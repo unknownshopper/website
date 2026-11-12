@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ecosistema — The Unknown Shopper</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f6f6fb;
+    --ink: #141632;
+    --muted: #6b7194;
+    --accent: #2563eb;
+    --cyan: #0d9ec4;
+    --green: #0e9f6e;
+    --amber: #d97706;
+    --line: #d9dded;
+    --card: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,.7);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  .modes {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    display: flex; gap: 4px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px;
+  }
+  .modes button {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .02em;
+    color: var(--muted);
+    border: 0; background: transparent; border-radius: 999px;
+    padding: 6px 13px; cursor: pointer; white-space: nowrap;
+    transition: background .2s, color .2s;
+  }
+  .modes button:hover { color: var(--ink); }
+  .modes button.on { background: var(--accent); color: #fff; }
+  header img { height: 34px; }
+  header a.back {
+    font-size: 13.5px; font-weight: 500; color: var(--muted);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: color .2s;
+  }
+  header a.back:hover { color: var(--accent); }
+  .stage { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+  canvas.grabbing { cursor: grabbing; }
+
+  .hud {
+    position: absolute;
+    top: 22px; left: 24px;
+    max-width: 340px;
+    background: rgba(255,255,255,.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 12px 32px rgba(20,22,50,.08);
+    z-index: 5;
+    transition: max-width .3s;
+  }
+  .hud-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .hud-toggle {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+  }
+  .hud-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .hud-toggle svg { transition: transform .3s; }
+  .hud.mini .hud-toggle svg { transform: rotate(180deg); }
+  .hud .hud-body { overflow: hidden; transition: all .3s; }
+  .hud.mini .hud-body { display: none; }
+  .hud.mini { max-width: 210px; padding: 13px 16px; }
+  .hud.mini h1 { font-size: 15px; margin: 3px 0 0; }
+  .hud .tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10.5px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .hud h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 600; letter-spacing: -.02em;
+    margin: 6px 0 8px;
+  }
+  .hud p { font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+  .hud .hint {
+    margin-top: 12px; padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    font-size: 11px; color: var(--muted);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .hud .hint svg { flex-shrink: 0; color: var(--accent); }
+
+  /* Panel de nodo activo */
+  .detail {
+    position: absolute;
+    top: 22px; right: 24px;
+    width: min(320px, calc(100vw - 48px));
+    max-height: calc(100% - 44px);
+    overflow-y: auto;
+    background: #141632;
+    color: #eef0ff;
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 18px 44px rgba(20,22,50,.3);
+    z-index: 6;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity .25s, transform .25s;
+    pointer-events: none;
+  }
+  .detail.on { opacity: 1; transform: none; }
+  .detail .dt {
+    font-size: 10px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: #7ea0f5;
+  }
+  .detail h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px; font-weight: 600; margin: 5px 0 7px;
+  }
+  .detail p { font-size: 12.5px; line-height: 1.6; color: #b7bce0; }
+  .detail .links {
+    margin-top: 10px; font-size: 11px; color: #7ea0f5;
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+  .detail .links span {
+    background: rgba(126,160,245,.14);
+    padding: 3px 9px; border-radius: 999px;
+  }
+
+  .legend {
+    position: absolute;
+    bottom: 22px; left: 24px;
+    display: flex; gap: 14px; flex-wrap: wrap;
+    background: rgba(255,255,255,.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 11.5px; color: var(--muted);
+    z-index: 5;
+  }
+  .legend i {
+    width: 9px; height: 9px; border-radius: 50%;
+    display: inline-block; margin-right: 6px;
+  }
+  @media (max-width: 720px) {
+    header { flex-wrap: wrap; gap: 10px; }
+    .modes {
+      position: static; transform: none; order: 3;
+      width: 100%; overflow-x: auto;
+    }
+  }
+  @media (max-width: 640px) {
+    .hud { max-width: calc(100vw - 48px); }
+    .legend { display: none; }
+    .detail {
+      top: auto; bottom: 16px;
+      left: 16px; right: 16px;
+      width: auto;
+      max-height: 34%;
+      transform: translateY(12px);
+    }
+    .detail.on { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="tusxx.png" alt="The Unknown Shopper" />
+  <nav class="modes" id="modes" aria-label="Vista del ecosistema">
+    <button class="on" data-mode="eco">Ecosistema</button>
+    <button data-mode="tus">Unknown Shopper</button>
+    <button data-mode="oc">Olmeca Code</button>
+    <button data-mode="dd">Datos Duros</button>
+  </nav>
+  <a class="back" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    Volver al inicio
+  </a>
+</header>
+
+<div class="stage">
+  <canvas id="graph"></canvas>
+
+  <div class="hud" id="hud">
+    <div class="hud-head">
+      <div>
+        <span class="tag" id="hudTag">Mapa de servicios</span>
+        <h1 id="hudTitle">El ecosistema completo</h1>
+      </div>
+      <button class="hud-toggle" id="hudToggle" aria-label="Contraer panel">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+      </button>
+    </div>
+    <div class="hud-body">
+      <p id="hudDesc">Cómo se conecta cada pieza: del protocolo que define la empresa a la evidencia que llega al panel — y de ahí a la decisión.</p>
+      <div class="hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11.5a5.5 5.5 0 1 1 6 5.47V18a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2Z"/><path d="M12 7v2"/></svg>
+        <span class="hint-txt">Arrastra los nodos · toca para ver conexiones</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail" id="detail">
+    <span class="dt" id="dtType"></span>
+    <h2 id="dtName"></h2>
+    <p id="dtDesc"></p>
+    <div class="links" id="dtLinks"></div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#141632"></i>Actores</span>
+    <span><i style="background:#2563eb"></i>Sistema</span>
+    <span><i style="background:#0d9ec4"></i>Datos</span>
+    <span><i style="background:#0e9f6e"></i>Resultados</span>
+  </div>
+</div>
+
+<script>
+// g: grupo-marca ('tus' | 'oc' | 'dd' | 'all' — 'all' aparece en todas las vistas)
+const NODES = [
+  // — The Unknown Shopper: captura en campo
+  { id:'tus',       label:'The Unknown Shopper', type:'core',   r:26, g:'tus', desc:'La puerta de entrada: recluta, entrena, audita y entrega inteligencia operativa. Medir antes de decidir.' },
+  { id:'empresa',   label:'Empresa',             type:'actor',  r:19, g:'all', desc:'La marca que contrata. Define estándares, hace la pregunta de negocio y recibe los resultados.' },
+  { id:'protocolo', label:'Protocolo de atención',type:'system', r:15, g:'tus', desc:'Los estándares del negocio convertidos en criterios evaluables — la empresa define, nosotros medimos.' },
+  { id:'shopper',   label:'Mystery Shopper',     type:'actor',  r:19, g:'tus', desc:'Evaluador certificado que visita como cliente común. Nadie sabe que está midiendo.' },
+  { id:'sucursal',  label:'Sucursales / franquicias', type:'actor', r:16, g:'tus', desc:'Cada punto de venta auditado — tienda propia, franquicia o canal digital.' },
+  { id:'cliente',   label:'Cliente real',        type:'actor',  r:14, g:'tus', desc:'La experiencia que su cliente vive a diario — lo que el shopper replica y documenta.' },
+  { id:'evidencia', label:'Evidencia',           type:'data',   r:13, g:'tus', desc:'Fotos, geolocalización, audio y recibos. Cada hallazgo viene respaldado.' },
+  { id:'reporte',   label:'Reporte <24h',        type:'system', r:16, g:'tus', desc:'Cada visita procesada y entregada en menos de 24 horas, con doble control de calidad.' },
+  { id:'matriz',    label:'Matriz de ponderación',type:'system',r:13, g:'tus', desc:'Los pesos que usted define: cada criterio cuenta según su prioridad real.' },
+  { id:'kpis',      label:'KPIs',                type:'data',   r:18, g:'tus', desc:'Score ponderado, cumplimiento de protocolo, tiempos y conversión — todo medible.' },
+  { id:'score',     label:'Score ponderado',     type:'data',   r:11, g:'tus', desc:'La calificación final de cada visita, calculada con su matriz.' },
+  { id:'tiempos',   label:'Tiempos de espera',   type:'data',   r:10, g:'tus', desc:'Minutos reales medidos: fila, atención, cobro, entrega.' },
+  { id:'panel',     label:'Panel por roles',     type:'system', r:17, g:'all', desc:'El punto de entrega compartido: credenciales jerárquicas, cada nivel ve exactamente su vista.' },
+  { id:'direccion', label:'Dirección',           type:'result', r:11, g:'tus', desc:'Visión global: tendencias, comparativos de red y módulo de competencia.' },
+  { id:'ops',       label:'Operaciones',         type:'result', r:11, g:'tus', desc:'Hallazgos por región y sucursal — dónde actuar primero.' },
+  { id:'gerente',   label:'Gerente de tienda',   type:'result', r:11, g:'tus', desc:'Solo su tienda: su score, sus hallazgos, su histórico.' },
+  { id:'alertas',   label:'Alertas críticas',    type:'result', r:12, g:'tus', desc:'Problemas graves notificados en minutos, no al cierre del trimestre.' },
+  { id:'competencia',label:'Competencia',        type:'actor',  r:14, g:'tus', desc:'Marcas similares evaluadas con el mismo guion — usted contra ellas, lado a lado.' },
+  { id:'historico', label:'Histórico',           type:'data',   r:13, g:'tus', desc:'La evolución de cada KPI por sucursal a lo largo del tiempo.' },
+  { id:'benchmark', label:'Comparativo A/B',     type:'result', r:12, g:'tus', desc:'La misma vara para todos: sus sucursales entre sí y contra la competencia.' },
+  // — OLMECA CODE: infraestructura donde vive la operación
+  { id:'oc',        label:'OLMECA CODE',         type:'core',   r:23, g:'oc',  desc:'La capa de infraestructura: sistemas a la medida que convierten los datos de campo en operación viva.' },
+  { id:'inv',       label:'Inventarios vivos',   type:'system', r:15, g:'oc',  desc:'Activos, refacciones y equipo con estado real — inspecciones PND, MRO y administración de la operación.' },
+  { id:'api',       label:'Integraciones API',   type:'system', r:12, g:'oc',  desc:'Sus sistemas hablando entre sí: ERP, CMMS, sensores y fuentes externas en un solo flujo.' },
+  { id:'docs',      label:'Gestor documental',   type:'system', r:12, g:'oc',  desc:'Control de versiones, evidencias y expedientes — nada se pierde, todo se audita.' },
+  { id:'tkt',       label:'Tickets / soporte',   type:'result', r:11, g:'oc',  desc:'Seguimiento operativo en vivo: incidencias, responsables y tiempos de resolución.' },
+  { id:'energia',   label:'Sector energía',      type:'actor',  r:14, g:'oc',  desc:'Villahermosa, Ciudad del Carmen, Dos Bocas, Coatzacoalcos — operación donde está la industria.' },
+  // — Datos Duros: profundidad después del reporte
+  { id:'dd',        label:'Datos Duros',         type:'core',   r:23, g:'dd',  desc:'La capa de profundidad: investigación metodológica que va más allá del reporte puntual.' },
+  { id:'enc',       label:'Encuestas en vivo',   type:'system', r:14, g:'dd',  desc:'Levantamiento georreferenciado con actualización en tiempo real — cada respuesta con su ubicación exacta.' },
+  { id:'muestra',   label:'Diseño de muestra',   type:'system', r:12, g:'dd',  desc:'Representatividad calculada: tamaño, segmentación y margen de error antes de salir a campo.' },
+  { id:'tab',       label:'Tabulación',          type:'data',   r:11, g:'dd',  desc:'Cada respuesta procesada, ponderada y cruzada — los datos duros detrás del hallazgo.' },
+  { id:'insight',   label:'Insight estadístico', type:'result', r:13, g:'dd',  desc:'El patrón que el reporte operativo no muestra: tendencias, correlaciones y señales de mercado.' },
+];
+
+const EDGES = [
+  // Flujo TUS
+  ['tus','empresa'],['tus','shopper'],['tus','protocolo'],
+  ['empresa','protocolo'],['empresa','sucursal'],['empresa','panel'],
+  ['shopper','sucursal'],['shopper','evidencia'],['shopper','cliente'],
+  ['protocolo','matriz'],['protocolo','shopper'],
+  ['sucursal','cliente'],['sucursal','evidencia'],['sucursal','competencia'],
+  ['evidencia','reporte'],['reporte','kpis'],['reporte','historico'],
+  ['matriz','score'],['kpis','score'],['kpis','tiempos'],['kpis','panel'],
+  ['panel','direccion'],['panel','ops'],['panel','gerente'],
+  ['panel','alertas'],['kpis','alertas'],
+  ['competencia','benchmark'],['score','benchmark'],['historico','benchmark'],
+  ['direccion','competencia'],['historico','direccion'],
+  // Flujo OLMECA CODE
+  ['empresa','oc'],['oc','inv'],['oc','api'],['oc','docs'],['oc','tkt'],
+  ['oc','energia'],['energia','inv'],['api','panel'],['oc','panel'],
+  // Flujo Datos Duros
+  ['empresa','dd'],['dd','enc'],['dd','muestra'],['dd','tab'],['dd','insight'],
+  ['muestra','enc'],['enc','tab'],['tab','insight'],
+  // Puentes del ecosistema (los hallazgos también aterrizan en el panel)
+  ['tus','oc'],['reporte','dd'],['evidencia','enc'],['insight','direccion'],['insight','panel'],
+];
+
+// Lentes: qué se muestra y cómo se cuenta
+const VIEWS = {
+  eco: {
+    tag: 'Mapa de servicios',
+    title: 'El ecosistema completo',
+    desc: 'Tres marcas, un flujo: The Unknown Shopper captura en campo, OLMECA CODE lo convierte en sistemas vivos y Datos Duros profundiza con investigación metodológica.',
+  },
+  tus: {
+    tag: 'Captura en campo',
+    title: 'The Unknown Shopper',
+    desc: 'La puerta de entrada: del protocolo de atención a la evidencia georreferenciada y el panel por roles — medir antes de decidir.',
+  },
+  oc: {
+    tag: 'Infraestructura',
+    title: 'OLMECA CODE',
+    desc: 'Los sistemas donde vive la operación: inventarios en tiempo real, integraciones y trazabilidad — con foco en el sector energía del sureste.',
+  },
+  dd: {
+    tag: 'Profundidad',
+    title: 'Datos Duros',
+    desc: 'El paso después del reporte: encuestas georreferenciadas en vivo, diseño de muestra y hallazgos estadísticos que sostienen la decisión.',
+  },
+};
+
+const COLORS = {
+  core:   { fill:'#2563eb', ring:'rgba(37,99,235,.18)' },
+  actor:  { fill:'#141632', ring:'rgba(20,22,50,.10)' },
+  system: { fill:'#2563eb', ring:'rgba(37,99,235,.14)' },
+  data:   { fill:'#0d9ec4', ring:'rgba(13,158,196,.14)' },
+  result: { fill:'#0e9f6e', ring:'rgba(14,159,110,.14)' },
+};
+
+const canvas = document.getElementById('graph');
+const ctx = canvas.getContext('2d');
+const stage = canvas.parentElement;
+let W, H, DPR;
+
+function resize() {
+  DPR = Math.min(devicePixelRatio || 1, 2);
+  W = stage.clientWidth; H = stage.clientHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+resize();
+addEventListener('resize', resize);
+
+// Estado físico
+const byId = {};
+NODES.forEach(n => {
+  n.vx = n.vy = 0;
+  n.neighbors = new Set();
+  if (innerWidth < 640) n.r *= 0.72; // nodos más compactos en móvil
+  byId[n.id] = n;
+});
+
+let mode = 'eco';
+let actNodes = [], actEdges = [];
+let hover = null, drag = null, mouse = { x: -1e4, y: -1e4 };
+
+function setMode(m) {
+  mode = m;
+  actNodes = NODES.filter(n => m === 'eco' || n.g === m || n.g === 'all');
+  const visible = new Set(actNodes.map(n => n.id));
+  actEdges = EDGES.filter(([a, b]) => visible.has(a) && visible.has(b));
+  actNodes.forEach(n => n.neighbors.clear());
+  actEdges.forEach(([a, b]) => { byId[a].neighbors.add(b); byId[b].neighbors.add(a); });
+  // Reagrupar en anillo al cambiar de lente
+  actNodes.forEach((n, i) => {
+    const a = (i / actNodes.length) * Math.PI * 2;
+    n.x = W / 2 + Math.cos(a) * (120 + Math.random() * 130);
+    n.y = H / 2 + Math.sin(a) * (100 + Math.random() * 110);
+    n.vx = n.vy = 0;
+  });
+  const v = VIEWS[m];
+  document.getElementById('hudTag').textContent = v.tag;
+  document.getElementById('hudTitle').textContent = v.title;
+  document.getElementById('hudDesc').textContent = v.desc;
+  document.querySelectorAll('#modes button').forEach(b =>
+    b.classList.toggle('on', b.dataset.mode === m));
+  hover = null; drag = null;
+  showDetail(null);
+}
+
+function step() {
+  const cx = W / 2, cy = H / 2;
+  for (const n of actNodes) {
+    // Centro suave
+    n.vx += (cx - n.x) * 0.0016;
+    n.vy += (cy - n.y) * 0.0016;
+    // Repulsión (solo a corta distancia, capada)
+    for (const m of actNodes) {
+      if (m === n) continue;
+      const dx = n.x - m.x, dy = n.y - m.y;
+      const d2 = dx * dx + dy * dy + 0.01;
+      if (d2 > 400 * 400) continue;
+      const f = Math.min(3200 / d2, 0.6);
+      n.vx += dx * f / Math.sqrt(d2);
+      n.vy += dy * f / Math.sqrt(d2);
+    }
+  }
+  // Resortes (edges): fuerza proporcional a (distancia - descanso)
+  for (const [a, b] of actEdges) {
+    const A = byId[a], B = byId[b];
+    const dx = B.x - A.x, dy = B.y - A.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const rest = 110 + (30 - A.r - B.r);
+    const f = (d - rest) * 0.0035;
+    A.vx += (dx / d) * f; A.vy += (dy / d) * f;
+    B.vx -= (dx / d) * f; B.vy -= (dy / d) * f;
+  }
+  for (const n of actNodes) {
+    n.vx *= 0.9; n.vy *= 0.9;
+    // Velocidad máxima — evita explosiones
+    const sp = Math.hypot(n.vx, n.vy);
+    if (sp > 4) { n.vx = n.vx / sp * 4; n.vy = n.vy / sp * 4; }
+    if (n !== drag) { n.x += n.vx; n.y += n.vy; }
+    n.x = Math.max(n.r + 8, Math.min(W - n.r - 8, n.x));
+    n.y = Math.max(n.r + 8, Math.min(H - n.r - 8, n.y));
+  }
+}
+
+function pick(x, y) {
+  let best = null, bd = 1e9;
+  for (const n of actNodes) {
+    const d = Math.hypot(n.x - x, n.y - y);
+    if (d < n.r + 18 && d < bd) { best = n; bd = d; }
+  }
+  return best;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Edges
+  for (const [a, b] of actEdges) {
+    const A = byId[a], B = byId[b];
+    const hot = hover && (a === hover.id || b === hover.id);
+    const dim = hover && !hot;
+    ctx.beginPath();
+    ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y);
+    ctx.strokeStyle = hot ? 'rgba(37,99,235,.55)' : dim ? 'rgba(20,22,50,.05)' : 'rgba(20,22,50,.14)';
+    ctx.lineWidth = hot ? 1.6 : 1;
+    ctx.stroke();
+  }
+  // Nodos
+  for (const n of actNodes) {
+    const c = COLORS[n.type];
+    const isHot = hover && (n === hover || n.neighbors.has(hover.id));
+    const dim = hover && !isHot;
+
+    ctx.globalAlpha = dim ? 0.25 : 1;
+    // halo
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r + (isHot ? 12 : 7), 0, Math.PI * 2);
+    ctx.fillStyle = c.ring;
+    ctx.fill();
+    // cuerpo
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = c.fill;
+    ctx.fill();
+    ctx.strokeStyle = isHot ? '#fff' : 'rgba(255,255,255,.65)';
+    ctx.lineWidth = isHot ? 2.5 : 1.5;
+    ctx.stroke();
+    // etiqueta
+    ctx.font = `${n === hover ? '600 ' : '500 '}${n.type === 'core' ? 13 : 11.5}px 'Space Grotesk', sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = n === hover ? '#2563eb' : '#141632';
+    ctx.fillText(n.label, n.x, n.y + n.r + 16);
+    ctx.globalAlpha = 1;
+  }
+}
+
+// Detalle
+const detail = document.getElementById('detail');
+function showDetail(n) {
+  if (!n) { detail.classList.remove('on'); return; }
+  const TYPES = { core:'Plataforma', actor:'Actor', system:'Sistema', data:'Dato', result:'Resultado' };
+  document.getElementById('dtType').textContent = TYPES[n.type];
+  document.getElementById('dtName').textContent = n.label;
+  document.getElementById('dtDesc').textContent = n.desc;
+  document.getElementById('dtLinks').innerHTML =
+    [...n.neighbors].map(id => `<span>${byId[id].label}</span>`).join('');
+  detail.classList.add('on');
+}
+
+canvas.addEventListener('pointermove', e => {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  if (drag) { drag.x = mouse.x; drag.y = mouse.y; drag.vx = drag.vy = 0; return; }
+  const n = pick(mouse.x, mouse.y);
+  if (n !== hover) { hover = n; showDetail(n); }
+});
+canvas.addEventListener('pointerdown', e => {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  const n = pick(mouse.x, mouse.y);
+  if (n) {
+    drag = n;
+    hover = n;              // en táctil, tap = seleccionar (equivale a hover)
+    showDetail(n);
+    canvas.classList.add('grabbing');
+    canvas.setPointerCapture(e.pointerId);
+  } else {
+    hover = null;           // tap en vacío cierra el detalle
+    showDetail(null);
+  }
+});
+canvas.addEventListener('pointerup', e => {
+  drag = null; canvas.classList.remove('grabbing');
+  // en mouse, al soltar el hover sigue el puntero; en táctil, la selección persiste
+  if (e.pointerType === 'mouse') {
+    const n = pick(mouse.x, mouse.y);
+    if (n !== hover) { hover = n; showDetail(n); }
+  }
+});
+canvas.addEventListener('pointerleave', () => { hover = null; showDetail(null); });
+
+// HUD colapsable — en pantallas pequeñas arranca contraído
+const hud = document.getElementById('hud');
+if (innerWidth < 760) hud.classList.add('mini');
+document.getElementById('hudToggle').addEventListener('click', () => hud.classList.toggle('mini'));
+
+// Selector de lente
+document.getElementById('modes').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) setMode(b.dataset.mode);
+});
+
+setMode('eco');
+(function loop() { step(); draw(); requestAnimationFrame(loop); })();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "The Unknown Shopper",
+  "short_name": "Unknown Shopper",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#0b0c10",
+  "icons": []
+}

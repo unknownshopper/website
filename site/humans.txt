@@ -1,0 +1,18 @@
+/* TEAM */
+  Site:       The Unknown Shopper
+  Contact:    the@unknownshoppers.com
+  Phone:      +52 993 217 1855
+  Instagram:  https://www.instagram.com/unknownshoppers/
+  Facebook:   https://www.facebook.com/theunknownshoppers/
+  TikTok:     https://www.tiktok.com/@the_unknown_shopper
+
+/* SITE */
+  Last update: 2026-09-26
+  Language:    Español
+  Standards:   HTML5, CSS3, JavaScript vanilla
+  Typography:  Inter, Space Grotesk
+  Doctype:     HTML5
+
+/* THANKS */
+  A todos los evaluadores incógnito que documentan la realidad,
+  y a quienes creen que los datos pesan más que las suposiciones.

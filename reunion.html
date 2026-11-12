@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Inducción | The Unknown Shopper</title>
+    <style>
+        :root {
+            --text: #0b0c10;
+            --muted: rgba(11, 12, 16, 0.65);
+            --border: rgba(11, 12, 16, 0.12);
+            --bg: #ffffff;
+            --soft: rgba(11, 12, 16, 0.04);
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        header {
+            display: grid;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .card.soft {
+            background: var(--soft);
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        p { margin: 0 0 10px; }
+        ul, ol { margin: 8px 0 0; padding-left: 18px; }
+        li { margin: 6px 0; }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .toc a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .toc a:hover { border-bottom-style: solid; }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 8px;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 26px;
+            margin: 8px 0;
+        }
+
+        .checklist li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .muted { color: var(--muted); }
+
+        .two-col {
+            display: grid;
+            gap: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 10px;
+            vertical-align: top;
+            font-size: 13px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 10px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fff;
+            color: var(--text);
+            font-size: 13px;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: rgba(11, 12, 16, 0.3);
+        }
+
+        th {
+            text-align: left;
+            background: var(--soft);
+            font-weight: 700;
+        }
+
+        .cell-title {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .branch-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .branch-list li {
+            margin: 6px 0;
+            padding: 6px 8px;
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .note {
+            padding: 12px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--soft);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (min-width: 860px) {
+            .two-col {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        @media print {
+            .container { padding: 0; }
+            .card { break-inside: avoid; }
+            a { text-decoration: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="tag">Manual de inducción para shoppers de nuevo ingreso</div>
+            <h1>The Unknown Shopper</h1>
+            <p class="subtitle">Este documento resume el proceso y buenas prácticas para realizar evaluaciones con evidencia en video.</p>
+        </header>
+
+        <main class="grid" style="margin-top: 18px;">
+            <section class="card toc">
+                <h2>Contenido</h2>
+                <ol>
+                    <li><a href="#proceso">Proceso de evaluación</a></li>
+                    <li><a href="#importante">Importante (antes de iniciar)</a></li>
+                    <li><a href="#modelos">Modelos de sucursal</a>
+                        <ol>
+                            <li><a href="#cafeteria">Modelo: Cafetería</a></li>
+                            <li><a href="#express">Modelo: Express</a></li>
+                            <li><a href="#movil">Modelo: Móvil</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </section>
+
+            <section id="proceso" class="card">
+                <h2>Proceso de evaluación</h2>
+                <div class="two-col">
+                    <div class="card soft">
+                        <h3>Objetivo</h3>
+                        <p class="muted">Capturar evidencia clara del estado del local y del proceso de atención/venta, sin interferir ni levantar sospechas.</p>
+                    </div>
+                    <div class="card soft">
+                        <h3>Regla de oro</h3>
+                        <p class="muted">Todo debe realizarse con calma, sin prisas, y procurando que la cámara capture lo que se necesita.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="importante" class="card">
+                <h2>IMPORTANTE (antes de iniciar)</h2>
+                <ul class="checklist">
+                    <li>Antes que nada debes poner el teléfono en modo avión.</li>
+                    <li>El proceso debe realizarse sin prisas.</li>
+                </ul>
+            </section>
+
+            <section id="modelos" class="card">
+                <h2>Modelos de sucursal</h2>
+                <p class="muted">A continuación, el checklist específico para cada tipo de sucursal.</p>
+
+                <div class="grid" style="margin-top: 12px;">
+                    <article id="cafeteria" class="card soft">
+                        <h3>1. Modelo: Cafetería</h3>
+                        <ul class="checklist">
+                            <li>Grabar si el local tiene la fachada en buen estado (letreros con luz, limpios, barra limpia).</li>
+                            <li>Sentarse en un ángulo donde la cámara pueda ver la barra, empleados, refrigerador con alimentos y granizado de frappé.</li>
+                            <li>Debe capturarse cuando el empleado se acerque a tomar la orden, dejar alimentos o bebidas y cuando lleve la cuenta.</li>
+                            <li>No pedir apresuradamente; esperar a que el empleado recomiende las promociones del mes y haga esfuerzo de venta.</li>
+                            <li>Siempre se pedirá un producto primero para ver si realizan esfuerzo de venta, y comprar después el segundo producto.</li>
+                            <li>No es necesario quedarse mucho tiempo: cuando se lleve la orden a la mesa, se puede pedir para llevar la orden.</li>
+                            <li>Al momento de pedir la cuenta, se espera que se ofrezca la app; descárgala para acumular puntos.</li>
+                            <li>Si no te entregan ticket, pídelo.</li>
+                            <li>Puedes dejar de grabar al salir de la sucursal.</li>
+                        </ul>
+                    </article>
+
+                    <article id="express" class="card soft">
+                        <h3>2. Modelo: Express</h3>
+                        <ul class="checklist">
+                            <li>Grabar si el local tiene la fachada en buen estado (letreros con luz, limpios, barra limpia).</li>
+                            <li>Acercarse a la barra despacio para poder apreciar los panes, refrigerador con alimentos y granizado de frappé.</li>
+                            <li>Debe capturarse cuando el empleado se acerque a tomar la orden, dejar alimentos o bebidas y cuando lleve la cuenta.</li>
+                            <li>No pedir apresuradamente; esperar a que el empleado recomiende las promociones del mes y haga esfuerzo de venta.</li>
+                            <li>Siempre se pedirá un producto primero para ver si realizan esfuerzo de venta, y comprar después el segundo producto.</li>
+                            <li>Al momento de pedir la cuenta, se espera que se ofrezca la app; descárgala para acumular puntos.</li>
+                            <li>Si no te entregan ticket, pídelo.</li>
+                            <li>Puedes dejar de grabar al salir de la sucursal.</li>
+                        </ul>
+                    </article>
+
+                    <article id="movil" class="card soft">
+                        <h3>3. Modelo: Móvil</h3>
+                        <ul class="checklist">
+                            <li>Como es en automóvil, grabar unos 10 segundos antes de llegar a la sucursal para poder ver sus características exteriores.</li>
+                            <li>Debe capturarse cuando el empleado se acerque a tomar la orden, dejar alimentos o bebidas y cuando lleve la cuenta.</li>
+                            <li>No pedir apresuradamente; esperar a que el empleado recomiende las promociones del mes y haga esfuerzo de venta.</li>
+                            <li>Siempre se pedirá un producto primero para ver si realizan esfuerzo de venta, y comprar después el segundo producto.</li>
+                            <li>Al momento de pedir la cuenta, se espera que se ofrezca la app; descárgala para acumular puntos.</li>
+                            <li>Si no te entregan ticket, pídelo.</li>
+                            <li>Puedes dejar de grabar al salir de la sucursal.</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section id="asignacion" class="card">
+                <h2>Asignación de sucursales (para reunión)</h2>
+                <p class="muted">Hay 16 sucursales en total (2 móviles, 4 express y 10 cafeterías). Este mes se seleccionan 4 shoppers y se asignan 4 sucursales a cada uno (16 en total).</p>
+
+                <div class="note" style="margin-top: 10px;">
+                    Sugerencia para la reunión: primero definan a los 4 shoppers asignados y luego completen la tabla de asignación por sucursal.
+                </div>
+
+                <div class="card soft" style="margin-top: 12px; overflow-x: auto;">
+                    <h3 style="margin: 0 0 10px;">Asignación por sucursal (completar en la reunión)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 22%;">Tipo</th>
+                                <th style="width: 38%;">Sucursal</th>
+                                <th style="width: 40%;">Asignado a (nombre)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="muted">Móvil</td>
+                                <td><div class="cell-title">Móvil la venta</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Móvil</td>
+                                <td><div class="cell-title">Móvil deportiva</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="muted">Express</td>
+                                <td><div class="cell-title">Pista</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Express</td>
+                                <td><div class="cell-title">Walmart deportiva</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Express</td>
+                                <td><div class="cell-title">Walmart carrizal</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Express</td>
+                                <td><div class="cell-title">Walmart universidad</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Altabrisa</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Ángeles</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Américas</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Centro</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Cristal</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Deportiva</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Galerías</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Guayabal</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Olmeca</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="muted">Cafetería</td>
+                                <td><div class="cell-title">Usuma</div></td>
+                                <td>
+                                    <select>
+                                        <option value="" selected>Por asignar</option>
+                                        <option value="Bety Vera">Bety Vera (9932804367)</option>
+                                        <option value="Axel Josue">Axel Josue (+52 993 378 1737)</option>
+                                        <option value="Juan Antonio">Juan Antonio (+52 983 422 3958)</option>
+                                        <option value="Agil">Agil (+52 993 167 3597)</option>
+                                        <option value="Zubale">Zubale (+52 993 485 6582)</option>
+                                        <option value="Alberto Villegas">Alberto Villegas (+52 993 138 4702)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Siguiente paso</h2>
+                <p class="muted">Dime si este manual será solo para este cliente (cafetería/express/móvil) o si también debemos incluir:</p>
+                <ul>
+                    <li>Entregables (reporte, evidencias, formatos)</li>
+                    <li>Reglas de ética / discreción</li>
+                    <li>Pagos (tiempos, comprobantes)</li>
+                    <li>Checklist de calidad del video (audio, encuadre, duración mínima)</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
