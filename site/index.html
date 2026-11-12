@@ -630,22 +630,11 @@
         <p>Auditoría de experiencia del cliente mediante shoppers. Datos reales, decisiones mejores.</p>
         <p class="foot-contact">
           <span class="cta-pop">
-            <button type="button" class="icon-btn demo-toggle" aria-label="WhatsApp: +52 993 217 1855" title="WhatsApp">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            </button>
-            <span class="cta-menu up">
-              <a href="https://wa.me/529932171855?text=Me%20interesa%20obtener%20informaci%C3%B3n%20sobre%20The%20Unknown%20Shopper." target="_blank" rel="noopener">Información / demo</a>
-              <a href="registro/?tipo=shopper">Quiero ser shopper</a>
-              <a href="registro/?tipo=empresa">Cotización para mi negocio</a>
-              <a href="https://wa.me/529932171855?text=Hola%2C%20tengo%20una%20consulta%20sobre%20The%20Unknown%20Shopper." target="_blank" rel="noopener">Otra consulta</a>
-            </span>
-          </span>
-          <span class="cta-pop">
             <button type="button" class="icon-btn demo-toggle" aria-label="Correo: the@unknownshoppers.com" title="Correo">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 8.6 5.7a2 2 0 0 0 2.2 0L22 7"/></svg>
             </button>
             <span class="cta-menu up">
-              <a href="mailto:the@unknownshoppers.com?subject=Solicitud%20de%20informaci%C3%B3n&amp;body=Me%20interesa%20obtener%20informaci%C3%B3n%20sobre%20The%20Unknown%20Shopper.">Información / demo</a>
+              <a href="registro/?tipo=empresa">Información / demo</a>
               <a href="registro/?tipo=shopper">Quiero ser shopper</a>
               <a href="registro/?tipo=empresa">Cotización para mi negocio</a>
               <a href="mailto:the@unknownshoppers.com?subject=Consulta%20general&amp;body=Hola%2C%20tengo%20una%20consulta%20sobre%20The%20Unknown%20Shopper.">Otra consulta</a>
@@ -709,6 +698,28 @@
     <!-- Pega aquí el iframe del video (YouTube/Vimeo) reemplazando este placeholder -->
     <div class="video-modal-placeholder">Video próximamente</div>
   </div>
+</div>
+
+<!-- ================= CHAT ASISTENTE ================= -->
+<button type="button" class="chat-fab" id="chatFab" aria-label="Abrir asistente">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel" aria-hidden="true">
+  <div class="chat-head">
+    <div class="chat-id">
+      <b>TUS Asistente</b>
+      <span>Mystery shopping · respuestas al instante</span>
+    </div>
+    <button type="button" id="chatClose" aria-label="Cerrar chat">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <form class="chat-input" id="chatForm">
+    <input id="chatText" placeholder="Escribe tu pregunta..." autocomplete="off" />
+    <button type="submit" aria-label="Enviar mensaje">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3.4 20.6 21.8 12 3.4 3.4l-.01 6.53L14 12 3.39 14.07l.01 6.53Z"/></svg>
+    </button>
+  </form>
 </div>
 
 <script>
@@ -926,6 +937,103 @@
   document.getElementById('videoModalClose').addEventListener('click', closeVideo);
   videoModal.addEventListener('click', e => { if (e.target === videoModal) closeVideo(); });
   addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
+
+  // ===== Chat asistente (base de conocimiento ampliable) =====
+  const KB = [
+    { k: ["hola", "buenas", "buenos dias", "buenas tardes", "hey", "que tal"],
+      a: "¡Hola! Soy el asistente de The Unknown Shopper. Puedo contarte qué es el mystery shopping, cómo funciona nuestra plataforma, cobertura, o cómo registrarte como shopper o empresa. ¿Qué te interesa?" },
+    { k: ["mystery shopper", "que es un shopper", "incognito", "comprador incognito", "cliente incognito", "cliente misterioso"],
+      a: "Un <b>mystery shopper</b> es una persona capacitada que visita un negocio haciéndose pasar por un cliente común y documenta objetivamente su experiencia: tiempos, trato, cumplimiento de protocolos. El personal nunca sabe que está siendo evaluado, así que los datos reflejan la operación real." },
+    { k: ["como funciona", "proceso", "metodologia", "como trabajan", "pasos"],
+      a: "Nuestro proceso: <b>1)</b> diseñamos escenarios de evaluación a la medida de tu negocio, <b>2)</b> entrenamos y enviamos shoppers verificados, <b>3)</b> en menos de 24 horas recibes el reporte con hallazgos, evidencia y recomendaciones." },
+    { k: ["que evaluan", "que miden", "criterios", "que revisan"],
+      a: "Evaluamos presentación e imagen del punto de venta, protocolos de atención, tiempos de espera reales, calidad del servicio, proceso de venta y postventa — todo con <b>tu matriz de ponderación</b>: tú defines qué pesa más." },
+    { k: ["sectores", "giros", "industrias", "que negocios", "tipos de negocio"],
+      a: "Trabajamos por vertical: <b>retail</b> (puntos de venta y anaqueles), <b>comparativo A/B</b> (sucursales o competidores con el mismo guion), <b>posventa automotriz</b> y <b>salud</b> (del agendamiento a la venta)." },
+    { k: ["competencia", "benchmark", "comparativa", "comparar sucursales"],
+      a: "Con el <b>módulo de competencia</b> evaluamos marcas similares con el mismo guion: tú contra tu competencia, lado a lado, en cada criterio." },
+    { k: ["plataforma", "reportes", "dashboard", "panel", "kpi", "reporte"],
+      a: "No entregamos solo reportes: es un <b>sistema de inteligencia</b>. Credenciales jerárquicas por rol, matriz de ponderación, históricos por sucursal, alertas en tiempo real y reportes KPI accionables con evidencia verificable." },
+    { k: ["credenciales", "roles", "accesos", "quien ve que"],
+      a: "Cada nivel ve su propia vista: dirección compara lo global, operaciones su región y cada gerente solo su tienda — sin datos que no le corresponden." },
+    { k: ["alertas", "tiempo real", "problema critico"],
+      a: "Si una visita detecta un problema crítico, tu equipo lo sabe en <b>minutos</b> — no al final del trimestre." },
+    { k: ["cobertura", "ciudades", "donde trabajan", "zonas", "estados"],
+      a: "Cubrimos el sureste de México: Tabasco, Veracruz, Chiapas, Campeche, Yucatán y Quintana Roo — Villahermosa, Ciudad del Carmen, Xalapa, Tuxtla, Campeche, Mérida, Cancún, Playa del Carmen, Tulum y CDMX." },
+    { k: ["cuanto tarda", "tiempos", "cuando empiezan", "implementacion", "arranque"],
+      a: "Entre 1 y 2 semanas: la primera se diseñan escenarios y se entrenan shoppers; en la segunda ya están en campo. Los reportes llegan <b>menos de 24 horas</b> después de cada visita." },
+    { k: ["precio", "costo", "cuanto cuesta", "cotizacion", "tarifa", "demo", "cotizar"],
+      a: "Cada programa se cotiza según alcance, sucursales y frecuencia. Déjanos tus datos en el <a href='registro/?tipo=empresa'>registro para empresas</a> y agendamos una demo de 20 minutos." },
+    { k: ["quiero ser shopper", "ser shopper", "trabajar", "empleo", "vacante", "registrarme", "unirme", "ganar dinero"],
+      a: "Para ser shopper solo necesitas discreción, buena observación y estar en una zona con sucursales. <a href='registro/?tipo=shopper'>Regístrate aquí</a> y te contactamos cuando haya campañas en tu ciudad." },
+    { k: ["cuanto pagan", "pago", "pagan", "honorarios", "cuanto gano"],
+      a: "Cada evaluación tiene una remuneración según la campaña (complejidad, distancia, requisitos). Te informamos el monto antes de aceptar cada asignación. <a href='registro/?tipo=shopper'>Regístrate</a> para recibir convocatorias." },
+    { k: ["requisitos shopper", "que necesito", "requisitos para ser shopper"],
+      a: "Lo esencial: mayoría de edad, discreción absoluta, buena redacción para los reportes y estar cerca de zonas comerciales. Auto y experiencia previa suman, pero no son obligatorios." },
+    { k: ["video", "como se ve", "ver como funciona"],
+      a: "Pronto publicaremos un video de 1 minuto. Mientras, el botón <b>Ver cómo funciona</b> del inicio te muestra el flujo, o agenda una <a href='registro/?tipo=empresa'>demo</a>." },
+    { k: ["contacto", "correo", "email", "telefono", "hablar con alguien", "humano"],
+      a: "Escríbenos a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o déjanos tus datos en el <a href='registro/?tipo=empresa'>formulario</a> y te contactamos nosotros." },
+    { k: ["privacidad", "datos personales", "aviso de privacidad", "mis datos"],
+      a: "Tratamos tus datos conforme a la ley mexicana (derechos ARCO). Lee el <a href='privacidad.html'>aviso de privacidad</a> completo." },
+    { k: ["quienes son", "empresa", "nosotros", "la empresa", "tus"],
+      a: "Somos <b>The Unknown Shopper</b>, una plataforma de auditoría de experiencia del cliente con base en Villahermosa, Tabasco. Datos reales, no suposiciones." },
+    { k: ["gracias", "ok", "perfecto", "vale", "adios", "bye"],
+      a: "¡Con gusto! Si surge otra duda, aquí estoy. Y si quieres dar el siguiente paso: <a href='registro/?tipo=empresa'>demo para empresas</a> · <a href='registro/?tipo=shopper'>registro de shoppers</a>." },
+    { k: ["evidencia", "fotos", "pruebas", "verificada"],
+      a: "Cada visita queda validada con <b>geolocalización, fotos y recibos de compra</b> — evidencia real con identidad protegida." }
+  ];
+  const CHIPS = ["¿Qué es un shopper?", "¿Cómo funciona?", "Cobertura", "Quiero una demo", "Ser shopper"];
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^\p{L}\p{N}\s]/gu, " ");
+  const chatMsgs = document.getElementById('chatMsgs');
+  const chatPanel = document.getElementById('chatPanel');
+  let chatInit = false;
+
+  function addMsg(html, me) {
+    const el = document.createElement('div');
+    el.className = 'chat-msg ' + (me ? 'me' : 'bot');
+    el.innerHTML = html;
+    chatMsgs.appendChild(el);
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  }
+  function answer(q) {
+    const nq = " " + norm(q) + " ";
+    let best = null, bestScore = 0;
+    for (const e of KB) {
+      let sc = 0;
+      for (const k of e.k) if (nq.includes(" " + norm(k))) sc += k.includes(" ") ? 2 : 1;
+      if (sc > bestScore) { bestScore = sc; best = e; }
+    }
+    return best && bestScore >= 1
+      ? best.a
+      : "Aún no tengo respuesta exacta para eso — estoy aprendiendo. Mientras tanto puedes ver la <a href='index.html#faq'>FAQ</a>, escribirnos a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o dejar tus datos en el <a href='registro/?tipo=empresa'>registro</a>.";
+  }
+  function openChat() {
+    chatPanel.classList.add('open');
+    chatPanel.setAttribute('aria-hidden', 'false');
+    if (!chatInit) {
+      chatInit = true;
+      addMsg("¡Hola! Soy el asistente de <b>The Unknown Shopper</b>. Pregúntame sobre mystery shopping, la plataforma, cobertura o cómo registrarte.");
+      document.getElementById('chatChips').innerHTML = CHIPS.map(c => `<button type="button">${c}</button>`).join('');
+      document.getElementById('chatChips').querySelectorAll('button').forEach(b =>
+        b.addEventListener('click', () => { addMsg(b.textContent, true); setTimeout(() => addMsg(answer(b.textContent)), 350); })
+      );
+    }
+    document.getElementById('chatText').focus();
+  }
+  function closeChat() { chatPanel.classList.remove('open'); chatPanel.setAttribute('aria-hidden', 'true'); }
+  document.getElementById('chatFab').addEventListener('click', () => chatPanel.classList.contains('open') ? closeChat() : openChat());
+  document.getElementById('chatClose').addEventListener('click', closeChat);
+  document.getElementById('chatForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const inp = document.getElementById('chatText');
+    const q = inp.value.trim();
+    if (!q) return;
+    const safe = q.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    addMsg(safe, true);
+    inp.value = '';
+    setTimeout(() => addMsg(answer(q)), 400);
+  });
 
   // Spotlight en cards del bento
   document.querySelectorAll('.card').forEach(card => {

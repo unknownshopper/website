@@ -102,6 +102,16 @@
   .status.err { display: block; background: rgba(217,119,6,.08); border: 1px solid rgba(217,119,6,.3); color: #92580a; }
   .alt { font-size: 12.5px; color: var(--muted); text-align: center; }
   .alt a { color: var(--accent); font-weight: 600; }
+  .checks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .checks label {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 500; color: var(--ink);
+    padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px;
+    background: #fbfbfe; cursor: pointer; user-select: none;
+    transition: border-color .15s, background .15s;
+  }
+  .checks label:has(input:checked) { border-color: var(--accent); background: rgba(37,99,235,.07); }
+  .checks input { width: auto; accent-color: var(--accent); margin: 0; }
   .hidden { display: none !important; }
   footer { padding: 22px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
 </style>
@@ -193,15 +203,16 @@
           <label class="field">N.º de sucursales
             <input name="sucursales" inputmode="numeric" placeholder="Ej. 5" />
           </label>
-          <label class="field">Canales a evaluar
-            <select name="canales">
-              <option value="">Selecciona</option>
-              <option value="fisico">Tienda física</option>
-              <option value="digital">Digital / e-commerce</option>
-              <option value="telefonico">Telefónico</option>
-              <option value="varios">Varios</option>
-            </select>
-          </label>
+          <div class="field" role="group">
+            <span>Canales a evaluar</span>
+            <div class="checks">
+              <label><input type="checkbox" name="canales" value="Tienda física" /> Tienda física</label>
+              <label><input type="checkbox" name="canales" value="Digital / e-commerce" /> Digital / e-commerce</label>
+              <label><input type="checkbox" name="canales" value="Telefónico" /> Telefónico</label>
+              <label><input type="checkbox" name="canales" value="Otros" id="chkOtros" /> Otros</label>
+            </div>
+            <input name="canales_otros" id="txtOtros" class="hidden" placeholder="Especifica otros canales" style="margin-top:8px" />
+          </div>
         </div>
       </div>
 
@@ -235,7 +246,8 @@ const WEB3FORMS_KEY = "";
 const FORM_ENDPOINT = ""; // ej. "https://formspree.io/f/XXXXXX"
 
 // Sin key/endpoint: se abre el cliente de correo con todo precargado (fallback).
-const FALLBACK_EMAIL = "the@unknownshoppers.com";
+// Mientras migramos el buzón, los leads van al Gmail directamente.
+const FALLBACK_EMAIL = "tipograficoweb@gmail.com";
 
 const $ = id => document.getElementById(id);
 let tipo = "shopper";
@@ -276,6 +288,10 @@ function setTipo(t) {
 
 $("tabShopper").addEventListener("click", () => setTipo("shopper"));
 $("tabEmpresa").addEventListener("click", () => setTipo("empresa"));
+$("chkOtros").addEventListener("change", e => {
+  $("txtOtros").classList.toggle("hidden", !e.target.checked);
+  if (e.target.checked) $("txtOtros").focus();
+});
 
 const q = new URLSearchParams(location.search).get("tipo");
 setTipo(q === "empresa" ? "empresa" : "shopper");
@@ -291,6 +307,8 @@ $("regForm").addEventListener("submit", async e => {
   e.preventDefault();
   const f = e.target;
   const d = Object.fromEntries(new FormData(f).entries());
+  const canales = [...f.querySelectorAll('input[name="canales"]:checked')].map(c => c.value);
+  d.canales = canales.map(c => c === "Otros" && d.canales_otros?.trim() ? `Otros: ${d.canales_otros.trim()}` : c).join(", ");
 
   if (!d.nombre?.trim() || !d.email?.includes("@") || !d.telefono?.trim() || !d.ciudad?.trim() || !d.consent) {
     show("err", "Completa los campos obligatorios (*) y acepta el aviso de privacidad.");
