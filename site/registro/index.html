@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Registro — The Unknown Shopper</title>
+<meta name="description" content="Regístrate como mystery shopper o solicita una evaluación para tu empresa con The Unknown Shopper." />
+<meta name="robots" content="index, follow" />
+<link rel="icon" type="image/png" sizes="512x512" href="../favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f6f6fb;
+    --ink: #141632;
+    --muted: #6b7194;
+    --accent: #2563eb;
+    --cyan: #0d9ec4;
+    --line: #d9dded;
+    --card: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,.7); backdrop-filter: blur(10px);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand img { height: 42px; width: auto; }
+  .brand b { font-family: 'Space Grotesk', sans-serif; font-size: 15px; line-height: 1.15; display: block; }
+  .brand small { color: var(--muted); font-size: 11.5px; }
+  .back { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+  .back:hover { text-decoration: underline; }
+
+  main { flex: 1; display: flex; justify-content: center; padding: 44px 20px 64px; }
+  .wrap { width: min(680px, 100%); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted);
+    padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff;
+  }
+  .eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(120deg, var(--accent), var(--cyan)); }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 4.5vw, 36px); letter-spacing: -.02em; margin-top: 18px; }
+  .sub { color: var(--muted); font-size: 15px; margin-top: 10px; max-width: 54ch; line-height: 1.55; }
+
+  .toggle {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    margin-top: 26px; padding: 4px;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+  }
+  .toggle button {
+    font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600;
+    border: 0; border-radius: 10px; padding: 11px;
+    background: transparent; color: var(--muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background .2s, color .2s;
+  }
+  .toggle button.active { background: var(--ink); color: #fff; }
+  .toggle button:not(.active):hover { color: var(--ink); }
+
+  form {
+    margin-top: 18px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 20px;
+    padding: 26px; display: grid; gap: 14px;
+  }
+  .row { display: grid; gap: 14px; }
+  .row.two { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 560px) { .row.two { grid-template-columns: 1fr; } }
+  label.field { display: grid; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  input, select, textarea {
+    font: 500 14px 'Inter', sans-serif; color: var(--ink);
+    padding: 11px 13px; border: 1px solid var(--line); border-radius: 11px;
+    background: #fbfbfe; outline: none; width: 100%;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  textarea { min-height: 96px; resize: vertical; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .consent input { width: auto; margin-top: 3px; }
+  .consent a { color: var(--accent); }
+  button.submit {
+    margin-top: 4px;
+    font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600;
+    padding: 14px; border: 0; border-radius: 12px; cursor: pointer;
+    color: #fff; background: linear-gradient(120deg, var(--accent), var(--cyan));
+    transition: filter .2s, transform .15s;
+  }
+  button.submit:hover { filter: brightness(1.07); transform: translateY(-1px); }
+  button.submit:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+  .status { display: none; border-radius: 11px; padding: 12px 14px; font-size: 13.5px; line-height: 1.5; }
+  .status.ok { display: block; background: rgba(14,159,110,.1); border: 1px solid rgba(14,159,110,.3); color: #0a6b4a; }
+  .status.err { display: block; background: rgba(217,119,6,.08); border: 1px solid rgba(217,119,6,.3); color: #92580a; }
+  .alt { font-size: 12.5px; color: var(--muted); text-align: center; }
+  .alt a { color: var(--accent); font-weight: 600; }
+  .hidden { display: none !important; }
+  footer { padding: 22px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../">
+    <img src="../tusxx.png" alt="The Unknown Shopper" />
+    <span>
+      <b>The Unknown Shopper</b>
+      <small>Plataforma de mystery shopping</small>
+    </span>
+  </a>
+  <a class="back" href="../">← Volver al sitio</a>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="eyebrow"><i></i> Registro</span>
+    <h1 id="titulo">Únete como shopper</h1>
+    <p class="sub" id="subtitulo">Evalúa tiendas y servicios como cliente incógnito y recibe campañas pagadas. Te contactaremos cuando haya evaluaciones disponibles en tu zona.</p>
+
+    <div class="toggle" role="tablist">
+      <button type="button" id="tabShopper" class="active">🕵️ Soy shopper</button>
+      <button type="button" id="tabEmpresa">🏢 Soy empresa</button>
+    </div>
+
+    <form id="regForm" novalidate>
+      <div class="row two">
+        <label class="field"><span id="lblNombre">Nombre completo *</span>
+          <input name="nombre" autocomplete="name" placeholder="Tu nombre" required />
+        </label>
+        <label class="field">Email *
+          <input name="email" type="email" autocomplete="email" placeholder="tucorreo@..." required />
+        </label>
+      </div>
+
+      <div class="row two">
+        <label class="field">Teléfono / WhatsApp *
+          <input name="telefono" type="tel" autocomplete="tel" placeholder="+52 ..." required />
+        </label>
+        <label class="field">Ciudad *
+          <input name="ciudad" autocomplete="address-level2" placeholder="Ej. Villahermosa" required />
+        </label>
+      </div>
+
+      <!-- Campos shopper -->
+      <div id="fShopper">
+        <div class="row two">
+          <label class="field">Edad
+            <input name="edad" inputmode="numeric" placeholder="Ej. 28" />
+          </label>
+          <label class="field">Disponibilidad
+            <input name="disponibilidad" placeholder="Ej. Tardes entre semana" />
+          </label>
+        </div>
+        <div class="row two" style="margin-top:14px">
+          <label class="field">¿Tienes auto?
+            <select name="auto">
+              <option value="">Selecciona</option>
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </label>
+          <label class="field">Experiencia como mystery shopper
+            <select name="experiencia">
+              <option value="">Selecciona</option>
+              <option value="nunca">Nunca</option>
+              <option value="poca">1-5 evaluaciones</option>
+              <option value="media">6-20 evaluaciones</option>
+              <option value="alta">20+ evaluaciones</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- Campos empresa -->
+      <div id="fEmpresa" class="hidden">
+        <div class="row two">
+          <label class="field">Empresa *
+            <input name="empresa" autocomplete="organization" placeholder="Nombre de tu empresa" />
+          </label>
+          <label class="field">Giro / sector
+            <input name="giro" placeholder="Ej. Retail, restaurantes, automotriz" />
+          </label>
+        </div>
+        <div class="row two" style="margin-top:14px">
+          <label class="field">N.º de sucursales
+            <input name="sucursales" inputmode="numeric" placeholder="Ej. 5" />
+          </label>
+          <label class="field">Canales a evaluar
+            <select name="canales">
+              <option value="">Selecciona</option>
+              <option value="fisico">Tienda física</option>
+              <option value="digital">Digital / e-commerce</option>
+              <option value="telefonico">Telefónico</option>
+              <option value="varios">Varios</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <label class="field" style="margin-top:2px"><span id="lblNotas">Notas (opcional)</span>
+        <textarea name="notas" id="txtNotas" placeholder=""></textarea>
+      </label>
+
+      <label class="consent">
+        <input type="checkbox" name="consent" required />
+        <span id="txtConsent">Acepto ser contactado(a) por The Unknown Shopper conforme al <a href="../privacidad.html" target="_blank">aviso de privacidad</a>.</span>
+      </label>
+
+      <div class="status" id="status"></div>
+
+      <button class="submit" type="submit" id="btnSubmit">Enviar registro</button>
+      <div class="alt">¿Prefieres correo directo? <a href="mailto:the@unknownshoppers.com">the@unknownshoppers.com</a></div>
+    </form>
+  </div>
+</main>
+
+<footer>© 2026 The Unknown Shopper · <a href="../privacidad.html" style="color:var(--accent)">Privacidad</a> · <a href="../terminos.html" style="color:var(--accent)">Términos</a></footer>
+
+<script>
+// ===== Configuración del envío =====
+// Opción A (recomendada): crea una access key gratis en https://web3forms.com
+// con el correo tipograficoweb@gmail.com y pégala aquí. Los registros llegan
+// a ese correo. Plan gratis: 250 envíos/mes.
+const WEB3FORMS_KEY = "";
+
+// Opción B: si prefieres otro servicio (Formspree, Getform), pon su endpoint:
+const FORM_ENDPOINT = ""; // ej. "https://formspree.io/f/XXXXXX"
+
+// Sin key/endpoint: se abre el cliente de correo con todo precargado (fallback).
+const FALLBACK_EMAIL = "the@unknownshoppers.com";
+
+const $ = id => document.getElementById(id);
+let tipo = "shopper";
+
+const T = {
+  shopper: {
+    titulo: "Únete como shopper",
+    sub: "Evalúa tiendas y servicios como cliente incógnito y recibe campañas pagadas. Te contactaremos cuando haya evaluaciones disponibles en tu zona.",
+    nombre: "Nombre completo *",
+    notas: "Algo que debamos considerar (zonas, horarios, experiencia previa...)",
+    consent: "Acepto ser contactado(a) por The Unknown Shopper para asignación de campañas, conforme al <a href=\"../privacidad.html\" target=\"_blank\">aviso de privacidad</a>.",
+    btn: "Enviar registro"
+  },
+  empresa: {
+    titulo: "Solicita una evaluación para tu empresa",
+    sub: "Cuéntanos qué quieres medir. Te contactaremos para agendar una demo y diseñar los escenarios de evaluación a la medida de tu operación.",
+    nombre: "Nombre de contacto *",
+    notas: "¿Qué quieres evaluar? (sucursales, canales, competencia, tiempos...)",
+    consent: "Acepto ser contactado(a) por The Unknown Shopper respecto a esta solicitud, conforme al <a href=\"../privacidad.html\" target=\"_blank\">aviso de privacidad</a>.",
+    btn: "Enviar solicitud"
+  }
+};
+
+function setTipo(t) {
+  tipo = t;
+  const c = T[t];
+  $("titulo").textContent = c.titulo;
+  $("subtitulo").textContent = c.sub;
+  $("lblNombre").textContent = c.nombre;
+  $("txtNotas").placeholder = c.notas;
+  $("txtConsent").innerHTML = c.consent;
+  $("btnSubmit").textContent = c.btn;
+  $("tabShopper").classList.toggle("active", t === "shopper");
+  $("tabEmpresa").classList.toggle("active", t === "empresa");
+  $("fShopper").classList.toggle("hidden", t !== "shopper");
+  $("fEmpresa").classList.toggle("hidden", t !== "empresa");
+}
+
+$("tabShopper").addEventListener("click", () => setTipo("shopper"));
+$("tabEmpresa").addEventListener("click", () => setTipo("empresa"));
+
+const q = new URLSearchParams(location.search).get("tipo");
+setTipo(q === "empresa" ? "empresa" : "shopper");
+
+function show(kind, msg) {
+  const el = $("status");
+  el.className = "status " + kind;
+  el.innerHTML = msg;
+  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+$("regForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target;
+  const d = Object.fromEntries(new FormData(f).entries());
+
+  if (!d.nombre?.trim() || !d.email?.includes("@") || !d.telefono?.trim() || !d.ciudad?.trim() || !d.consent) {
+    show("err", "Completa los campos obligatorios (*) y acepta el aviso de privacidad.");
+    return;
+  }
+  if (tipo === "empresa" && !d.empresa?.trim()) {
+    show("err", "Indica el nombre de tu empresa.");
+    return;
+  }
+
+  const btn = $("btnSubmit");
+  btn.disabled = true;
+  const prev = btn.textContent;
+  btn.textContent = "Enviando...";
+
+  try {
+    if (WEB3FORMS_KEY || FORM_ENDPOINT) {
+      const res = await fetch(FORM_ENDPOINT || "https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY || undefined,
+          subject: tipo === "empresa"
+            ? `Nueva solicitud Empresa: ${d.empresa} (${d.nombre})`
+            : `Nuevo registro Shopper: ${d.nombre}`,
+          tipo, ...d
+        })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) throw new Error();
+    } else {
+      const lines = Object.entries({ tipo, ...d })
+        .filter(([k, v]) => v && k !== "consent")
+        .map(([k, v]) => `${k}: ${v}`).join("\n");
+      location.href = `mailto:${FALLBACK_EMAIL}?subject=${encodeURIComponent(
+        tipo === "empresa" ? `Solicitud empresa: ${d.empresa}` : `Registro shopper: ${d.nombre}`
+      )}&body=${encodeURIComponent(lines)}`;
+    }
+    f.reset();
+    setTipo(tipo);
+    show("ok", tipo === "empresa"
+      ? "¡Listo! Recibimos tu solicitud. Te contactaremos para agendar una demo."
+      : "¡Listo! Recibimos tu registro. Te contactaremos cuando haya campañas en tu zona.");
+  } catch {
+    show("err", "No se pudo enviar. Intenta de nuevo o escríbenos a <a href='mailto:the@unknownshoppers.com' style='color:inherit;font-weight:600'>the@unknownshoppers.com</a>.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = T[tipo].btn;
+  }
+});
+</script>
+</body>
+</html>
