@@ -20,12 +20,20 @@ Checklist para independizar dominio, sitio y correo de la agencia.
 
 El clon está listo en `site/` (HTML estático, sin dependencias de la agencia).
 
-- Hosting: subir `site/` al hosting nuevo (Hostinger/cPanel propio, Netlify, Vercel, GitHub Pages, Cloudflare Pages).
-- DNS en Cloudflare:
-  - `A` / `CNAME` `@` → hosting nuevo (según indique el proveedor)
-  - `CNAME` `www` → dominio raíz o según proveedor
-  - `CNAME` `registro` → deployment de la landing Next.js (formulario shopper/empresa; el sitio ya apunta a `https://registro.unknownshoppers.com/?tipo=shopper|empresa`)
-- Verificar: `unknownshoppers.com`, `www`, `/privacidad`, `/terminos`, `/obsi`.
+- El sitio ya vive en GitHub Pages: `unknownshopper.github.io/website`. Opciones:
+  - **Quedarse en Pages** (gratis): en repo → Settings → Pages → Custom domain `unknownshoppers.com` + DNS: `A` @ → las 4 IPs de GitHub Pages (185.199.108-111.153) y `CNAME` `www` → `unknownshopper.github.io`. El registro queda en `unknownshoppers.com/registro/`.
+  - **Hosting propio**: subir `site/` a Hostinger/cPanel/Netlify/etc. y apuntar DNS según el proveedor.
+- Verificar: `unknownshoppers.com`, `www`, `/privacidad.html`, `/terminos.html`, `/obsi.html`, `/registro/?tipo=empresa`.
+
+### Formulario de registro
+
+`site/registro/` es autónomo (no necesita backend). Para que los envíos lleguen por correo sin abrir el cliente del usuario:
+
+1. Crear access key gratis en https://web3forms.com con `tipograficoweb@gmail.com` (250 envíos/mes gratis).
+2. Pegarla en `site/registro/index.html` → `const WEB3FORMS_KEY = "..."` y hacer push.
+3. Alternativa: cualquier endpoint de forms (Formspree/Getform) en `FORM_ENDPOINT`.
+
+Sin key configurada, el form abre un `mailto:` con los datos precargados (funciona, pero depende del cliente de correo del usuario).
 
 ## 3. Correo: CF Email Routing + Gmail
 

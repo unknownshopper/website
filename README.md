@@ -24,11 +24,13 @@ No se entregan solo reportes: se entrega un sistema de inteligencia.
 
 **Cobertura**: sureste de México — Tabasco, Veracruz, Chiapas, Campeche, Yucatán y Quintana Roo (Villahermosa, Cancún, Mérida, Playa del Carmen, Tulum, Ciudad del Carmen, Xalapa).
 
+**En vivo (GitHub Pages)**: https://unknownshopper.github.io/website/ — se publica `site/` automáticamente en cada push a `main` (workflow `pages.yml`).
+
 ## Estructura del repositorio
 
 | Ruta | Contenido |
 |---|---|
-| `site/` | Clon estático del sitio en producción (`unknownshoppers.com`): `index`, `privacidad`, `terminos`, `obsi`. Listo para subir a cualquier hosting — sin dependencias de la agencia ni de Cloudflare. |
+| `site/` | Clon estático del sitio en producción (`unknownshoppers.com`): `index`, `privacidad`, `terminos`, `obsi` + **`registro/`** (formulario dual shopper/empresa, autónomo). Sin dependencias de la agencia ni de Cloudflare. |
 | `src/` | Landing de reclutamiento en Next.js 14 (App Router) con el **formulario de registro de shoppers**. Los leads se envían por correo vía `/api/lead` (nodemailer + SMTP). |
 | `public/` | Assets de la landing (logo, ilustraciones). |
 | `reunion.html` | Manual de inducción para shoppers (página standalone). |
