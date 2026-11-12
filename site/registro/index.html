@@ -250,16 +250,14 @@
 
 <script>
 // ===== Configuración del envío =====
-// Opción A (recomendada): crea una access key gratis en https://web3forms.com
-// con el correo tipograficoweb@gmail.com y pégala aquí. Los registros llegan
-// a ese correo. Plan gratis: 250 envíos/mes.
+// FormSubmit (sin cuenta): el primer envío manda un correo de confirmación
+// a tipograficoweb@gmail.com — actívalo una vez y los leads llegan solos.
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/tipograficoweb@gmail.com";
+
+// Opción B: Web3Forms (250 envíos/mes gratis) — access key de web3forms.com:
 const WEB3FORMS_KEY = "";
 
-// Opción B: si prefieres otro servicio (Formspree, Getform), pon su endpoint:
-const FORM_ENDPOINT = ""; // ej. "https://formspree.io/f/XXXXXX"
-
-// Sin key/endpoint: se abre el cliente de correo con todo precargado (fallback).
-// Mientras migramos el buzón, los leads van al Gmail directamente.
+// Si ambos quedan vacíos: mailto con todo precargado (fallback).
 const FALLBACK_EMAIL = "tipograficoweb@gmail.com";
 
 const $ = id => document.getElementById(id);
@@ -351,9 +349,12 @@ $("regForm").addEventListener("submit", async e => {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY || undefined,
-          subject: tipo === "empresa"
+          _subject: tipo === "empresa"
             ? `Nueva solicitud Empresa: ${d.empresa} (${d.nombre})`
             : `Nuevo registro Shopper: ${d.nombre}`,
+          _replyto: d.email,
+          _template: "table",
+          _captcha: "false",
           tipo, ...d
         })
       });
