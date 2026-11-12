@@ -843,7 +843,7 @@
         }
         nextPulse = now + 3500 + Math.random() * 3500;
       }
-      for (const p of pulses) p.z -= p.y ? .095 : .055;
+      for (const p of pulses) p.z -= p.y ? .064 : .037;
       pulses = pulses.filter((p) => p.z > .18);
     }
     function tdraw() {
