@@ -979,10 +979,14 @@
       a: "Pronto publicaremos un video de 1 minuto. Mientras, el botón <b>Ver cómo funciona</b> del inicio te muestra el flujo, o agenda una <a href='registro/?tipo=empresa'>demo</a>." },
     { k: ["contacto", "correo", "email", "telefono", "hablar con alguien", "humano"],
       a: "Escríbenos a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o déjanos tus datos en el <a href='registro/?tipo=empresa'>formulario</a> y te contactamos nosotros." },
-    { k: ["sus clientes", "clientes", "para quien trabajan", "que empresas", "casos de exito", "referencias", "quien los contrata", "quienes los contratan"],
+    { k: ["sus clientes", "clientes", "para quien trabajan", "con quienes trabajan", "con quien trabajan", "que empresas", "casos de exito", "referencias", "quien los contrata", "quienes los contratan"],
       a: "Nuestros clientes son empresas con puntos de venta o servicio: cadenas retail, restaurantes, concesionarias, clínicas y franquicias — básicamente cualquier negocio que quiera medir la experiencia real de sus clientes. Por confidencialidad no publicamos nombres, pero podemos compartir casos anonimizados en una <a href='registro/?tipo=empresa'>demo</a>." },
     { k: ["que eres", "quien eres", "eres una ia", "eres un robot", "eres un bot", "asistente virtual", "con quien hablo", "eres humano", "inteligencia artificial"],
       a: "Soy <b>The Unknown Shopper</b> y responderé tus dudas acerca de nuestros servicios, registro y plataforma. Si quieres hablar con una persona, deja tus datos en el <a href='registro/?tipo=empresa'>formulario</a>." },
+    { k: ["tu dueno", "su dueno", "el dueno", "quien te creo", "quien te hizo", "fundador", "propietario", "de quien es la empresa", "quien esta detras"],
+      a: "Somos <b>The Unknown Shopper</b>, una empresa independiente de auditoría de experiencia del cliente con base en Villahermosa, Tabasco — con relaciones de más de 15 años con nuestros clientes más antiguos. Si buscas contacto con una persona: <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a>." },
+    { k: ["en que me ayudas", "en que puedes ayudar", "que puedes hacer", "para que sirves", "que sabes", "ayuda", "opciones", "menu"],
+      a: "Puedo contarte: <b>qué es</b> un mystery shopper, <b>cómo funciona</b> nuestra plataforma de reportes (roles, históricos, matriz, puntos de atención), <b>cobertura</b>, precios/demo y cómo <b>registrarte</b> como shopper o empresa. ¿Por dónde empezamos?" },
     { k: ["privacidad", "datos personales", "aviso de privacidad", "mis datos"],
       a: "Tratamos tus datos conforme a la ley mexicana (derechos ARCO). Lee el <a href='privacidad.html'>aviso de privacidad</a> completo." },
     { k: ["quienes son", "empresa", "nosotros", "la empresa", "tus"],
@@ -1015,7 +1019,7 @@
     }
     return best && bestScore >= 1
       ? best.a
-      : "Aún no tengo respuesta exacta para eso — estoy aprendiendo. Mientras tanto puedes ver la <a href='index.html#faq'>FAQ</a>, escribirnos a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o dejar tus datos en el <a href='registro/?tipo=empresa'>registro</a>.";
+      : "Eso no te lo voy a contestar. Para mayor información contacta a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o deja tus datos en el <a href='registro/?tipo=empresa'>registro</a>.";
   }
   function openChat() {
     chatPanel.classList.add('open');
