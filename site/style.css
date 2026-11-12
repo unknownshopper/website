@@ -1458,3 +1458,19 @@
 @media (max-width: 480px) {
   .chat-panel { right: 12px; bottom: 80px; height: min(520px, calc(100vh - 100px)); }
 }
+
+/* Avatar del chat */
+.chat-id { display: flex; align-items: center; gap: 10px; }
+.chat-avatar {
+  width: 34px; height: 34px; border-radius: 50%; object-fit: cover;
+  background: #fff; border: 1.5px solid rgba(255,255,255,.35); flex-shrink: 0;
+}
+.chat-msg.bot {
+  position: relative; padding-left: 34px;
+}
+.chat-msg.bot::before {
+  content: ""; position: absolute; left: 8px; top: 9px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff url("logoxx.png") center / cover no-repeat;
+  border: 1px solid #e3e6f2;
+}
