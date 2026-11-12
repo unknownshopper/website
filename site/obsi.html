@@ -14,8 +14,8 @@
     --bg: #f6f6fb;
     --ink: #141632;
     --muted: #6b7194;
-    --accent: #2563eb;
-    --cyan: #0d9ec4;
+    --accent: #ff6a00;
+    --cyan: #ffa01f;
     --green: #0e9f6e;
     --amber: #d97706;
     --line: #d9dded;
@@ -133,7 +133,7 @@
     max-height: calc(100% - 44px);
     overflow-y: auto;
     background: #141632;
-    color: #eef0ff;
+    color: #ffe9d6;
     border-radius: 16px;
     padding: 18px 20px;
     box-shadow: 0 18px 44px rgba(20,22,50,.3);
@@ -146,19 +146,19 @@
   .detail.on { opacity: 1; transform: none; }
   .detail .dt {
     font-size: 10px; font-weight: 600; letter-spacing: .14em;
-    text-transform: uppercase; color: #7ea0f5;
+    text-transform: uppercase; color: #ff9433;
   }
   .detail h2 {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 17px; font-weight: 600; margin: 5px 0 7px;
   }
-  .detail p { font-size: 12.5px; line-height: 1.6; color: #b7bce0; }
+  .detail p { font-size: 12.5px; line-height: 1.6; color: #cbb9a8; }
   .detail .links {
-    margin-top: 10px; font-size: 11px; color: #7ea0f5;
+    margin-top: 10px; font-size: 11px; color: #ff9433;
     display: flex; flex-wrap: wrap; gap: 5px;
   }
   .detail .links span {
-    background: rgba(126,160,245,.14);
+    background: rgba(255,157,77,.14);
     padding: 3px 9px; border-radius: 999px;
   }
 
@@ -246,8 +246,8 @@
 
   <div class="legend">
     <span><i style="background:#141632"></i>Actores</span>
-    <span><i style="background:#2563eb"></i>Sistema</span>
-    <span><i style="background:#0d9ec4"></i>Datos</span>
+    <span><i style="background:#ff6a00"></i>Sistema</span>
+    <span><i style="background:#ffa01f"></i>Datos</span>
     <span><i style="background:#0e9f6e"></i>Resultados</span>
   </div>
 </div>
@@ -339,10 +339,10 @@ const VIEWS = {
 };
 
 const COLORS = {
-  core:   { fill:'#2563eb', ring:'rgba(37,99,235,.18)' },
+  core:   { fill:'#ff6a00', ring:'rgba(255,106,0,.18)' },
   actor:  { fill:'#141632', ring:'rgba(20,22,50,.10)' },
-  system: { fill:'#2563eb', ring:'rgba(37,99,235,.14)' },
-  data:   { fill:'#0d9ec4', ring:'rgba(13,158,196,.14)' },
+  system: { fill:'#ff6a00', ring:'rgba(255,106,0,.14)' },
+  data:   { fill:'#ffa01f', ring:'rgba(255,160,31,.14)' },
   result: { fill:'#0e9f6e', ring:'rgba(14,159,110,.14)' },
 };
 
@@ -454,7 +454,7 @@ function draw() {
     const dim = hover && !hot;
     ctx.beginPath();
     ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y);
-    ctx.strokeStyle = hot ? 'rgba(37,99,235,.55)' : dim ? 'rgba(20,22,50,.05)' : 'rgba(20,22,50,.14)';
+    ctx.strokeStyle = hot ? 'rgba(255,106,0,.55)' : dim ? 'rgba(20,22,50,.05)' : 'rgba(20,22,50,.14)';
     ctx.lineWidth = hot ? 1.6 : 1;
     ctx.stroke();
   }
@@ -481,7 +481,7 @@ function draw() {
     // etiqueta
     ctx.font = `${n === hover ? '600 ' : '500 '}${n.type === 'core' ? 13 : 11.5}px 'Space Grotesk', sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillStyle = n === hover ? '#2563eb' : '#141632';
+    ctx.fillStyle = n === hover ? '#ff6a00' : '#141632';
     ctx.fillText(n.label, n.x, n.y + n.r + 16);
     ctx.globalAlpha = 1;
   }

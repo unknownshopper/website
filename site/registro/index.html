@@ -15,8 +15,8 @@
     --bg: #f6f6fb;
     --ink: #141632;
     --muted: #6b7194;
-    --accent: #2563eb;
-    --cyan: #0d9ec4;
+    --accent: #ff6a00;
+    --cyan: #ffa01f;
     --line: #d9dded;
     --card: #ffffff;
   }
@@ -38,7 +38,7 @@
   .brand img { height: 42px; width: auto; }
   .brand b { font-family: 'Space Grotesk', sans-serif; font-size: 15px; line-height: 1.15; display: block; }
   .brand small { color: var(--muted); font-size: 11.5px; }
-  .back { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+  .back { font-size: 13px; font-weight: 600; color: #e05500; text-decoration: none; }
   .back:hover { text-decoration: underline; }
 
   main { flex: 1; display: flex; justify-content: center; padding: 44px 20px 64px; }
@@ -83,11 +83,11 @@
     background: #fbfbfe; outline: none; width: 100%;
     transition: border-color .15s, box-shadow .15s;
   }
-  input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,106,0,.12); }
   textarea { min-height: 96px; resize: vertical; }
   .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.5; }
   .consent input { width: auto; margin-top: 3px; }
-  .consent a { color: var(--accent); }
+  .consent a { color: #e05500; }
   button.submit {
     margin-top: 4px;
     font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600;
@@ -101,7 +101,7 @@
   .status.ok { display: block; background: rgba(14,159,110,.1); border: 1px solid rgba(14,159,110,.3); color: #0a6b4a; }
   .status.err { display: block; background: rgba(217,119,6,.08); border: 1px solid rgba(217,119,6,.3); color: #92580a; }
   .alt { font-size: 12.5px; color: var(--muted); text-align: center; }
-  .alt a { color: var(--accent); font-weight: 600; }
+  .alt a { color: #e05500; font-weight: 600; }
   .checks { display: flex; flex-wrap: wrap; gap: 8px; }
   .checks label {
     display: inline-flex; align-items: center; gap: 7px;
@@ -110,7 +110,7 @@
     background: #fbfbfe; cursor: pointer; user-select: none;
     transition: border-color .15s, background .15s;
   }
-  .checks label:has(input:checked) { border-color: var(--accent); background: rgba(37,99,235,.07); }
+  .checks label:has(input:checked) { border-color: var(--accent); background: rgba(255,106,0,.07); }
   .checks input { width: auto; accent-color: var(--accent); margin: 0; }
   .hidden { display: none !important; }
   .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; pointer-events: none; }
