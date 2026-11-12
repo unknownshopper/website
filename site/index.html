@@ -802,7 +802,7 @@
       const F = y ? FRAGS_Y : FRAGS_C;
       const n = y ? 8 : 5;
       for (let i = 0; i < n; i++) {
-        const z = y && i >= 4 ? 4.9 + (i - 4) * .18 : 3.1 + i * .18;
+        const z = y && i >= 4 ? 4.6 + (i - 4) * .3 : 3.1 + i * .3;
         const g = S.slice(i * 3, i * 3 + 3).map((t) => ({
           t, u: Math.random() * 1.5 - .75, v: Math.random() * 1.6 - .8,
         }));
