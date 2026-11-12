@@ -1365,3 +1365,32 @@
 
     .to-top { width: 44px; height: 44px; right: 16px; bottom: 16px; }
   }
+
+/* ===== Modal video "Ver cómo funciona" ===== */
+.video-modal {
+  position: fixed; inset: 0; z-index: 300;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(10,12,30,.72); backdrop-filter: blur(6px);
+  padding: 20px;
+}
+.video-modal.open { display: flex; }
+.video-modal-box {
+  position: relative;
+  width: min(920px, 94vw); aspect-ratio: 16/9;
+  background: #0b0e1f; border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+}
+.video-modal-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+.video-modal-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: #8f96c9; font: 600 15px 'Space Grotesk', sans-serif; letter-spacing: .04em;
+}
+.video-modal-close {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  width: 34px; height: 34px; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.1); color: #fff; font-size: 14px;
+  cursor: pointer; transition: background .2s;
+}
+.video-modal-close:hover { background: rgba(255,255,255,.22); }
