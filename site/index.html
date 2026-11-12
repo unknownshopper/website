@@ -191,6 +191,7 @@
   <div class="glow glow-b"></div>
   <div class="glow glow-c"></div>
   <div class="grid-lines"></div>
+  <canvas id="tunnel" aria-hidden="true"></canvas>
 
   <div class="container">
     <div class="eyebrow reveal"><span class="dot"></span> Plataforma de mystery shopping</div>
@@ -740,6 +741,183 @@
     navCta.classList.toggle('visible', scrollY > 600);
   }, { passive: true });
   toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Túnel de malla del hero — anillos en perspectiva + ráfagas con datos TUS
+  const tc = document.getElementById('tunnel');
+  if (tc) {
+    const tx2 = tc.getContext('2d');
+    const RINGS = 20, SPOKES = 22;
+    const LINES_C = [
+      'visita.completada()',
+      'score: 87.4',
+      'sucursal.centro ✓',
+      'reporte.generar(24h)',
+      'hallazgo.priorizar()',
+      'evidencia: foto',
+      'NPS +4.2',
+      'shopper.desplegar()',
+      'CSAT 92%',
+      'auditar(protocolo)',
+      'kpi.mensual()',
+      'matriz.comparar()',
+      'alerta.critica',
+      'geo.confirmada',
+      'recibo.verificar()',
+      'benchmark.competencia()',
+      'ponderar(30/25/20/25)',
+      'historico.get(mes)',
+      'sla < 24h',
+    ];
+    const LINES_Y = [
+      'Σ scoreᵢ·wᵢ → ponderado',
+      'cumplimiento ≥ 95%',
+      'Δ vs mes anterior',
+      'n = visitas reales',
+      'x̄ = Σxᵢ/n',
+      'z = (x - μ)/σ',
+      'P(falla|sucursal)',
+      't < 24h',
+      'NPS = %prom − %detr',
+      'CSAT = Σok/n',
+      'σ → consistencia',
+      'Δscore > 0',
+      'meta = 90+',
+      'u = incógnito',
+      'λ → frecuencia',
+      'E = experiencia',
+      'α = precisión',
+      '∞ mejoras',
+      '%cumple → 100',
+      't₀ → t₁ → t₂',
+      'det(A) ≠ 0',
+      'v = visita',
+      'φ → excelencia',
+      'r → correlación',
+    ];
+    const FRAGS_C = '01{}[]=+%·→'.split('');
+    const FRAGS_Y = 'λΣ∆πΩ∂√Φ±≈∫·'.split('');
+    function spawnWave(y) {
+      const S = (y ? LINES_Y : LINES_C).slice().sort(() => Math.random() - .5);
+      const F = y ? FRAGS_Y : FRAGS_C;
+      const n = y ? 8 : 5;
+      for (let i = 0; i < n; i++) {
+        const z = y && i >= 4 ? 4.9 + (i - 4) * .18 : 3.1 + i * .18;
+        const g = S.slice(i * 3, i * 3 + 3).map((t) => ({
+          t, u: Math.random() * 1.5 - .75, v: Math.random() * 1.6 - .8,
+        }));
+        for (let k = 0; k < 8; k++)
+          g.push({ t: F[(Math.random() * F.length) | 0], u: Math.random() * 1.85 - .92, v: Math.random() * 1.85 - .92, s: .7 });
+        pulses.push({ z, y, g });
+      }
+    }
+    let TW = 0, TH = 0, vpx = 0, vpy = 0, tmx = 0, tmy = 0, tvis = false, rings = [], pulses = [], nextPulse = 0, waveCount = 0, nextDeep = 5 + Math.floor(Math.random() * 3);
+    function tresize() {
+      const d = Math.min(devicePixelRatio || 1, 2);
+      TW = tc.offsetWidth; TH = tc.offsetHeight;
+      tc.width = TW * d; tc.height = TH * d;
+      tx2.setTransform(d, 0, 0, d, 0, 0);
+      vpx = tmx = TW / 2; vpy = tmy = TH * .42;
+      rings = Array.from({ length: RINGS }, (_, i) => ({ z: .22 + (i / RINGS) * 4.2 }));
+    }
+    function tstep() {
+      const t = performance.now() * .001;
+      const wx = Math.sin(t * .16) * TW * .18;
+      const wy = Math.cos(t * .11) * TH * .12;
+      vpx += (tmx + wx - vpx) * .04;
+      vpy += (tmy + wy - vpy) * .04;
+      for (const r of rings) { r.z -= .0045; if (r.z <= .22) r.z += 4.2; }
+      const now = performance.now();
+      if (pulses.length === 0 && now > nextPulse) {
+        waveCount++;
+        if (waveCount >= nextDeep) {
+          waveCount = 0;
+          nextDeep = 5 + Math.floor(Math.random() * 3);
+          spawnWave(true);
+        } else {
+          spawnWave(false);
+        }
+        nextPulse = now + 3500 + Math.random() * 3500;
+      }
+      for (const p of pulses) p.z -= p.y ? .095 : .055;
+      pulses = pulses.filter((p) => p.z > .18);
+    }
+    function tdraw() {
+      tx2.clearRect(0, 0, TW, TH);
+      const RAD = Math.hypot(TW, TH);
+      const swirlT = performance.now() * .00008;
+      for (let s = 0; s < SPOKES; s++) {
+        const a0 = (s / SPOKES) * Math.PI * 2 + swirlT * 1.6;
+        tx2.beginPath();
+        for (let k = 0; k <= 10; k++) {
+          const f = k / 10;
+          const a = a0 + f * .3;
+          const x = vpx + Math.cos(a) * f * RAD, y = vpy + Math.sin(a) * f * RAD;
+          if (k) tx2.lineTo(x, y); else tx2.moveTo(x, y);
+        }
+        tx2.strokeStyle = 'rgba(37,99,235,.055)';
+        tx2.stroke();
+      }
+      const KX = TW * .55, KY = TH * .55;
+      for (const r of rings) {
+        const hw = KX / r.z, hh = KY / r.z;
+        if (hw > RAD) continue;
+        const al = .34 * (1 - r.z / 4.8);
+        const rot = swirlT * 2 + r.z * .09;
+        tx2.save();
+        tx2.translate(vpx, vpy);
+        tx2.rotate(rot);
+        tx2.lineWidth = 3.5;
+        tx2.strokeStyle = `rgba(37,99,235,${al * .35})`;
+        tx2.strokeRect(-hw, -hh, hw * 2, hh * 2);
+        tx2.lineWidth = 1.2;
+        tx2.strokeStyle = `rgba(37,99,235,${al})`;
+        tx2.strokeRect(-hw, -hh, hw * 2, hh * 2);
+        tx2.restore();
+      }
+      for (const p of pulses) {
+        const hw = KX / p.z, hh = KY / p.z;
+        if (hw > RAD) continue;
+        const al = Math.max(0, .75 * (1 - p.z / 4.6)) * Math.min(1, p.z / .4);
+        const halo = p.y ? '37,99,235' : '13,158,196';
+        const core = p.y ? '18,45,120' : '8,80,125';
+        const prot = swirlT * 2 + p.z * .09;
+        tx2.save();
+        tx2.translate(vpx, vpy);
+        tx2.rotate(prot);
+        tx2.lineWidth = 6;
+        tx2.strokeStyle = `rgba(${halo},${al * .3})`;
+        tx2.strokeRect(-hw, -hh, hw * 2, hh * 2);
+        tx2.lineWidth = 1.6;
+        tx2.strokeStyle = `rgba(${core},${al})`;
+        tx2.strokeRect(-hw, -hh, hw * 2, hh * 2);
+        tx2.fillStyle = `rgba(${halo},${al * .05})`;
+        tx2.fillRect(-hw, -hh, hw * 2, hh * 2);
+        if (hw > 40 && p.g) {
+          const fs = Math.min(16, Math.max(9, hw * .055));
+          tx2.font = fs + 'px "Space Grotesk", monospace';
+          tx2.textAlign = 'center'; tx2.textBaseline = 'middle';
+          tx2.fillStyle = `rgba(${core},${al * .65})`;
+          for (const g of p.g) {
+            if (g.s) tx2.font = fs * g.s + 'px "Space Grotesk", monospace';
+            tx2.fillText(g.t, hw * g.u, hh * g.v);
+            if (g.s) tx2.font = fs + 'px "Space Grotesk", monospace';
+          }
+        }
+        tx2.restore();
+      }
+      tx2.lineWidth = 1;
+    }
+    function tframe() { if (tvis) { tstep(); tdraw(); } requestAnimationFrame(tframe); }
+    addEventListener('mousemove', (e) => {
+      const r = tc.getBoundingClientRect();
+      tmx = TW / 2 + (e.clientX - (r.left + r.width / 2)) * .12;
+      tmy = TH * .42 + (e.clientY - (r.top + r.height * .42)) * .08;
+    }, { passive: true });
+    new IntersectionObserver((es) => es.forEach((e) => tvis = e.isIntersecting), { threshold: .02 }).observe(tc);
+    tresize();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) tdraw(); else tframe();
+    addEventListener('resize', tresize);
+  }
 
   // Rotador de titulares del hero
   const phrases = document.querySelectorAll('.rotator .phrase');
