@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 
 type LeadPayload = {
+  tipo?: string;
   fullName?: string;
   email?: string;
   phone?: string;
@@ -10,6 +11,9 @@ type LeadPayload = {
   availability?: string;
   hasCar?: string;
   experience?: string;
+  company?: string;
+  industry?: string;
+  locations?: string;
   notes?: string;
   consent?: boolean;
 };
@@ -26,13 +30,22 @@ export async function POST(req: Request) {
     );
   }
 
+  const tipo = payload.tipo === "empresa" ? "empresa" : "shopper";
   const fullName = (payload.fullName || "").trim();
   const email = (payload.email || "").trim();
   const phone = (payload.phone || "").trim();
   const city = (payload.city || "").trim();
+  const company = (payload.company || "").trim();
   const consent = payload.consent === true;
 
-  if (fullName.length < 3 || !email.includes("@") || phone.length < 7 || city.length < 2 || !consent) {
+  if (
+    fullName.length < 3 ||
+    !email.includes("@") ||
+    phone.length < 7 ||
+    city.length < 2 ||
+    !consent ||
+    (tipo === "empresa" && company.length < 2)
+  ) {
     return NextResponse.json(
       { ok: false, message: "Faltan campos obligatorios." },
       { status: 400 }
@@ -65,18 +78,30 @@ export async function POST(req: Request) {
     auth: { user, pass }
   });
 
-  const subject = `Nuevo registro Mystery Shopper: ${fullName}`;
+  const subject =
+    tipo === "empresa"
+      ? `Nueva solicitud Empresa: ${company} (${fullName})`
+      : `Nuevo registro Mystery Shopper: ${fullName}`;
   const text = [
     "Nuevo lead - The Unknown Shopper",
     "",
+    `Tipo: ${tipo}`,
     `Nombre: ${fullName}`,
     `Email: ${email}`,
     `Teléfono: ${phone}`,
     `Ciudad: ${city}`,
-    `Edad: ${payload.age || ""}`,
-    `Disponibilidad: ${payload.availability || ""}`,
-    `Auto: ${payload.hasCar || ""}`,
-    `Experiencia: ${payload.experience || ""}`,
+    ...(tipo === "empresa"
+      ? [
+          `Empresa: ${company}`,
+          `Giro: ${payload.industry || ""}`,
+          `Sucursales: ${payload.locations || ""}`
+        ]
+      : [
+          `Edad: ${payload.age || ""}`,
+          `Disponibilidad: ${payload.availability || ""}`,
+          `Auto: ${payload.hasCar || ""}`,
+          `Experiencia: ${payload.experience || ""}`
+        ]),
     `Notas: ${payload.notes || ""}`,
     "",
     "Fuente: Landing"

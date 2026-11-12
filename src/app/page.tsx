@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {
   BadgeCheck,
+  Building2,
   CalendarDays,
   ClipboardList,
   Coins,
@@ -10,12 +11,14 @@ import {
   MessageCircleMore,
   ShieldCheck,
   Sparkles,
-  Timer
+  Timer,
+  User
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type FormState = {
+  tipo: "shopper" | "empresa";
   fullName: string;
   email: string;
   phone: string;
@@ -24,8 +27,28 @@ type FormState = {
   availability: string;
   hasCar: "si" | "no" | "";
   experience: string;
+  company: string;
+  industry: string;
+  locations: string;
   notes: string;
   consent: boolean;
+};
+
+const emptyForm: FormState = {
+  tipo: "shopper",
+  fullName: "",
+  email: "",
+  phone: "",
+  city: "",
+  age: "",
+  availability: "",
+  hasCar: "",
+  experience: "",
+  company: "",
+  industry: "",
+  locations: "",
+  notes: "",
+  consent: false
 };
 
 export default function HomePage() {
@@ -36,27 +59,23 @@ export default function HomePage() {
     | { type: "error"; message: string }
   >({ type: "idle" });
 
-  const [form, setForm] = useState<FormState>({
-    fullName: "",
-    email: "",
-    phone: "",
-    city: "",
-    age: "",
-    availability: "",
-    hasCar: "",
-    experience: "",
-    notes: "",
-    consent: false
-  });
+  const [form, setForm] = useState<FormState>(emptyForm);
+
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get("tipo");
+    if (t === "empresa" || t === "shopper") {
+      setForm((f) => ({ ...f, tipo: t }));
+    }
+  }, []);
 
   const canSubmit = useMemo(() => {
-    return (
+    const base =
       form.fullName.trim().length >= 3 &&
       form.email.includes("@") &&
       form.phone.trim().length >= 7 &&
       form.city.trim().length >= 2 &&
-      form.consent
-    );
+      form.consent;
+    return base && (form.tipo === "shopper" || form.company.trim().length >= 2);
   }, [form]);
 
   async function onSubmit(e: React.FormEvent) {
@@ -88,20 +107,11 @@ export default function HomePage() {
       setStatus({
         type: "success",
         message:
-          "¡Listo! Recibimos tu registro. Te contactaremos cuando haya campañas disponibles."
+          form.tipo === "empresa"
+            ? "¡Listo! Recibimos tu solicitud. Te contactaremos para agendar una demo."
+            : "¡Listo! Recibimos tu registro. Te contactaremos cuando haya campañas disponibles."
       });
-      setForm({
-        fullName: "",
-        email: "",
-        phone: "",
-        city: "",
-        age: "",
-        availability: "",
-        hasCar: "",
-        experience: "",
-        notes: "",
-        consent: false
-      });
+      setForm({ ...emptyForm, tipo: form.tipo });
     } catch (err) {
       setStatus({
         type: "error",
@@ -350,14 +360,43 @@ export default function HomePage() {
             className="sticky top-6 h-fit rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm backdrop-blur"
           >
             <h2 className="text-xl font-semibold tracking-tight">
-              Regístrate para recibir campañas
+              {form.tipo === "empresa"
+                ? "Solicita una evaluación para tu empresa"
+                : "Regístrate para recibir campañas"}
             </h2>
             <p className="mt-2 text-sm text-black/70">
               Te contactaremos desde <span className="font-semibold">the@unknownshoppers.com</span>
             </p>
 
+            <div className="mt-5 grid grid-cols-2 gap-1 rounded-2xl border border-black/10 bg-black/5 p-1">
+              <button
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, tipo: "shopper" }))}
+                className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                  form.tipo === "shopper"
+                    ? "bg-black text-white shadow-sm"
+                    : "text-black/70 hover:text-black"
+                }`}
+              >
+                <User className="h-4 w-4" />
+                Soy shopper
+              </button>
+              <button
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, tipo: "empresa" }))}
+                className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                  form.tipo === "empresa"
+                    ? "bg-black text-white shadow-sm"
+                    : "text-black/70 hover:text-black"
+                }`}
+              >
+                <Building2 className="h-4 w-4" />
+                Soy empresa
+              </button>
+            </div>
+
             <form className="mt-6 grid gap-3" onSubmit={onSubmit}>
-              <Field label="Nombre completo*">
+              <Field label={form.tipo === "empresa" ? "Nombre de contacto*" : "Nombre completo*"}>
                 <input
                   value={form.fullName}
                   onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
@@ -388,6 +427,28 @@ export default function HomePage() {
                 </Field>
               </div>
 
+              {form.tipo === "empresa" ? (
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="Empresa*">
+                    <input
+                      value={form.company}
+                      onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
+                      className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      placeholder="Nombre de tu empresa"
+                      autoComplete="organization"
+                    />
+                  </Field>
+                  <Field label="Giro / sector">
+                    <input
+                      value={form.industry}
+                      onChange={(e) => setForm((f) => ({ ...f, industry: e.target.value }))}
+                      className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      placeholder="Ej. Retail, restaurantes, automotriz"
+                    />
+                  </Field>
+                </div>
+              ) : null}
+
               <div className="grid gap-3 sm:grid-cols-2">
                 <Field label="Ciudad*">
                   <input
@@ -398,65 +459,83 @@ export default function HomePage() {
                     autoComplete="address-level2"
                   />
                 </Field>
-                <Field label="Edad">
-                  <input
-                    value={form.age}
-                    onChange={(e) => setForm((f) => ({ ...f, age: e.target.value }))}
-                    className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
-                    placeholder="Ej. 28"
-                    inputMode="numeric"
-                  />
-                </Field>
+                {form.tipo === "shopper" ? (
+                  <Field label="Edad">
+                    <input
+                      value={form.age}
+                      onChange={(e) => setForm((f) => ({ ...f, age: e.target.value }))}
+                      className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      placeholder="Ej. 28"
+                      inputMode="numeric"
+                    />
+                  </Field>
+                ) : (
+                  <Field label="N.º de sucursales">
+                    <input
+                      value={form.locations}
+                      onChange={(e) => setForm((f) => ({ ...f, locations: e.target.value }))}
+                      className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      placeholder="Ej. 5"
+                      inputMode="numeric"
+                    />
+                  </Field>
+                )}
               </div>
 
-              <Field label="Disponibilidad (días/horarios)">
-                <input
-                  value={form.availability}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, availability: e.target.value }))
-                  }
-                  className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
-                  placeholder="Ej. Tardes entre semana / sábados"
-                />
-              </Field>
+              {form.tipo === "shopper" ? (
+                <>
+                  <Field label="Disponibilidad (días/horarios)">
+                    <input
+                      value={form.availability}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, availability: e.target.value }))
+                      }
+                      className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      placeholder="Ej. Tardes entre semana / sábados"
+                    />
+                  </Field>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Field label="¿Tienes auto?">
-                  <select
-                    value={form.hasCar}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, hasCar: e.target.value as any }))
-                    }
-                    className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
-                  >
-                    <option value="">Selecciona</option>
-                    <option value="si">Sí</option>
-                    <option value="no">No</option>
-                  </select>
-                </Field>
-                <Field label="Experiencia como mystery shopper">
-                  <select
-                    value={form.experience}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, experience: e.target.value }))
-                    }
-                    className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
-                  >
-                    <option value="">Selecciona</option>
-                    <option value="nunca">Nunca</option>
-                    <option value="poca">1-5 evaluaciones</option>
-                    <option value="media">6-20 evaluaciones</option>
-                    <option value="alta">20+ evaluaciones</option>
-                  </select>
-                </Field>
-              </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <Field label="¿Tienes auto?">
+                      <select
+                        value={form.hasCar}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, hasCar: e.target.value as any }))
+                        }
+                        className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      >
+                        <option value="">Selecciona</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                      </select>
+                    </Field>
+                    <Field label="Experiencia como mystery shopper">
+                      <select
+                        value={form.experience}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, experience: e.target.value }))
+                        }
+                        className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
+                      >
+                        <option value="">Selecciona</option>
+                        <option value="nunca">Nunca</option>
+                        <option value="poca">1-5 evaluaciones</option>
+                        <option value="media">6-20 evaluaciones</option>
+                        <option value="alta">20+ evaluaciones</option>
+                      </select>
+                    </Field>
+                  </div>
+                </>
+              ) : null}
 
               <Field label="Notas (opcional)">
                 <textarea
                   value={form.notes}
                   onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
                   className="w-full min-h-24 resize-y rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-black/30"
-                  placeholder="Algo que debamos considerar (zonas, horarios, experiencia adicional, etc.)"
+                  placeholder={form.tipo === "empresa"
+                    ? "Cuéntanos qué quieres evaluar (sucursales, canales, competencia, etc.)"
+                    : "Algo que debamos considerar (zonas, horarios, experiencia adicional, etc.)"}
                 />
               </Field>
 
@@ -470,8 +549,9 @@ export default function HomePage() {
                   className="mt-1 h-4 w-4 rounded border-black/30 bg-white"
                 />
                 <span>
-                  Acepto ser contactado(a) por The Unknown Shopper para asignación de
-                  campañas.
+                  {form.tipo === "empresa"
+                    ? "Acepto ser contactado(a) por The Unknown Shopper respecto a esta solicitud."
+                    : "Acepto ser contactado(a) por The Unknown Shopper para asignación de campañas."}
                 </span>
               </label>
 
@@ -480,7 +560,11 @@ export default function HomePage() {
                 disabled={submitting}
                 className="mt-2 w-full rounded-xl bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {submitting ? "Enviando..." : "Enviar registro"}
+                {submitting
+                  ? "Enviando..."
+                  : form.tipo === "empresa"
+                    ? "Enviar solicitud"
+                    : "Enviar registro"}
               </button>
 
               {status.type !== "idle" ? (

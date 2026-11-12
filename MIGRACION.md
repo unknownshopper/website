@@ -24,6 +24,7 @@ El clon está listo en `site/` (HTML estático, sin dependencias de la agencia).
 - DNS en Cloudflare:
   - `A` / `CNAME` `@` → hosting nuevo (según indique el proveedor)
   - `CNAME` `www` → dominio raíz o según proveedor
+  - `CNAME` `registro` → deployment de la landing Next.js (formulario shopper/empresa; el sitio ya apunta a `https://registro.unknownshoppers.com/?tipo=shopper|empresa`)
 - Verificar: `unknownshoppers.com`, `www`, `/privacidad`, `/terminos`, `/obsi`.
 
 ## 3. Correo: CF Email Routing + Gmail
