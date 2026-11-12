@@ -113,6 +113,7 @@
   .checks label:has(input:checked) { border-color: var(--accent); background: rgba(37,99,235,.07); }
   .checks input { width: auto; accent-color: var(--accent); margin: 0; }
   .hidden { display: none !important; }
+  .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; pointer-events: none; }
   footer { padding: 22px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
 </style>
 </head>
@@ -234,6 +235,9 @@
         <span id="txtConsent">Acepto ser contactado(a) por The Unknown Shopper conforme al <a href="../privacidad.html" target="_blank">aviso de privacidad</a>.</span>
       </label>
 
+      <!-- honeypot anti-spam: invisible para humanos, los bots lo llenan -->
+      <input type="text" name="empresa_web" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
       <div class="status" id="status"></div>
 
       <button class="submit" type="submit" id="btnSubmit">Enviar registro</button>
@@ -318,6 +322,13 @@ $("regForm").addEventListener("submit", async e => {
   const d = Object.fromEntries(new FormData(f).entries());
   const canales = [...f.querySelectorAll('input[name="canales"]:checked')].map(c => c.value);
   d.canales = canales.map(c => c === "Otros" && d.canales_otros?.trim() ? `Otros: ${d.canales_otros.trim()}` : c).join(", ");
+
+  // honeypot: si está lleno, es un bot — simular éxito sin enviar
+  if (d.empresa_web?.trim()) {
+    f.reset();
+    show("ok", "¡Listo! Recibimos tu registro.");
+    return;
+  }
 
   if (!d.nombre?.trim() || !d.email?.includes("@") || !d.telefono?.trim() || !d.ciudad?.trim() || !d.consent) {
     show("err", "Completa los campos obligatorios (*) y acepta el aviso de privacidad.");
