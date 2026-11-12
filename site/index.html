@@ -796,6 +796,7 @@
     ];
     const FRAGS_C = '01{}[]=+%·→'.split('');
     const FRAGS_Y = 'λΣ∆πΩ∂√Φ±≈∫·'.split('');
+    const CHARTS = ['line', 'bars', 'donut'];
     function spawnWave(y) {
       const S = (y ? LINES_Y : LINES_C).slice().sort(() => Math.random() - .5);
       const F = y ? FRAGS_Y : FRAGS_C;
@@ -807,7 +808,11 @@
         }));
         for (let k = 0; k < 8; k++)
           g.push({ t: F[(Math.random() * F.length) | 0], u: Math.random() * 1.85 - .92, v: Math.random() * 1.85 - .92, s: .7 });
-        pulses.push({ z, y, g });
+        pulses.push({
+          z, y, g,
+          chart: Math.random() < .5 ? CHARTS[(Math.random() * CHARTS.length) | 0] : null,
+          cu: Math.random() * .8 - .4, cv: Math.random() * .55 - .28,
+        });
       }
     }
     let TW = 0, TH = 0, vpx = 0, vpy = 0, tmx = 0, tmy = 0, tvis = false, rings = [], pulses = [], nextPulse = 0, waveCount = 0, nextDeep = 5 + Math.floor(Math.random() * 3);
@@ -901,6 +906,65 @@
             if (g.s) tx2.font = fs * g.s + 'px "Space Grotesk", monospace';
             tx2.fillText(g.t, hw * g.u, hh * g.v);
             if (g.s) tx2.font = fs + 'px "Space Grotesk", monospace';
+          }
+        }
+        // Gráficas viajando sobre el velo: se dibujan conforme se acerca
+        if (p.chart && hw > 70) {
+          const prog = Math.min(1, Math.max(0, (3.4 - p.z) / 2.2));
+          const cx0 = hw * p.cu, cy0 = hh * p.cv, s = hw * .3;
+          const gok = '5,150,105';
+          if (p.chart === 'line') {
+            const pts = [[-.5, .35], [-.28, .08], [-.08, .22], [.12, -.06], [.3, .02], [.5, -.42]];
+            const total = pts.length - 1, f = prog * total;
+            tx2.lineWidth = Math.max(2, s * .09);
+            tx2.strokeStyle = `rgba(${halo},.95)`;
+            tx2.lineJoin = tx2.lineCap = 'round';
+            tx2.beginPath();
+            tx2.moveTo(cx0 + pts[0][0] * s * 2, cy0 + pts[0][1] * s * 2);
+            for (let i = 0; i < total; i++) {
+              const seg = Math.min(1, Math.max(0, f - i));
+              if (seg <= 0) break;
+              tx2.lineTo(
+                cx0 + (pts[i][0] + (pts[i + 1][0] - pts[i][0]) * seg) * s * 2,
+                cy0 + (pts[i][1] + (pts[i + 1][1] - pts[i][1]) * seg) * s * 2
+              );
+              if (seg < 1) break;
+            }
+            tx2.stroke();
+            if (prog > .92) {
+              const ax = cx0 + pts[total][0] * s * 2, ay = cy0 + pts[total][1] * s * 2;
+              tx2.fillStyle = `rgba(${gok},.95)`;
+              tx2.beginPath(); tx2.arc(ax, ay, s * .14, 0, Math.PI * 2); tx2.fill();
+              tx2.strokeStyle = '#fff'; tx2.lineWidth = Math.max(1.5, s * .05);
+              tx2.beginPath();
+              tx2.moveTo(ax - s * .07, ay); tx2.lineTo(ax - s * .015, ay + s * .06); tx2.lineTo(ax + s * .075, ay - s * .06);
+              tx2.stroke();
+            }
+          } else if (p.chart === 'bars') {
+            const bars = [.32, .48, .4, .6, .8, 1];
+            const bw = (s * 2) / bars.length;
+            tx2.strokeStyle = `rgba(${core},.4)`; tx2.lineWidth = 1;
+            tx2.beginPath(); tx2.moveTo(cx0 - s, cy0 + s * .7); tx2.lineTo(cx0 + s, cy0 + s * .7); tx2.stroke();
+            bars.forEach((b, i) => {
+              const bh = b * prog * s * 1.3;
+              tx2.fillStyle = i === bars.length - 1 ? `rgba(${gok},.9)` : `rgba(${halo},${.55 + b * .35})`;
+              tx2.fillRect(cx0 - s + i * bw + bw * .12, cy0 + s * .7 - bh, bw * .76, bh);
+            });
+          } else {
+            const r0 = s * .75;
+            tx2.lineWidth = Math.max(2.5, s * .17);
+            tx2.strokeStyle = `rgba(${halo},.2)`;
+            tx2.beginPath(); tx2.arc(cx0, cy0, r0, 0, Math.PI * 2); tx2.stroke();
+            tx2.strokeStyle = prog > .95 ? `rgba(${gok},.95)` : `rgba(${halo},.9)`;
+            tx2.lineCap = 'round';
+            tx2.beginPath(); tx2.arc(cx0, cy0, r0, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * .874 * prog); tx2.stroke();
+            if (prog > .55) {
+              const fs2 = Math.max(10, s * .5);
+              tx2.font = `600 ${fs2}px "Space Grotesk", sans-serif`;
+              tx2.textAlign = 'center'; tx2.textBaseline = 'middle';
+              tx2.fillStyle = `rgba(${prog > .95 ? gok : core},.9)`;
+              tx2.fillText(Math.round(87.4 * Math.min(1, prog)) + '%', cx0, cy0);
+            }
           }
         }
         tx2.restore();
