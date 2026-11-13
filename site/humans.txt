@@ -7,7 +7,7 @@
   TikTok:     https://www.tiktok.com/@the_unknown_shopper
 
 /* SITE */
-  Last update: 2026-09-26
+  Last update: 2026-11-12
   Language:    Español
   Standards:   HTML5, CSS3, JavaScript vanilla
   Typography:  Inter, Space Grotesk
