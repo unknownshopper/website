@@ -11,7 +11,9 @@ Toda la migración es **unilateral**.
 
 ## 0. Antes de cortar con la agencia
 
-- [ ] **Respaldar el historial de correos** del buzón actual: si hay acceso webmail/IMAP, descargar con Thunderbird o `imapsync` hacia `tipograficoweb@gmail.com`. Una vez apuntes el MX a Cloudflare, ese buzón deja de recibir.
+- [ ] **Respaldar el historial de correos** del buzón actual: una vez apuntes el MX a Cloudflare, ese buzón deja de recibir.
+  - Si el webmail por `unknownshoppers.com:2096` está bloqueado por el WAF de la agencia, el servidor real responde directo: **`https://priva-140.spindns.com:2096`** (Roundcube) o IMAP `priva-140.spindns.com:993` SSL con `the@unknownshoppers.com` — IMAP no pasa por el proxy de Cloudflare, no pueden bloquearlo.
+  - Cliente (Thunderbird/Apple Mail) para descargar todo localmente, o `imapsync` hacia `tipograficoweb@gmail.com`.
 - [ ] **Capturar los registros DNS actuales** (A, MX, TXT, CNAME) en el dashboard de Cloudflare de la agencia si se tiene acceso, o reconstruirlos desde cero — solo hace falta el A del sitio viejo si se quiere mantener encendido un tiempo.
 - [ ] (Opcional, sin urgencia) auth code en GoDaddy → solo si más adelante se quiere mover el dominio a Cloudflare Registrar por costo. No es requisito para migrar correo ni sitio.
 
