@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.unknownshoppers.com/sitemap.xml
+Sitemap: https://unknownshoppers.com/sitemap.xml
