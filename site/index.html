@@ -636,7 +636,7 @@
               <a href="registro/?tipo=empresa">Información / demo</a>
               <a href="registro/?tipo=shopper">Quiero ser shopper</a>
               <a href="registro/?tipo=empresa">Cotización para mi negocio</a>
-              <a href="mailto:the@unknownshoppers.com?subject=Consulta%20general&amp;body=Hola%2C%20tengo%20una%20consulta%20sobre%20The%20Unknown%20Shopper.">Otra consulta</a>
+              <a href="registro/?tipo=empresa">Otra consulta</a>
             </span>
           </span>
           <a class="icon-btn" href="https://www.instagram.com/unknownshoppers/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
@@ -1220,13 +1220,13 @@
     { k: ["video", "como se ve", "ver como funciona"],
       a: "Pronto publicaremos un video de 1 minuto. Mientras, el botón <b>Ver cómo funciona</b> del inicio te muestra el flujo, o agenda una <a href='registro/?tipo=empresa'>demo</a>." },
     { k: ["contacto", "correo", "email", "telefono", "hablar con alguien", "humano"],
-      a: "Escríbenos a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o déjanos tus datos en el <a href='registro/?tipo=empresa'>formulario</a> y te contactamos nosotros." },
+      a: "Escríbenos a the@unknownshoppers.com o déjanos tus datos en el <a href='registro/?tipo=empresa'>formulario</a> y te contactamos nosotros." },
     { k: ["sus clientes", "clientes", "para quien trabajan", "con quienes trabajan", "con quien trabajan", "que empresas", "casos de exito", "referencias", "quien los contrata", "quienes los contratan"],
       a: "Nuestros clientes son empresas con puntos de venta o servicio: cadenas retail, restaurantes, concesionarias, clínicas y franquicias — básicamente cualquier negocio que quiera medir la experiencia real de sus clientes. Por confidencialidad no publicamos nombres, pero podemos compartir casos anonimizados en una <a href='registro/?tipo=empresa'>demo</a>." },
     { k: ["que eres", "quien eres", "eres una ia", "eres un robot", "eres un bot", "asistente virtual", "con quien hablo", "eres humano", "inteligencia artificial"],
       a: "Soy <b>The Unknown Shopper</b> y responderé tus dudas acerca de nuestros servicios, registro y plataforma. Si quieres hablar con una persona, deja tus datos en el <a href='registro/?tipo=empresa'>formulario</a>." },
     { k: ["tu dueno", "su dueno", "el dueno", "quien te creo", "quien te hizo", "fundador", "propietario", "de quien es la empresa", "quien esta detras"],
-      a: "Somos <b>The Unknown Shopper</b>, una empresa independiente de auditoría de experiencia del cliente con base en Villahermosa, Tabasco — con relaciones de más de 15 años con nuestros clientes más antiguos. Si buscas contacto con una persona: <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a>." },
+      a: "Somos <b>The Unknown Shopper</b>, una empresa independiente de auditoría de experiencia del cliente con base en Villahermosa, Tabasco — con relaciones de más de 15 años con nuestros clientes más antiguos. Si buscas contacto con una persona: the@unknownshoppers.com." },
     { k: ["en que me ayudas", "en que puedes ayudar", "que puedes hacer", "para que sirves", "que sabes", "ayuda", "opciones", "menu"],
       a: "Puedo contarte: <b>qué es</b> un mystery shopper, <b>cómo funciona</b> nuestra plataforma de reportes (roles, históricos, matriz, puntos de atención), <b>cobertura</b>, precios/demo y cómo <b>registrarte</b> como shopper o empresa. ¿Por dónde empezamos?" },
     { k: ["camaras", "camara escondida", "graban", "grabacion", "video oculto", "espian", "microfono", "microfonos"],
@@ -1238,9 +1238,9 @@
     { k: ["nombre del empleado", "datos del empleado", "quien me atendio", "quien atendio", "despedir empleado", "reporte del empleado", "datos de los evaluados"],
       a: "La información de cada evaluación solo la ven los responsables autorizados de la empresa que la solicitó, conforme a su matriz de acceso y a nuestro <a href='privacidad.html'>aviso de privacidad</a>." },
     { k: ["eres chatgpt", "eres gpt", "que modelo usas", "quien te programo", "eres inteligencia artificial", "eres ia de verdad", "eres una ia real"],
-      a: "Soy el asistente automatizado oficial del sitio de <b>The Unknown Shopper</b>: respondo con la información aprobada de la empresa, no invento respuestas. Para temas fuera de catálogo: <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a>." },
+      a: "Soy el asistente automatizado oficial del sitio de <b>The Unknown Shopper</b>: respondo con la información aprobada de la empresa, no invento respuestas. Para temas fuera de catálogo: the@unknownshoppers.com." },
     { k: ["darme de baja", "eliminar mis datos", "borrar mis datos", "cancelar mi registro", "ya no quiero ser shopper", "quiero salir", "derechos arco", "arco", "rectificar datos", "cancelar datos"],
-      a: "Puedes ejercer tus derechos <b>ARCO</b> (acceso, rectificación, cancelación u oposición) escribiendo a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> con tu nombre completo y la solicitud. Respondemos en máximo 20 días hábiles, conforme al <a href='privacidad.html'>aviso de privacidad</a>." },
+      a: "Puedes ejercer tus derechos <b>ARCO</b> (acceso, rectificación, cancelación u oposición) escribiendo a the@unknownshoppers.com con tu nombre completo y la solicitud. Respondemos en máximo 20 días hábiles, conforme al <a href='privacidad.html'>aviso de privacidad</a>." },
     { k: ["es gratis", "gratis", "sin costo", "cobran por preguntar", "demo gratis", "prueba gratis", "me cobran"],
       a: "La <b>demo de 20 minutos es sin costo</b>: te mostramos el sistema funcionando y cotizamos según tu alcance. Los programas de evaluación sí tienen costo, dependiendo de sucursales, canales y frecuencia." },
     { k: ["privacidad", "datos personales", "aviso de privacidad", "mis datos"],
@@ -1275,7 +1275,7 @@
     }
     return best && bestScore >= 1
       ? best.a
-      : "Eso no te lo voy a contestar. Para mayor información contacta a <a href='mailto:the@unknownshoppers.com'>the@unknownshoppers.com</a> o deja tus datos en el <a href='registro/?tipo=empresa'>registro</a>.";
+      : "Eso no te lo voy a contestar. Para mayor información contacta a the@unknownshoppers.com o deja tus datos en el <a href='registro/?tipo=empresa'>registro</a>.";
   }
   function openChat() {
     chatPanel.classList.add('open');

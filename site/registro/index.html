@@ -241,7 +241,7 @@
       <div class="status" id="status"></div>
 
       <button class="submit" type="submit" id="btnSubmit">Enviar registro</button>
-      <div class="alt">¿Prefieres correo directo? <a href="mailto:the@unknownshoppers.com">the@unknownshoppers.com</a></div>
+      <div class="alt">¿Prefieres correo directo? the@unknownshoppers.com</div>
     </form>
   </div>
 </main>
@@ -258,7 +258,6 @@ const FORM_ENDPOINT = "https://formsubmit.co/ajax/tipograficoweb@gmail.com";
 const WEB3FORMS_KEY = "";
 
 // Si ambos quedan vacíos: mailto con todo precargado (fallback).
-const FALLBACK_EMAIL = "tipograficoweb@gmail.com";
 
 const $ = id => document.getElementById(id);
 let tipo = "shopper";
@@ -360,13 +359,6 @@ $("regForm").addEventListener("submit", async e => {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === false) throw new Error();
-    } else {
-      const lines = Object.entries({ tipo, ...d })
-        .filter(([k, v]) => v && k !== "consent")
-        .map(([k, v]) => `${k}: ${v}`).join("\n");
-      location.href = `mailto:${FALLBACK_EMAIL}?subject=${encodeURIComponent(
-        tipo === "empresa" ? `Solicitud empresa: ${d.empresa}` : `Registro shopper: ${d.nombre}`
-      )}&body=${encodeURIComponent(lines)}`;
     }
     f.reset();
     setTipo(tipo);
@@ -374,7 +366,7 @@ $("regForm").addEventListener("submit", async e => {
       ? "¡Listo! Recibimos tu solicitud. Te contactaremos para agendar una demo."
       : "¡Listo! Recibimos tu registro. Te contactaremos cuando haya campañas en tu zona.");
   } catch {
-    show("err", "No se pudo enviar. Intenta de nuevo o escríbenos a <a href='mailto:the@unknownshoppers.com' style='color:inherit;font-weight:600'>the@unknownshoppers.com</a>.");
+    show("err", "No se pudo enviar. Intenta de nuevo o escríbenos a the@unknownshoppers.com.");
   } finally {
     btn.disabled = false;
     btn.textContent = T[tipo].btn;
