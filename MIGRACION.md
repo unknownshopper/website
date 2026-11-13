@@ -1,32 +1,29 @@
 # Migración de unknownshoppers.com
 
-Checklist para independizar correo, sitio y dominio de la agencia.
+Checklist para independizar correo y sitio de la agencia.
 
-**Orden recomendado: correo primero, dominio al final.** Para liberar el correo
-solo hace falta controlar el DNS — la transferencia del dominio puede esperar y,
-hecha al final, causa **cero downtime** porque ya nada depende de la agencia.
+**Situación real**: el dominio ya está en el GoDaddy del propietario — no se
+necesita auth code ni permiso de la agencia para nada. Lo único que controla la
+agencia es el hosting viejo (ya clonado a este repo) y el buzón viejo (respaldar).
+Toda la migración es **unilateral**.
+
+**Orden recomendado: correo primero, sitio después.**
 
 ## 0. Antes de cortar con la agencia
 
-- [ ] **Respaldar el historial de correos** del buzón actual (500 MB):
-      opción rápida: reenviar correos importantes a `tipograficoweb@gmail.com`;
-      opción completa: `imapsync` del buzón viejo al Gmail (o descargar por IMAP a un cliente como Thunderbird).
-- [ ] **Capturar los registros DNS actuales** (A, MX, TXT, CNAME) — captura de pantalla de la zona DNS/panel si hay acceso. Es crítico para recrearlos en Cloudflare sin romper nada.
-- [ ] Pedir el **auth code / EPP code** del dominio y que lo "desbloqueen" para transferencia. No hace falta usarlo todavía — se usa en la sección 3, pero conviene tenerlo antes de que la agencia se entere del todo.
+- [ ] **Respaldar el historial de correos** del buzón actual: si hay acceso webmail/IMAP, descargar con Thunderbird o `imapsync` hacia `tipograficoweb@gmail.com`. Una vez apuntes el MX a Cloudflare, ese buzón deja de recibir.
+- [ ] **Capturar los registros DNS actuales** (A, MX, TXT, CNAME) en el dashboard de Cloudflare de la agencia si se tiene acceso, o reconstruirlos desde cero — solo hace falta el A del sitio viejo si se quiere mantener encendido un tiempo.
+- [ ] (Opcional, sin urgencia) auth code en GoDaddy → solo si más adelante se quiere mover el dominio a Cloudflare Registrar por costo. No es requisito para migrar correo ni sitio.
 
-## 1. Correo primero — DNS a Cloudflare
+## 1. Correo primero — DNS a Cloudflare propio
 
-El correo solo puede liberarse cuando controles el DNS. Esto se logra **sin transferir el dominio**:
-
-1. Crear cuenta en Cloudflare → "Add site" → `unknownshoppers.com` → plan Free.
-   Cloudflare te asigna 2 nameservers (ej. `lara.ns.cloudflare.com`) y escanea los DNS actuales.
-2. Revisar/recrear en Cloudflare los registros actuales (el A del sitio viejo, MX viejos) para que nada se rompa al cambiar.
-3. Pedir a la agencia —o hacerlo en el panel del registrador si tienes acceso— cambiar los **nameservers** del dominio a los que asignó Cloudflare.
-   - Cambiar NS ≠ transferir dominio: el sitio y el correo siguen igual en ese instante, pero el DNS ya lo controlas tú.
+1. Crear cuenta propia en Cloudflare → "Add site" → `unknownshoppers.com` → plan Free.
+   Cloudflare asigna 2 nameservers nuevos (ej. `lara.ns.cloudflare.com`).
+2. En **tu propio GoDaddy** → DNS del dominio → cambiar nameservers a los que asignó tu Cloudflare.
    - Propagación: de minutos a ~24 h. Verificar con `dig NS unknownshoppers.com`.
-4. Ya con el DNS en Cloudflare, activar el correo (1a–1c). El buzón viejo de la agencia puede convivir unos días mientras migras.
-
-> Si la agencia se niega a cambiar los nameservers, no hay atajo: toca transferir primero (sección 3) y retomar aquí después. Por eso conviene pedir el auth code desde el principio.
+   - En ese instante el DNS pasa 100% a tu control; la agencia queda fuera.
+3. En Cloudflare, recrear lo mínimo para no romper nada mientras tanto:
+   - `A` @ → IP del hosting viejo (si quieres que el sitio viejo siga vivo unos días) — o directamente los pasos de la sección 2 si el corte es inmediato.
 
 ### 1a. Cloudflare Email Routing (recibir)
 
@@ -68,11 +65,12 @@ Prueba: enviar un correo a `the@unknownshoppers.com` desde otra cuenta → debe 
 
 El sitio ya vive en GitHub Pages (`unknownshopper.github.io/website`) y es 100% estático.
 
-Con el DNS ya en tu Cloudflare, el corte lo decides tú (un cambio de registro, no la agencia):
+Con el DNS en tu Cloudflare, el corte lo decides tú:
 
-- **Quedarse en Pages** (gratis): repo → Settings → Pages → Custom domain `unknownshoppers.com` + DNS en Cloudflare: `A` @ → las 4 IPs de GitHub Pages (185.199.108.153, .109.153, .110.153, .111.153) y `CNAME` `www` → `unknownshopper.github.io`. El registro queda en `unknownshoppers.com/registro/`.
-- **Hosting propio**: subir `site/` a Hostinger/Netlify/etc. y apuntar DNS según el proveedor.
-- Puedes mantener el sitio viejo de la agencia apuntado mientras verificas, y cambiar el registro A cuando estés listo.
+- Repo → Settings → Pages → Custom domain `unknownshoppers.com`.
+- DNS en Cloudflare: `A` @ → 185.199.108.153, .109.153, .110.153, .111.153 (proxy desactivado, "DNS only") y `CNAME` `www` → `unknownshopper.github.io`.
+- El registro queda en `unknownshoppers.com/registro/`.
+- Puedes dejar el A apuntando al hosting viejo unos días mientras verificas, y cambiarlo cuando quieras — un registro, no una negociación.
 - Verificar: `unknownshoppers.com`, `www`, `/privacidad.html`, `/terminos.html`, `/obsi.html`, `/registro/?tipo=empresa`.
 
 ### Formulario de registro
@@ -83,17 +81,17 @@ Con el DNS ya en tu Cloudflare, el corte lo decides tú (un cambio de registro, 
 - Los correos de lead ya incluyen `_replyto` (responder va directo al correo del lead) y asunto con el tipo (`Nuevo registro Shopper:` / `Nueva solicitud Empresa:`).
 - El honeypot `empresa_web` filtra bots sin captcha.
 
-## 3. Transferir el dominio (último)
+## 3. Si la agencia se pone difícil
 
-Con correo y sitio ya funcionando fuera de la agencia:
+Aunque el dominio es tuyo, pueden retener:
 
-1. Crear cuenta en el registrador destino (Cloudflare Registrar recomendado: precio de costo, sin markup).
-2. Iniciar transferencia con el auth code. Tarda ~5–7 días.
-3. **La transferencia mantiene los nameservers actuales** (los de Cloudflare) → el sitio y el correo ni se enteran. Por eso este paso va al final: ya no hay nada que pueda romperse.
-4. Al terminar, el dominio queda 100% tuyo: renovaciones, contacto registrante y DNS — cero dependencia de la agencia.
+- **El historial del buzón** → por eso el respaldo va primero. Si cortan acceso antes de respaldar, ese contenido se pierde (los correos futuros llegan a Cloudflare/Gmail igual).
+- **El hosting viejo** → irrelevante: el sitio completo ya está en este repo y en GitHub Pages.
+- Nada más. Dominio, DNS, correo nuevo y sitio nuevo son 100% tuyos.
 
 ## 4. Notas
 
 - Los correos enviados desde Gmail como `the@` llevan SPF de Google válido; Gmail firma DKIM con gmail.com (normal y suficiente).
 - Todos los `mailto:` del sitio apuntan a `the@unknownshoppers.com` — seguirán funcionando tras la migración.
+- El dominio expira 21-dic-2026; al estar en tu GoDaddy la renovación la controlas tú.
 - El formulario Next.js (`src/app/api/lead`) queda como respaldo por si algún día quieres backend propio: puede usar el mismo Gmail con App Password (`SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=465`, `SMTP_USER=tipograficoweb@gmail.com`, `SMTP_PASS=<app password>`, `LEADS_TO=tipograficoweb@gmail.com`).
