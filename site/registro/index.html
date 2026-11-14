@@ -365,6 +365,9 @@ $("regForm").addEventListener("submit", async e => {
           _replyto: d.email,
           _template: "table",
           _captcha: "false",
+          _autoresponse: tipo === "empresa"
+            ? "Gracias por tu interés en The Unknown Shopper.\n\nRecibimos tu solicitud correctamente. Te contactaremos a la brevedad para agendar una demo y diseñar los escenarios de evaluación para tu operación.\n\n— Equipo TUS · unknownshoppers.com"
+            : "Gracias por registrarte en The Unknown Shopper.\n\nRecibimos tus datos correctamente. Cuando haya una campaña disponible en tu zona, te contactaremos por WhatsApp o correo con los detalles.\n\n— Equipo TUS · unknownshoppers.com",
           tipo, ...d
         })
       });
