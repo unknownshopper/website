@@ -1324,6 +1324,9 @@
     margin-bottom: 50px;
   }
   .foot-grid p { color: var(--muted); font-size: 14px; margin-top: 16px; max-width: 280px; }
+  .foot-tel { font-size:13px; margin-top:10px; }
+  .foot-tel a { color:var(--muted); text-decoration:none; }
+  .foot-tel a:hover { color:var(--accent); }
   .foot-contact { display: flex; gap: 12px; margin-top: 20px; }
   .icon-btn {
     width: 42px; height: 42px;
