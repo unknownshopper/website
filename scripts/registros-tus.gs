@@ -300,7 +300,8 @@ ${ESTATUS.map(function (s) {
 </select></form></td>
 <td class="act">
 <a class="wa" target="_blank" href="${waLink(r[4], r[2], "instrucciones")}">WA · instrucciones</a>
-<a class="ln" target="_blank" href="${waLink(r[4], r[2], "video")}">WA · video</a><br>
+<a class="ln" target="_blank" href="${waLink(r[4], r[2], "video")}">WA · video</a>
+<a class="ln" href="#" onclick="msgWA('${waNum(r[4])}', '${String(r[2]).replace(/'/g, "")}');return false">WA · mensaje</a><br>
 <a class="ln" target="_top" href="${self}&action=edit&row=${i + 1}">Editar</a>
 <a class="dl" target="_top" href="${self}&action=del&row=${i + 1}&nom=${encodeURIComponent(r[2])}" onclick="return confirm('¿Eliminar a ${r[2]}? No se puede deshacer.')">Eliminar</a>
 </td></tr>`;
@@ -376,6 +377,14 @@ function sendWA(){
 function copiar(){
   var m = document.getElementById('msg');
   m.select(); document.execCommand('copy');
+}
+function msgWA(n, nom){
+  var t = prompt('Mensaje para ' + nom + ':', 'Hola ' + nom + ', ');
+  if(!t) return;
+  var a = document.createElement('a');
+  a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent(t);
+  a.target = '_blank'; a.rel = 'noopener';
+  document.body.appendChild(a); a.click(); a.remove();
 }
 </script>
 </body></html>`;
