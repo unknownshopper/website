@@ -271,7 +271,8 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:22px;margin:0 0 4px}
 h2{font-family:'Space Grotesk',sans-serif;font-size:17px;margin:30px 0 10px}
 .sub{color:#5b6078;font-size:13px;margin-bottom:18px}
 table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:13px}
-th{background:#0b1e5b;color:#fff;text-align:left;padding:10px 12px;font-size:12px}
+th{background:#0b1e5b;color:#fff;text-align:left;padding:10px 12px;font-size:12px;cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{background:#16307e}
 td{padding:10px 12px;border-top:1px solid #eef0f6;vertical-align:top}
 .badge{display:inline-block;padding:2px 10px;border-radius:99px;color:#fff;font-size:11px;font-weight:600}
 .act a{display:inline-block;margin:2px 4px 2px 0;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none}
@@ -298,7 +299,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 </style></head><body>
 <h1>Panel TUS · Registros</h1>
 <div class="sub">${rows.length - 1} registros en el filtro 2 &middot; <a target="_top" href="${self}" style="color:#2563eb">actualizar</a> &middot; <a target="_top" href="${self}&action=nuevo" style="color:#15803d;font-weight:600">＋ Agregar</a></div>
-<table><tr><th>#</th><th>Nombre</th><th>Contacto</th><th>Ciudad / Edad</th><th>Detalles</th><th>Estatus</th><th>Acciones</th></tr>`;
+<table><tr><th onclick="sortTable(0)">#</th><th onclick="sortTable(1)">Nombre</th><th onclick="sortTable(2)">Contacto</th><th onclick="sortTable(3)">Ciudad / Edad</th><th onclick="sortTable(4)">Detalles</th><th onclick="sortTable(5)">Estatus</th><th>Acciones</th></tr>`;
 
   for (let i = rows.length - 1; i >= 1; i--) {
     const r = rows[i];
@@ -398,6 +399,26 @@ function sendWA(){
 function copiar(){
   var m = document.getElementById('msg');
   m.select(); document.execCommand('copy');
+}
+var sortDir = {};
+function sortTable(n){
+  var table = document.querySelector('table');
+  var rows = Array.prototype.slice.call(table.rows).slice(1);
+  var dir = sortDir[n] === 'asc' ? 'desc' : 'asc';
+  sortDir[n] = dir;
+  rows.sort(function(a, b){
+    var x = a.cells[n].textContent.trim();
+    var y = b.cells[n].textContent.trim();
+    var c = x.localeCompare(y, 'es', { numeric: true });
+    return dir === 'asc' ? c : -c;
+  });
+  rows.forEach(function(r){ table.appendChild(r); });
+  var ths = table.rows[0].cells;
+  for (var i = 0; i < ths.length; i++){
+    var t = ths[i];
+    t.dataset.base = t.dataset.base || t.textContent;
+    t.textContent = t.dataset.base + (i === n ? (dir === 'asc' ? ' ▲' : ' ▼') : '');
+  }
 }
 function msgWA(n, nom){
   var t = prompt('Mensaje para ' + nom + ':', 'Hola ' + nom + ', ');
