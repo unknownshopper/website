@@ -229,6 +229,13 @@ function doGet(e) {
     return editarForm([], 0, self, ESTATUS, "add");
   }
 
+  if (p.action === "tagcamp" && p.camp) {
+    const rr = sh.getDataRange().getValues();
+    for (let i = 1; i < rr.length; i++) {
+      if (!rr[i][17]) sh.getRange(i + 1, 18).setValue(p.camp);
+    }
+  }
+
   if (p.action === "add") {
     sh.appendRow([new Date(), p.tipo || "shopper", p.nombre || "", p.email || "",
       p.telefono || "", p.ciudad || "", p.edad || "", p.disponibilidad || "",
@@ -303,7 +310,13 @@ textarea{width:100%;min-height:140px;border:1px solid #e3e6f0;border-radius:10px
 input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:13px;margin-top:10px}
 </style></head><body>
 <h1>Panel TUS · Registros</h1>
-<div class="sub">${rows.length - 1} registros en el filtro 2 &middot; <a target="_top" href="${self}" style="color:#2563eb">actualizar</a> &middot; <a target="_top" href="${self}&action=nuevo" style="color:#15803d;font-weight:600">＋ Agregar</a></div>
+<div class="sub">${rows.length - 1} registros en el filtro 2 &middot; <a target="_top" href="${self}" style="color:#2563eb">actualizar</a> &middot; <a target="_top" href="${self}&action=nuevo" style="color:#15803d;font-weight:600">＋ Agregar</a>
+&middot; <form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="display:inline">
+<input type="hidden" name="key" value="${PANEL_KEY}">
+<input type="hidden" name="action" value="tagcamp">
+<input name="camp" placeholder="etiqueta campaña" style="border:1px solid #e3e6f0;border-radius:6px;padding:3px 8px;font-size:12px;width:110px">
+<button type="submit" style="border:0;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;background:#f3e8ff;color:#7c3aed;cursor:pointer">Aplicar a vacíos</button>
+</form></div>
 <table><tr><th onclick="sortTable(0)">#</th><th onclick="sortTable(1)">Nombre</th><th onclick="sortTable(2)">Contacto</th><th onclick="sortTable(3)">Ciudad / Edad</th><th onclick="sortTable(4)">Detalles</th><th onclick="sortTable(5)">Estatus</th><th>Acciones</th></tr>`;
 
   for (let i = rows.length - 1; i >= 1; i--) {
