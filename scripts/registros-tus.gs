@@ -83,7 +83,7 @@ function doPost(e) {
       d.telefono || "", d.ciudad || "", d.edad || "", d.disponibilidad || "",
       d.auto || "", d.experiencia || "", d.contacto_preferido || "",
       d.canales || "", d.empresa || "", d.giro || "", d.sucursales || "",
-      d.notas || "", "Nuevo"]);
+      d.notas || "", /^no\b/i.test(String(d.auto || "").trim()) ? "Descartado" : "Nuevo"]);
   }
 
   const suj = d.tipo === "empresa"
