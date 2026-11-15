@@ -95,6 +95,8 @@
   }
   input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
   textarea { min-height: 96px; resize: vertical; }
+  .ehint { font-size: 12px; font-weight: 500; color: #b45309; cursor: pointer; }
+  .ehint b { color: var(--accent); text-decoration: underline; }
   .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.5; }
   .consent input { width: auto; margin-top: 3px; }
   .consent a { color: var(--accent); }
@@ -158,6 +160,7 @@
         </label>
         <label class="field">Email *
           <input name="email" type="email" autocomplete="email" placeholder="tucorreo@..." required />
+          <small id="emailHint" class="ehint" hidden></small>
         </label>
       </div>
 
@@ -326,6 +329,39 @@ function show(kind, msg) {
   el.innerHTML = msg;
   el.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
+
+// Sugerencia de dominio de email (typos comunes)
+const TYPOS = {
+  "gmail.comm":"gmail.com","gmail.con":"gmail.com","gmail.cm":"gmail.com","gmail.co":"gmail.com",
+  "gmal.com":"gmail.com","gamil.com":"gmail.com","gmailc.om":"gmail.com","gmail.om":"gmail.com",
+  "hotmal.com":"hotmail.com","hotmail.comm":"hotmail.com","hotmail.con":"hotmail.com",
+  "hotmial.com":"hotmail.com","hotmil.com":"hotmail.com","hotnail.com":"hotmail.com",
+  "outlok.com":"outlook.com","outlook.comm":"outlook.com","outloook.com":"outlook.com",
+  "yahoo.comm":"yahoo.com","yaho.com":"yahoo.com","yahoo.con":"yahoo.com","yahho.com":"yahoo.com",
+  "icloud.comm":"icloud.com","iclod.com":"icloud.com","iclou.com":"icloud.com"
+};
+const emailInput = document.querySelector('input[name="email"]');
+emailInput.addEventListener("blur", () => {
+  const hint = $("emailHint");
+  const v = emailInput.value.trim();
+  const at = v.lastIndexOf("@");
+  const dom = at > 0 ? v.slice(at + 1).toLowerCase() : "";
+  const fix = TYPOS[dom];
+  if (fix) {
+    hint.innerHTML = `¿Quisiste decir <b>${v.slice(0, at)}@${fix}</b>? Toca para corregir.`;
+    hint.hidden = false;
+  } else {
+    hint.hidden = true;
+  }
+});
+$("emailHint").addEventListener("click", () => {
+  const at = emailInput.value.trim().lastIndexOf("@");
+  const dom = emailInput.value.trim().slice(at + 1).toLowerCase();
+  if (TYPOS[dom]) {
+    emailInput.value = emailInput.value.trim().slice(0, at) + "@" + TYPOS[dom];
+    $("emailHint").hidden = true;
+  }
+});
 
 $("regForm").addEventListener("submit", async e => {
   e.preventDefault();
