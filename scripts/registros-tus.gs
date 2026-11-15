@@ -125,6 +125,23 @@ function waNum(tel) {
   return digits;
 }
 
+function dispBadges(disp, auto) {
+  const a = String(auto || "").toLowerCase();
+  const autoB = /^(si|sí|yes|1)/.test(a.trim())
+    ? '<span class="pb pwa">Auto</span>'
+    : '<span class="pb pno">Sin auto</span>';
+  const d = String(disp || "").toLowerCase();
+  const am = /mañana|matutino|antes de|madrug/.test(d);
+  const pm = /tarde|vespertino|mediodía|mediodia|después|despues|noche/.test(d);
+  const libre = /todo|completo|ambos|flexible|libre|cualquier/.test(d);
+  let turno = "";
+  if (libre || (am && pm)) turno = "AM+PM";
+  else if (am) turno = "AM";
+  else if (pm) turno = "PM";
+  const dispB = turno ? '<span class="pb pm">' + turno + '</span>' : "";
+  return autoB + " " + dispB + "<br>";
+}
+
 function waLink(tel, nombre, pagina) {
   const url = pagina === "video" ? LINK_VIDEO : LINK_INSTR;
   const msg = "Hola " + nombre + ", gracias por tu registro en The Unknown Shopper. " +
@@ -265,6 +282,7 @@ td{padding:10px 12px;border-top:1px solid #eef0f6;vertical-align:top}
 .muted{color:#9aa0b8;font-size:12px}
 .pb{display:inline-block;padding:1px 8px;border-radius:99px;font-size:10px;font-weight:700;vertical-align:middle}
 .pwa{background:#e7f8ec;color:#15803d}.pm{background:#eef4ff;color:#2563eb}
+.pno{background:#fdecec;color:#b91c1c}
 .act a.dl{background:#fdecec;color:#b91c1c}
 .rutas{background:#fff;border-radius:12px;padding:18px 20px}
 .ruta{margin-bottom:14px}
@@ -292,7 +310,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 <td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span></td>
 <td>${r[4]} ${pref === "whatsapp" ? '<span class="pb pwa">WhatsApp</span>' : ""}<br><span class="muted">${r[3]}</span> ${pref === "correo" ? '<span class="pb pm">Correo</span>' : ""}</td>
 <td>${r[5]}<br><span class="muted">${r[6]} años</span></td>
-<td><span class="muted">Disp: ${r[7]} · Auto: ${r[8]} · Exp: ${r[9]}<br>${r[15] || ""}</span></td>
+<td>${dispBadges(r[7], r[8])}<span class="muted">Disp: ${r[7]} · Exp: ${r[9]}<br>${r[15] || ""}</span></td>
 <td><form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="margin:0">
 <input type="hidden" name="key" value="${PANEL_KEY}">
 <input type="hidden" name="action" value="status">
