@@ -260,9 +260,12 @@
 
 <script>
 // ===== Configuración del envío =====
-// FormSubmit (sin cuenta): el primer envío manda un correo de confirmación
-// a the@unknownshoppers.com — actívalo una vez y los leads llegan solos
-// (Cloudflare Email Routing los reenvía a la bandeja real).
+// Apps Script → escribe el registro en la hoja "Registros TUS",
+// notifica a la bandeja y manda confirmación al registrante.
+const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbw0QxwdJpebcBlXQsuMzuz39LVknuA1Ty8QoQecbwnhPbpsST_ACsosPYbbOZ8Nzjowdw/exec";
+const SHEET_TOKEN = "tus-reg-2026";
+
+// Respaldo: FormSubmit si el endpoint de Sheets falla.
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/the@unknownshoppers.com";
 
 // Opción B: Web3Forms (250 envíos/mes gratis) — access key de web3forms.com:
@@ -353,7 +356,16 @@ $("regForm").addEventListener("submit", async e => {
   btn.textContent = "Enviando...";
 
   try {
-    if (WEB3FORMS_KEY || FORM_ENDPOINT) {
+    if (SHEET_ENDPOINT) {
+      // Apps Script redirige POSTs de forma no estándar; no-cors lo envía
+      // como "fire and forget" — el script ejecuta igual aunque la
+      // respuesta sea opaca.
+      await fetch(SHEET_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({ token: SHEET_TOKEN, tipo, ...d })
+      });
+    } else if (WEB3FORMS_KEY || FORM_ENDPOINT) {
       const res = await fetch(FORM_ENDPOINT || "https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
