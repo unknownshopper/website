@@ -75,6 +75,7 @@ function doPost(e) {
     vals.forEach(function (v, idx) {
       if (v !== undefined && v !== "") sh.getRange(dup, idx + 2).setValue(v);
     });
+    if (d.campana) sh.getRange(dup, 18).setValue(d.campana);
     sh.getRange(dup, 16).setValue(
       String(d.notas || rows0[dup - 1][15] || "") + " [actualizado " +
       new Date().toLocaleDateString("es-MX") + "]");
@@ -83,8 +84,10 @@ function doPost(e) {
       d.telefono || "", d.ciudad || "", d.edad || "", d.disponibilidad || "",
       d.auto || "", d.experiencia || "", d.contacto_preferido || "",
       d.canales || "", d.empresa || "", d.giro || "", d.sucursales || "",
-      d.notas || "", /^no\b/i.test(String(d.auto || "").trim()) ? "Descartado" : "Nuevo"]);
+      d.notas || "", /^no\b/i.test(String(d.auto || "").trim()) ? "Descartado" : "Nuevo",
+      d.campana || "organico"]);
   }
+  if (!sh.getRange(1, 18).getValue()) sh.getRange(1, 18).setValue("Campaña");
 
   const suj = d.tipo === "empresa"
     ? "Nueva solicitud Empresa: " + d.empresa + " (" + d.nombre + ")"
@@ -177,7 +180,8 @@ function editarForm(v, r, self, ESTATUS, accion) {
     ["auto", "Auto", v[8]], ["experiencia", "Experiencia", v[9]],
     ["contacto", "Contacto preferido", v[10]], ["canales", "Canales", v[11]],
     ["empresa", "Empresa", v[12]], ["giro", "Giro", v[13]],
-    ["sucursales", "Sucursales", v[14]], ["notas", "Notas", v[15]]];
+    ["sucursales", "Sucursales", v[14]], ["notas", "Notas", v[15]],
+    ["campana", "Campaña", v[17]]];
   let form = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Editar registro</title><style>
 body{font-family:Inter,system-ui,sans-serif;background:#f4f6fb;margin:0;padding:22px;color:#1d2340;max-width:520px}
@@ -230,7 +234,7 @@ function doGet(e) {
       p.telefono || "", p.ciudad || "", p.edad || "", p.disponibilidad || "",
       p.auto || "", p.experiencia || "", p.contacto || "", p.canales || "",
       p.empresa || "", p.giro || "", p.sucursales || "", p.notas || "",
-      p.estatus || "Nuevo"]);
+      p.estatus || "Nuevo", p.campana || "manual"]);
   }
 
   if (p.action && p.row && p.action !== "add") {
@@ -244,7 +248,7 @@ function doGet(e) {
       } else if (p.action === "save") {
         const cols = { nombre: 3, email: 4, telefono: 5, ciudad: 6, edad: 7,
           disponibilidad: 8, auto: 9, experiencia: 10, contacto: 11,
-          canales: 12, empresa: 13, giro: 14, sucursales: 15, notas: 16, estatus: 17 };
+          canales: 12, empresa: 13, giro: 14, sucursales: 15, notas: 16, estatus: 17, campana: 18 };
         for (const k in cols) {
           if (p[k] !== undefined) sh.getRange(r, cols[k]).setValue(p[k]);
         }
@@ -284,6 +288,7 @@ td{padding:10px 12px;border-top:1px solid #eef0f6;vertical-align:top}
 .pb{display:inline-block;padding:1px 8px;border-radius:99px;font-size:10px;font-weight:700;vertical-align:middle}
 .pwa{background:#e7f8ec;color:#15803d}.pm{background:#eef4ff;color:#2563eb}
 .pno{background:#fdecec;color:#b91c1c}
+.pc{background:#f3e8ff;color:#7c3aed}
 .act a.dl{background:#fdecec;color:#b91c1c}
 .rutas{background:#fff;border-radius:12px;padding:18px 20px}
 .ruta{margin-bottom:14px}
@@ -308,7 +313,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
     const fecha = r[0] ? new Date(r[0]).toLocaleDateString("es-MX", { day: "2-digit", month: "short" }) : "";
     body += `<tr>
 <td>${i}<br><span class="muted">${fecha}</span></td>
-<td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span></td>
+<td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span> ${r[17] ? '<span class="pb pc">' + r[17] + '</span>' : ""}</td>
 <td>${r[4]} ${pref === "whatsapp" ? '<span class="pb pwa">WhatsApp</span>' : ""}<br><span class="muted">${r[3]}</span> ${pref === "correo" ? '<span class="pb pm">Correo</span>' : ""}</td>
 <td>${r[5]}<br><span class="muted">${r[6]} años</span></td>
 <td>${dispBadges(r[7], r[8])}<span class="muted">Disp: ${r[7]} · Exp: ${r[9]}<br>${r[15] || ""}</span></td>

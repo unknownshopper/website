@@ -323,6 +323,11 @@ $("chkOtros").addEventListener("change", e => {
 const q = new URLSearchParams(location.search).get("tipo");
 setTipo(q === "empresa" ? "empresa" : "shopper");
 
+// Campaña: llega por ?c= en el link del anuncio; se conserva si navega y vuelve
+const cParam = new URLSearchParams(location.search).get("c");
+if (cParam) sessionStorage.setItem("tus_c", cParam);
+const campana = cParam || sessionStorage.getItem("tus_c") || "";
+
 function show(kind, msg) {
   const el = $("status");
   el.className = "status " + kind;
@@ -369,6 +374,7 @@ $("regForm").addEventListener("submit", async e => {
   const d = Object.fromEntries(new FormData(f).entries());
   const canales = [...f.querySelectorAll('input[name="canales"]:checked')].map(c => c.value);
   d.canales = canales.map(c => c === "Otros" && d.canales_otros?.trim() ? `Otros: ${d.canales_otros.trim()}` : c).join(", ");
+  if (campana) d.campana = campana;
 
   // honeypot: si está lleno, es un bot — simular éxito sin enviar
   if (d.empresa_web?.trim()) {
