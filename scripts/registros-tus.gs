@@ -399,10 +399,9 @@ function sendWA(){
   var t = document.getElementById('msg').value;
   if(!n){ alert('Escribe el WhatsApp del shopper (10 dígitos).'); return; }
   if(!t){ alert('Primero genera el mensaje.'); return; }
-  var a = document.createElement('a');
-  a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent(t);
-  a.target = '_blank'; a.rel = 'noopener';
-  document.body.appendChild(a); a.click(); a.remove();
+  var u = 'https://wa.me/' + n + '?text=' + encodeURIComponent(t);
+  var w = window.open(u, '_blank');
+  if(!w) prompt('El navegador bloqueó la ventana. Copia este enlace y ábrelo en otra pestaña:', u);
 }
 function copiar(){
   var m = document.getElementById('msg');
@@ -431,10 +430,9 @@ function sortTable(n){
 function msgWA(n, nom){
   var t = prompt('Mensaje para ' + nom + ':', 'Hola ' + nom + ', ');
   if(!t) return;
-  var a = document.createElement('a');
-  a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent(t);
-  a.target = '_blank'; a.rel = 'noopener';
-  document.body.appendChild(a); a.click(); a.remove();
+  var u = 'https://wa.me/' + n + '?text=' + encodeURIComponent(t);
+  var w = window.open(u, '_blank');
+  if(!w) prompt('El navegador bloqueó la ventana. Copia este enlace y ábrelo en otra pestaña:', u);
 }
 </script>
 </body></html>`;
