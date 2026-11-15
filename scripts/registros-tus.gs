@@ -57,11 +57,34 @@ function doPost(e) {
   const sospechoso = emailSospechoso(d.email);
   if (sospechoso) d.notas = ((d.notas || "") + " [email sospechoso]").trim();
 
-  sh.appendRow([new Date(), d.tipo || "", d.nombre || "", d.email || "",
-    d.telefono || "", d.ciudad || "", d.edad || "", d.disponibilidad || "",
-    d.auto || "", d.experiencia || "", d.contacto_preferido || "",
-    d.canales || "", d.empresa || "", d.giro || "", d.sucursales || "",
-    d.notas || "", "Nuevo"]);
+  // dedupe: mismo teléfono o email → actualiza la fila existente
+  const telN = String(d.telefono || "").replace(/\D/g, "");
+  const mailN = String(d.email || "").trim().toLowerCase();
+  const rows0 = sh.getDataRange().getValues();
+  let dup = -1;
+  for (let i = 1; i < rows0.length; i++) {
+    const rt = String(rows0[i][4] || "").replace(/\D/g, "");
+    const rm = String(rows0[i][3] || "").trim().toLowerCase();
+    if ((telN && rt === telN) || (mailN && rm === mailN)) { dup = i + 1; break; }
+  }
+
+  if (dup > 0) {
+    const vals = [d.tipo, d.nombre, d.email, d.telefono, d.ciudad, d.edad,
+      d.disponibilidad, d.auto, d.experiencia, d.contacto_preferido,
+      d.canales, d.empresa, d.giro, d.sucursales, d.notas];
+    vals.forEach(function (v, idx) {
+      if (v !== undefined && v !== "") sh.getRange(dup, idx + 2).setValue(v);
+    });
+    sh.getRange(dup, 16).setValue(
+      String(d.notas || rows0[dup - 1][15] || "") + " [actualizado " +
+      new Date().toLocaleDateString("es-MX") + "]");
+  } else {
+    sh.appendRow([new Date(), d.tipo || "", d.nombre || "", d.email || "",
+      d.telefono || "", d.ciudad || "", d.edad || "", d.disponibilidad || "",
+      d.auto || "", d.experiencia || "", d.contacto_preferido || "",
+      d.canales || "", d.empresa || "", d.giro || "", d.sucursales || "",
+      d.notas || "", "Nuevo"]);
+  }
 
   const suj = d.tipo === "empresa"
     ? "Nueva solicitud Empresa: " + d.empresa + " (" + d.nombre + ")"
