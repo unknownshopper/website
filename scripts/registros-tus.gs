@@ -310,7 +310,10 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
     const r = rows[i];
     const est = String(r[16] || "Nuevo");
     const pref = String(r[10] || "").toLowerCase();
-    const fecha = r[0] ? new Date(r[0]).toLocaleDateString("es-MX", { day: "2-digit", month: "short" }) : "";
+    const fecha = r[0]
+      ? new Date(r[0]).toLocaleDateString("es-MX", { day: "2-digit", month: "short" }) +
+        " · " + new Date(r[0]).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })
+      : "";
     body += `<tr>
 <td>${i}<br><span class="muted">${fecha}</span></td>
 <td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span> ${r[17] ? '<span class="pb pc">' + r[17] + '</span>' : ""}</td>
