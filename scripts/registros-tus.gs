@@ -320,7 +320,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 <td>${r[4]} ${pref === "whatsapp" ? '<span class="pb pwa">WhatsApp</span>' : ""}<br><span class="muted">${r[3]}</span> ${pref === "correo" ? '<span class="pb pm">Correo</span>' : ""}</td>
 <td>${r[5]}<br><span class="muted">${r[6]} años</span></td>
 <td>${dispBadges(r[7], r[8])}<span class="muted">Disp: ${r[7]} · Exp: ${r[9]}<br>${r[15] || ""}</span></td>
-<td><form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="margin:0">
+<td data-s="${est}"><form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="margin:0">
 <input type="hidden" name="key" value="${PANEL_KEY}">
 <input type="hidden" name="action" value="status">
 <input type="hidden" name="row" value="${i + 1}">
@@ -415,8 +415,8 @@ function sortTable(n){
   var dir = sortDir[n] === 'asc' ? 'desc' : 'asc';
   sortDir[n] = dir;
   rows.sort(function(a, b){
-    var x = a.cells[n].textContent.trim();
-    var y = b.cells[n].textContent.trim();
+    var x = a.cells[n].dataset.s || a.cells[n].textContent.trim();
+    var y = b.cells[n].dataset.s || b.cells[n].textContent.trim();
     var c = x.localeCompare(y, 'es', { numeric: true });
     return dir === 'asc' ? c : -c;
   });
