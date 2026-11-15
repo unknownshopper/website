@@ -263,6 +263,8 @@ td{padding:10px 12px;border-top:1px solid #eef0f6;vertical-align:top}
 .st a:hover{background:#e2e8fb;color:#2563eb}
 .stsel{border:1px solid #e3e6f0;border-radius:8px;padding:5px 8px;font-size:12px;font-weight:600;background:#fff;cursor:pointer;max-width:130px}
 .muted{color:#9aa0b8;font-size:12px}
+.pb{display:inline-block;padding:1px 8px;border-radius:99px;font-size:10px;font-weight:700;vertical-align:middle}
+.pwa{background:#e7f8ec;color:#15803d}.pm{background:#eef4ff;color:#2563eb}
 .act a.dl{background:#fdecec;color:#b91c1c}
 .rutas{background:#fff;border-radius:12px;padding:18px 20px}
 .ruta{margin-bottom:14px}
@@ -283,11 +285,12 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
   for (let i = rows.length - 1; i >= 1; i--) {
     const r = rows[i];
     const est = String(r[16] || "Nuevo");
+    const pref = String(r[10] || "").toLowerCase();
     const fecha = r[0] ? new Date(r[0]).toLocaleDateString("es-MX", { day: "2-digit", month: "short" }) : "";
     body += `<tr>
 <td>${i}<br><span class="muted">${fecha}</span></td>
 <td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span></td>
-<td>${r[4]}<br><span class="muted">${r[3]} · ${r[10]}</span></td>
+<td>${r[4]} ${pref === "whatsapp" ? '<span class="pb pwa">WhatsApp</span>' : ""}<br><span class="muted">${r[3]}</span> ${pref === "correo" ? '<span class="pb pm">Correo</span>' : ""}</td>
 <td>${r[5]}<br><span class="muted">${r[6]} años</span></td>
 <td><span class="muted">Disp: ${r[7]} · Auto: ${r[8]} · Exp: ${r[9]}<br>${r[15] || ""}</span></td>
 <td><form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="margin:0">
