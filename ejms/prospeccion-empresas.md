@@ -71,9 +71,11 @@ Objetivo de la llamada: NO vender ahí — conseguir el WhatsApp/nombre del deci
 - **Línea administrativa:** (993) 315 6474
 - **Domicilio fiscal:** Quintín Arauz s/n, Col. Atasta, C.P. 86100, Villahermosa
 - **Sucursales:** Zaragoza 407 Centro · Benito Juárez 400 · Av. Ramón Mendoza (Plaza Las Américas/El Recreo) · Periférico Pellicer Cámara · Plaza Crystal · Cárdenas (Morelos 306)
-- **Ángulo:** reseñas públicas aman el producto pero se quejan del servicio — inconsistencia entre sucursales, exactamente lo que mide una evaluación incógnito
+- **Ángulo principal:** ES FRANQUICIADOR desde 1985 ("Adquiere tu franquicia" en su bio) — pitch: control de calidad de franquicias / verificar estándar de marca por sucursal
+- **Ángulo secundario:** reseñas públicas aman el producto pero se quejan del servicio — inconsistencia entre sucursales
+- **Canales:** sitio kombo.mx muerto (ERR_CONNECTION_REFUSED) → Instagram @helados.kombo es su canal vivo (botón Mensaje) · línea administrativa (993) 315 6474
 - **Oferta gancho:** piloto sin costo en la sucursal que elijan
-- **Estado:** por contactar → llamar a la línea administrativa
+- **Estado:** por contactar → IG DM o llamada administrativa
 
 ---
 
