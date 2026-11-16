@@ -1680,3 +1680,9 @@
 }
 .svc-tiers b { color: var(--ink); font-weight: 650; }
 @media (max-width: 900px) { .svc-menu { grid-template-columns: 1fr; } }
+
+/* ===== Fila social dedicada bajo el CTA final ===== */
+.social-row { display: flex; justify-content: center; gap: 14px; margin-top: 34px; }
+.social-row .icon-btn { width: 54px; height: 54px; }
+.social-row .icon-btn svg { width: 24px; height: 24px; }
+.social-row .cta-menu { text-align: left; }
