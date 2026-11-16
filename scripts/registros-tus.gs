@@ -319,7 +319,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 .desc>summary:hover{color:#374151}
 </style></head><body>
 <h1>Panel TUS · Registros</h1>
-<div class="sub">${rows.length - 1} registros en el filtro 2 &middot; <a target="_top" href="${self}" style="color:#2563eb">actualizar</a> &middot; <a target="_top" href="${self}&action=nuevo" style="color:#15803d;font-weight:600">＋ Agregar</a>
+<div class="sub">${rows.length - 1} registros en el filtro 2 &middot; <a target="_top" href="${self}" style="color:#2563eb">actualizar</a> &middot; <a target="_top" href="${self}&action=nuevo" style="color:#15803d;font-weight:600">＋ Agregar</a> &middot; <a target="_top" href="https://unknownshoppers.com/" style="color:#5b6078">← ir al sitio</a>
 &middot; <form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="display:inline">
 <input type="hidden" name="key" value="${PANEL_KEY}">
 <input type="hidden" name="action" value="tagcamp">
