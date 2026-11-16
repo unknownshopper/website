@@ -340,6 +340,10 @@ function setTipo(t) {
   $("tabEmpresa").classList.toggle("active", t === "empresa");
   $("fShopper").classList.toggle("hidden", t !== "shopper");
   $("fEmpresa").classList.toggle("hidden", t !== "empresa");
+  const url = new URL(location.href);
+  if (t === "empresa") url.searchParams.set("tipo", "empresa");
+  else url.searchParams.delete("tipo");
+  history.replaceState(null, "", url);
 }
 
 $("tabShopper").addEventListener("click", () => setTipo("shopper"));
