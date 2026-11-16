@@ -265,6 +265,8 @@ function doGet(e) {
         for (const k in cols) {
           if (p[k] !== undefined) sh.getRange(r, cols[k]).setValue(p[k]);
         }
+      } else if (p.action === "obs") {
+        sh.getRange(r, 16).setValue(p.obs || "");
       } else if (p.action === "edit") {
         return editarForm(rows0[r - 1], r, self, ESTATUS);
       }
@@ -297,6 +299,10 @@ td{padding:10px 12px;border-top:1px solid #eef0f6;vertical-align:top}
 .st a{display:inline-block;margin:3px 3px 0 0;padding:3px 8px;border-radius:6px;background:#f1f3fa;color:#3a3f5e;font-size:11px;font-weight:600;text-decoration:none}
 .st a:hover{background:#e2e8fb;color:#2563eb}
 .stsel{border:1px solid #e3e6f0;border-radius:8px;padding:5px 8px;font-size:12px;font-weight:600;background:#fff;cursor:pointer;max-width:130px}
+.obs{width:100%;min-width:150px;min-height:54px;border:1px solid transparent;border-radius:8px;padding:6px 8px;font-size:12px;font-family:inherit;background:transparent;resize:vertical;box-sizing:border-box;line-height:1.4}
+.obs:hover{border-color:#e3e6f0}
+.obs:focus{border-color:#2563eb;outline:none;background:#fff}
+.obs.saved{border-color:#16a34a;background:#f0fdf4}
 .muted{color:#9aa0b8;font-size:12px}
 .pb{display:inline-block;padding:1px 8px;border-radius:99px;font-size:10px;font-weight:700;vertical-align:middle}
 .pwa{background:#e7f8ec;color:#15803d}.pm{background:#eef4ff;color:#2563eb}
@@ -326,7 +332,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 <input name="camp" placeholder="etiqueta campaña" style="border:1px solid #e3e6f0;border-radius:6px;padding:3px 8px;font-size:12px;width:110px">
 <button type="submit" style="border:0;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;background:#f3e8ff;color:#7c3aed;cursor:pointer">Aplicar a vacíos</button>
 </form></div>
-<table><tr><th onclick="sortTable(0)">#</th><th onclick="sortTable(1)">Nombre</th><th onclick="sortTable(2)">Contacto</th><th onclick="sortTable(3)">Ciudad / Edad</th><th onclick="sortTable(4)">Detalles</th><th onclick="sortTable(5)">Estatus</th><th>Acciones</th></tr>`;
+<table><tr><th onclick="sortTable(0)">#</th><th onclick="sortTable(1)">Nombre</th><th onclick="sortTable(2)">Contacto</th><th onclick="sortTable(3)">Ciudad / Edad</th><th onclick="sortTable(4)">Detalles</th><th onclick="sortTable(5)">Observaciones</th><th onclick="sortTable(6)">Estatus</th><th>Acciones</th></tr>`;
 
   function rowTr(i) {
     const r = rows[i];
@@ -341,7 +347,8 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 <td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span> ${r[17] ? '<span class="pb pc">' + r[17] + '</span>' : ""}</td>
 <td>${r[4]} ${pref === "whatsapp" ? '<span class="pb pwa">WhatsApp</span>' : ""}<br><span class="muted">${r[3]}</span> ${pref === "correo" ? '<span class="pb pm">Correo</span>' : ""}</td>
 <td>${r[5]}<br><span class="muted">${r[6]} años</span></td>
-<td>${dispBadges(r[7], r[8])}<span class="muted">Disp: ${r[7]} · Exp: ${r[9]}<br>${r[15] || ""}</span></td>
+<td>${dispBadges(r[7], r[8])}<span class="muted">Disp: ${r[7]} · Exp: ${r[9]}</span></td>
+<td><textarea class="obs" data-row="${i + 1}" placeholder="—">${String(r[15] || "").replace(/</g, "&lt;")}</textarea></td>
 <td data-s="${est}"><form method="get" target="_top" action="${ScriptApp.getService().getUrl()}" style="margin:0">
 <input type="hidden" name="key" value="${PANEL_KEY}">
 <input type="hidden" name="action" value="status">
@@ -368,7 +375,7 @@ ${ESTATUS.map(function (s) {
 
   if (nDesc) {
     body += `<details class="desc"><summary>🗑 Descartados (${nDesc}) — toca para ver</summary>
-<table><tr><th>#</th><th>Nombre</th><th>Contacto</th><th>Ciudad / Edad</th><th>Detalles</th><th>Estatus</th><th>Acciones</th></tr>${desc}</table></details>`;
+<table><tr><th>#</th><th>Nombre</th><th>Contacto</th><th>Ciudad / Edad</th><th>Detalles</th><th>Observaciones</th><th>Estatus</th><th>Acciones</th></tr>${desc}</table></details>`;
   }
 
   body += `<h2>Asignación de rutas</h2>
@@ -483,6 +490,13 @@ function msgWA(n, nom){
   var w = window.open(u, '_blank');
   if(!w) prompt('El navegador bloqueó la ventana. Copia este enlace y ábrelo en otra pestaña:', u);
 }
+document.querySelectorAll('.obs').forEach(function(t){
+  t.addEventListener('change', function(){
+    fetch('${self}&action=obs&row=' + t.dataset.row + '&obs=' + encodeURIComponent(t.value), { mode: 'no-cors' });
+    t.classList.add('saved');
+    setTimeout(function(){ t.classList.remove('saved'); }, 1400);
+  });
+});
 </script>
 </body></html>`;
 
