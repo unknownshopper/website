@@ -533,20 +533,20 @@ fbq('track','PageView');
     <div class="sec-head reveal">
       <span class="sec-tag">El ecosistema TUS</span>
       <h2>Un <span style="background:linear-gradient(100deg,#2563eb,#0d9ec4);-webkit-background-clip:text;background-clip:text;color:transparent">organismo vivo</span> de soluciones</h2>
-      <p>Medición de campo, experiencia en el punto de venta y plataformas a medida — tres líneas que se refuerzan entre sí. Arrastre los nodos para explorar.</p>
+      <p>The Unknown Shopper mide en campo, PIRIA convierte los datos en sistemas vivos y la experiencia en sitio mejora la operación donde ocurre. Arrastre los nodos para explorar.</p>
     </div>
     <div class="shot reveal map-card">
       <div class="map-head">
         <span class="map-live"><i></i>Ecosistema en vivo</span>
-        <span class="map-sub">Medición · Experiencia · Plataformas</span>
+        <span class="map-sub">TUS · En sitio · PIRIA</span>
       </div>
       <canvas id="netCanvas" aria-label="Mapa interactivo del ecosistema TUS" role="img"></canvas>
       <div class="map-tip" id="mapTip"></div>
       <div class="map-legend">
         <span><i class="lg lg-hq"></i>Núcleo</span>
-        <span><i class="lg lg-sec"></i>Medición de campo</span>
+        <span><i class="lg lg-sec"></i>Unknown Shopper</span>
         <span><i class="lg lg-eva"></i>Experiencia en sitio</span>
-        <span><i class="lg lg-pla"></i>Plataformas a medida</span>
+        <span><i class="lg lg-pla"></i>PIRIA</span>
         <span class="map-hint">Arrastra los nodos para explorar</span>
       </div>
     </div>
@@ -1099,24 +1099,24 @@ fbq('track','PageView');
   if(netCv){
     const NODES=[
       {id:"tus",l:"TUS",c:0,r:23,d:"Soluciones que miden y mejoran la operación: auditoría incógnita, experiencia en sitio y sistemas a medida."},
-      {id:"med",l:"Medición de campo",c:1,r:14,d:"Datos reales recolectados en la operación: shopper incógnito, percepción y canales."},
+      {id:"med",l:"Unknown Shopper",c:1,r:14,d:"Medición de campo: shopper incógnito, encuestas de percepción y auditoría de canales."},
       {id:"exp",l:"Experiencia en sitio",c:2,r:14,d:"Herramientas que mejoran la atención dentro del propio punto de venta."},
-      {id:"pla",l:"Plataformas a medida",c:3,r:14,d:"Sistemas hechos a la operación del cliente: rápidos, sin botones de más."},
+      {id:"pla",l:"PIRIA",c:3,r:14,d:"Sistemas a la medida y automatización: la operación hecha plataforma, sin botones de más."},
       {id:"m1",l:"Mystery shopping",c:1,r:7},{id:"m2",l:"Auditoría de franquicias",c:1,r:7},
-      {id:"m3",l:"Encuesta de percepción",c:1,r:7},{id:"m4",l:"Call center / WhatsApp",c:1,r:7},
+      {id:"m3",l:"Encuestas de percepción",c:1,r:7},{id:"m4",l:"Call center / WhatsApp",c:1,r:7},
       {id:"m5",l:"Red de evaluadores",c:1,r:7},
-      {id:"e1",l:"Menú digital en mesa",c:2,r:7},{id:"e2",l:"Llamada de mesero NFC",c:2,r:7},
-      {id:"e3",l:"Comandas por mesa",c:2,r:7},{id:"e4",l:"Tiempo de respuesta medido",c:2,r:7},
-      {id:"p1",l:"Dashboard con KPIs",c:3,r:7},{id:"p2",l:"Video evidencia",c:3,r:7},
-      {id:"p3",l:"Accesos por rol",c:3,r:7},{id:"p4",l:"Sistemas operativos",c:3,r:7},
-      {id:"p5",l:"Reportes <24 h",c:3,r:7},
+      {id:"e1",l:"Menú digital NFC",c:2,r:7},{id:"e2",l:"Llamada de mesero",c:2,r:7},
+      {id:"e3",l:"Comandas por mesa",c:2,r:7},{id:"e4",l:"Tiempo de respuesta",c:2,r:7},
+      {id:"p1",l:"Embudo de captación",c:3,r:7},{id:"p2",l:"Integraciones API",c:3,r:7},
+      {id:"p3",l:"Gestor documental",c:3,r:7},{id:"p4",l:"Inventarios vivos",c:3,r:7},
+      {id:"p5",l:"Panel con KPIs + video",c:3,r:7},
     ];
     const EDGES=[
       ["tus","med"],["tus","exp"],["tus","pla"],["med","exp"],["exp","pla"],["med","pla"],
       ["med","m1"],["med","m2"],["med","m3"],["med","m4"],["med","m5"],
       ["exp","e1"],["exp","e2"],["exp","e3"],["exp","e4"],
       ["pla","p1"],["pla","p2"],["pla","p3"],["pla","p4"],["pla","p5"],
-      ["m1","p1"],["m1","p2"],["e2","e4"],["e4","p1"],["m2","p3"],["m3","p5"],["m5","m1"],
+      ["m1","p5"],["m3","p5"],["e2","e4"],["e4","p5"],["m2","p3"],["p1","m3"],["m5","m1"],["p1","p5"],
     ];
     const CC=["#22d3ee","#a78bfa","#60a5fa","#34d399"];
     const nctx=netCv.getContext("2d");
