@@ -23,7 +23,7 @@ const LOGIN = (err) => `<!DOCTYPE html><html lang="es"><head><meta charset="utf-
 *{box-sizing:border-box;margin:0}
 body{font-family:'Inter',system-ui,sans-serif;background:#0b1e5b;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#1d2340}
 .card{background:#fff;border-radius:16px;padding:36px 32px;width:90%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
-.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#0b1e5b;margin-bottom:4px}
+.logo{height:52px;margin-bottom:6px}
 .sub{color:#5b6078;font-size:13px;margin-bottom:24px}
 label{display:block;text-align:left;font-size:12px;color:#5b6078;margin-bottom:6px}
 input{width:100%;border:1px solid #e3e6f0;border-radius:10px;padding:12px 14px;font-size:15px}
@@ -33,7 +33,7 @@ button:hover{background:#1d4fd7}
 .err${err ? "" : "{display:none}"};background:#fdecec;color:#b91c1c;font-size:12px;border-radius:8px;padding:8px;margin-top:12px}
 </style></head><body>
 <div class="card">
-<div class="logo">🕵️ The Unknown Shopper</div>
+<img class="logo" src="/tusxx.png" alt="The Unknown Shopper">
 <div class="sub">Panel de administración</div>
 <form method="post" action="/panel/login">
 <label for="p">Contraseña</label>
