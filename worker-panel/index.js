@@ -108,6 +108,12 @@ export default {
     // y la clave real jamás aparece en el HTML entregado
     html = html.split(env.PANEL_KEY).join("x");
 
+    // botón salir
+    html = html.replace(/<\/body>/i,
+      '<a href="/panel/salir" style="position:fixed;bottom:14px;right:16px;' +
+      'font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:600;' +
+      'color:#9aa0b8;text-decoration:none;z-index:99">salir ⏻</a></body>');
+
     const headers = new Headers();
     headers.set("Content-Type", "text/html;charset=utf-8");
     headers.set("Cache-Control", "private, no-store");
