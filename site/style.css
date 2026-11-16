@@ -1686,3 +1686,5 @@
 .social-row .icon-btn { width: 54px; height: 54px; }
 .social-row .icon-btn svg { width: 24px; height: 24px; }
 .social-row .cta-menu { text-align: left; }
+.social-band { padding: 26px 20px 44px; }
+.social-band .social-row { margin-top: 0; }
