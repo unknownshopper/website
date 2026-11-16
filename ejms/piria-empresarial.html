@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    width:1080px; height:1350px;
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(160deg,#0a0e1f 0%,#0e1434 55%,#141033 100%);
+    color:#e8ecf8;
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(139,92,246,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139,92,246,.06) 1px, transparent 1px);
+    background-size:54px 54px;
+    mask-image:radial-gradient(ellipse 95% 80% at 50% 40%, #000 35%, transparent 78%);
+  }
+  .glow-a { position:absolute; width:820px; height:820px; border-radius:50%;
+    background:radial-gradient(circle, rgba(139,92,246,.22), transparent 65%);
+    top:-300px; right:-260px; }
+  .glow-b { position:absolute; width:700px; height:700px; border-radius:50%;
+    background:radial-gradient(circle, rgba(34,211,238,.16), transparent 65%);
+    bottom:160px; left:-280px; }
+
+  header {
+    position:relative; padding:52px 68px 0;
+    display:flex; align-items:center; gap:20px;
+  }
+  .wm { font-family:'Space Grotesk'; font-weight:700; font-size:56px; letter-spacing:1px; color:#c9d2f2; }
+  .wm .ia {
+    display:inline-block; background:#f4f6ff; color:#141a3a;
+    border-radius:18px; padding:2px 18px; margin-left:6px;
+  }
+  header .brand small { display:block; font-size:15px; font-weight:500; color:#7f8fc7; letter-spacing:3px; margin-top:4px; }
+
+  .tag {
+    margin:54px 68px 0; position:relative;
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk'; font-size:16px; font-weight:600; letter-spacing:3px;
+    text-transform:uppercase; color:#22d3ee;
+    border:1.5px solid rgba(34,211,238,.4); border-radius:999px;
+    padding:11px 24px; background:rgba(34,211,238,.07);
+    width:fit-content;
+  }
+  .tag i { width:8px; height:8px; border-radius:50%; background:#22d3ee; box-shadow:0 0 0 5px rgba(34,211,238,.15); }
+
+  h1 {
+    position:relative; margin:32px 68px 0;
+    font-family:'Space Grotesk'; font-weight:700;
+    font-size:76px; line-height:1.04; letter-spacing:-2.5px; color:#f2f5ff;
+  }
+  h1 .grad {
+    background:linear-gradient(100deg,#8b5cf6 5%,#22d3ee 90%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .lead {
+    position:relative; margin:30px 68px 0;
+    font-size:26px; line-height:1.42; color:#a7b3dd; max-width:740px; font-weight:500;
+  }
+
+  .mid {
+    position:relative; margin:48px 68px 0;
+    display:flex; align-items:stretch; gap:40px;
+  }
+  .chips { display:flex; flex-direction:column; gap:18px; flex:1; }
+  .chip {
+    display:flex; align-items:center; gap:16px;
+    background:rgba(255,255,255,.045); border:1.5px solid rgba(139,92,246,.28); border-radius:18px;
+    padding:24px 26px 24px 20px;
+    font-size:24px; font-weight:600; color:#e4e9fb;
+    flex:1;
+  }
+  .chip .ck {
+    width:36px; height:36px; border-radius:10px; flex:none;
+    background:linear-gradient(120deg,#8b5cf6,#22d3ee);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .chip .ck svg { width:19px; height:19px; }
+  .chip small { display:block; font-size:15.5px; font-weight:500; color:#8e9bcd; margin-top:2px; }
+
+  .side {
+    width:290px; flex:none; position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:rgba(139,92,246,.08); border:1.5px solid rgba(139,92,246,.35); border-radius:22px;
+    padding:26px 22px; text-align:center;
+  }
+  .side .cal-tag {
+    font-weight:600; font-size:15px; color:#22d3ee;
+    letter-spacing:2.4px; text-transform:uppercase; margin-bottom:14px;
+  }
+  .side .cal-big {
+    font-family:'Space Grotesk'; font-weight:700; font-size:52px;
+    letter-spacing:-1px; line-height:1.08;
+    background:linear-gradient(100deg,#a78bfa,#22d3ee);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .side .cal-note {
+    margin-top:16px; font-size:16px; font-weight:600; color:#a7b3dd;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .side .cal-note::before { content:''; width:9px; height:9px; border-radius:50%; background:#22d3ee; box-shadow:0 0 0 5px rgba(34,211,238,.15); }
+
+  .ticker {
+    position:relative; margin-top:auto;
+    padding:20px 0; border-top:1.5px solid rgba(139,92,246,.2); border-bottom:1.5px solid rgba(139,92,246,.2);
+    background:rgba(255,255,255,.02);
+    font-family:'Space Grotesk',monospace; font-size:18px; color:#8e9bcd; letter-spacing:.4px;
+    white-space:nowrap; overflow:hidden;
+  }
+  .ticker span { margin:0 26px; }
+  .ticker b { color:#22d3ee; }
+
+  footer {
+    position:relative;
+    background:linear-gradient(100deg,#6d28d9,#0891b2);
+    padding:34px 68px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  footer .cta { font-family:'Space Grotesk'; font-weight:700; font-size:32px; color:#fff; letter-spacing:.3px; }
+  footer .wa { font-size:20px; font-weight:600; color:rgba(255,255,255,.85); }
+</style></head>
+<body>
+  <div class="grid"></div>
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+
+  <header>
+    <div class="wm">PIR<span class="ia">IA</span>
+      <small class="brand" style="font-family:'Inter'">SOFTWARE A LA MEDIDA</small>
+    </div>
+  </header>
+
+  <div class="tag"><i></i>Software empresarial</div>
+
+  <h1>El software se adapta a su <span class="grad">operación</span> — no al revés.</h1>
+  <p class="lead">Sistemas a la medida para su empresa: sin módulos de relleno, sin mar de botones. Solo lo que su operación necesita — rápido y confiable.</p>
+
+  <div class="mid">
+    <div class="chips">
+      <div class="chip"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Trazabilidad y control por orden<small>Cada movimiento con responsable y fecha</small></div></div>
+      <div class="chip"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>KPIs y paneles por rol<small>Cada quien ve solo lo que le toca decidir</small></div></div>
+      <div class="chip"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Integraciones con sus sistemas<small>APIs, no islas de información</small></div></div>
+      <div class="chip"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Automatización de lo repetitivo<small>WhatsApp, alertas y seguimiento solo</small></div></div>
+    </div>
+    <div class="side">
+      <div class="cal-tag">Entrega</div>
+      <div class="cal-big">en semanas,<br>no meses</div>
+      <div class="cal-note">setup + operación mensual</div>
+    </div>
+  </div>
+
+  <div class="ticker">
+    <span>trazabilidad.completa <b>◆</b></span><span>kpi.en.vivo <b>◆</b></span><span>api.integraciones <b>◆</b></span><span>automatización.whatsapp <b>◆</b></span><span>panel.por.roles <b>◆</b></span><span>inventario.tiempo.real <b>◆</b></span><span>reportes.automáticos</span>
+  </div>
+
+  <footer>
+    <div class="cta">Agende su diagnóstico →</div>
+    <div class="wa">wa.me/52 932 201 0082</div>
+  </footer>
+</body></html>
