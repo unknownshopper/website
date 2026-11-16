@@ -28,6 +28,7 @@ async function sessionToken(env) {
 const LOGIN = (err) => `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Acceso al panel — The Unknown Shopper</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥸</text></svg>">
 <meta name="robots" content="noindex,nofollow"><style>
 *{box-sizing:border-box;margin:0}
 body{font-family:'Inter',system-ui,sans-serif;background:#0b1e5b;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#1d2340}
@@ -108,7 +109,9 @@ export default {
     // y la clave real jamás aparece en el HTML entregado
     html = html.split(env.PANEL_KEY).join("x");
 
-    // botón salir
+    // favicon 🥸 + botón salir
+    html = html.replace(/<\/title>/i, '</title>' +
+      '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥸</text></svg>">');
     html = html.replace(/<\/body>/i,
       '<a href="/panel/salir" style="position:fixed;bottom:14px;right:16px;' +
       'font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:600;' +
