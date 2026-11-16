@@ -8,7 +8,8 @@ const PANEL_KEY = "34fd89785544f191fe2e43eaa67d352e";
 
 const AUTO = {
   shopper: "Gracias por registrarte en The Unknown Shopper.\n\nRecibimos tus datos correctamente. Cuando haya una campaña disponible en tu zona, te contactaremos por WhatsApp o correo con los detalles.\n\n— Equipo TUS · unknownshoppers.com",
-  empresa: "Gracias por tu interés en The Unknown Shopper.\n\nRecibimos tu solicitud correctamente. Te contactaremos a la brevedad para agendar una demo y diseñar los escenarios de evaluación para tu operación.\n\n— Equipo TUS · unknownshoppers.com"
+  empresa: "Gracias por tu interés en The Unknown Shopper.\n\nRecibimos tu solicitud correctamente. Te contactaremos a la brevedad para agendar una demo y diseñar los escenarios de evaluación para tu operación.\n\n— Equipo TUS · unknownshoppers.com",
+  sinauto: "Gracias por registrarte en The Unknown Shopper.\n\nPara la campaña actual se requiere auto propio para moverte entre sucursales, por lo que en esta ocasión no podremos asignarte evaluaciones.\n\nTe mantenemos en nuestra base: cuando abramos una campaña compatible con tu perfil — evaluaciones telefónicas, en línea o en tu zona — te contactaremos.\n\n— Equipo TUS · unknownshoppers.com"
 };
 
 const LINK_INSTR = "https://unknownshoppers.com/instrucciones.html";
@@ -108,12 +109,15 @@ function doPost(e) {
   }
 
   if (!sospechoso && d.email && d.email.indexOf("@") > 0) {
+    const sinAuto = /^no\b/i.test(String(d.auto || "").trim());
+    const plantilla = d.tipo === "empresa" ? AUTO.empresa
+      : sinAuto ? AUTO.sinauto : AUTO.shopper;
     try {
       GmailApp.sendEmail(d.email, "Recibimos tu mensaje — The Unknown Shopper",
-        AUTO[d.tipo] || AUTO.shopper, opts);
+        plantilla, opts);
     } catch (err) {
       MailApp.sendEmail(d.email, "Recibimos tu mensaje — The Unknown Shopper",
-        AUTO[d.tipo] || AUTO.shopper, { name: "The Unknown Shopper", replyTo: ALIAS });
+        plantilla, { name: "The Unknown Shopper", replyTo: ALIAS });
     }
   }
 
@@ -250,6 +254,10 @@ function doGet(e) {
     if (r >= 2 && r <= rows0.length) {
       if (p.action === "status" && p.estatus) {
         sh.getRange(r, 17).setValue(p.estatus);
+        if (p.estatus === "Descartado" && p.motivo) {
+          const prev = String(rows0[r - 1][15] || "");
+          sh.getRange(r, 16).setValue(prev + " [descarte: " + p.motivo + "]");
+        }
       } else if (p.action === "del" && String(rows0[r - 1][2]) === String(p.nom)) {
         sh.deleteRow(r);
       } else if (p.action === "save") {
@@ -337,7 +345,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 <input type="hidden" name="key" value="${PANEL_KEY}">
 <input type="hidden" name="action" value="status">
 <input type="hidden" name="row" value="${i + 1}">
-<select name="estatus" class="stsel" style="color:${COLOR[est] || "#2563eb"}" onchange="this.form.submit()">
+<select name="estatus" class="stsel" style="color:${COLOR[est] || "#2563eb"}" onchange="stGo(this)">
 ${ESTATUS.map(function (s) {
   return `<option${s === est ? " selected" : ""}>${s}</option>`; }).join("")}
 </select></form></td>
@@ -419,6 +427,22 @@ function sendWA(){
 function copiar(){
   var m = document.getElementById('msg');
   m.select(); document.execCommand('copy');
+}
+function stGo(sel){
+  if(sel.value === 'Descartado'){
+    var mot = prompt('Motivo del descarte (opcional):', '');
+    if(mot){
+      var i = document.createElement('input');
+      i.type = 'hidden'; i.name = 'motivo'; i.value = mot;
+      sel.form.appendChild(i);
+    }
+    if(mot === null){
+      var cur = sel.querySelector('option[selected]');
+      if(cur) sel.selectedIndex = Array.prototype.indexOf.call(sel.options, cur);
+      return;
+    }
+  }
+  sel.form.submit();
 }
 var sortDir = {};
 function sortTable(n){
