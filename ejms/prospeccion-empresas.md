@@ -56,6 +56,27 @@ Regla de oro: **mensaje corto, una sola pregunta, sin adjuntar nada en el primer
 
 ---
 
+## 5. Guion de llamada (línea administrativa)
+
+> — "Buen día, ¿podría hablar con quien ve la administración o gerencia de las sucursales?"
+> — "Mi nombre es [nombre], de **The Unknown Shopper**. No vendo publicidad ni insumos — hacemos **auditorías de servicio al cliente**: enviamos clientes incógnito a las sucursales y entregamos reporte con video en 24 horas. ¿Con quién podría agendar 10 minutos, o me toma sus datos para mandarle la información por WhatsApp?"
+
+Objetivo de la llamada: NO vender ahí — conseguir el WhatsApp/nombre del decisor y permiso para enviar info.
+
+---
+
+## Prospectos
+
+### Helados Kombo, S.A. de C.V. — PRIORIDAD 1
+- **Línea administrativa:** (993) 315 6474
+- **Domicilio fiscal:** Quintín Arauz s/n, Col. Atasta, C.P. 86100, Villahermosa
+- **Sucursales:** Zaragoza 407 Centro · Benito Juárez 400 · Av. Ramón Mendoza (Plaza Las Américas/El Recreo) · Periférico Pellicer Cámara · Plaza Crystal · Cárdenas (Morelos 306)
+- **Ángulo:** reseñas públicas aman el producto pero se quejan del servicio — inconsistencia entre sucursales, exactamente lo que mide una evaluación incógnito
+- **Oferta gancho:** piloto sin costo en la sucursal que elijan
+- **Estado:** por contactar → llamar a la línea administrativa
+
+---
+
 ## Playbook rápido
 
 - **Dónde buscarlos:** Google Maps (cafeterías con 2+ sucursales en Villahermosa), grupos de Facebook de empresarios locales, directorio CANIRAC/COPARMEX Tabasco.
