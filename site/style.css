@@ -1615,12 +1615,21 @@
 /* ===== Sectores — línea de tiempo estilo PIRIA, paleta TUS ===== */
 .sect-line { display: grid; grid-template-columns: repeat(5,1fr); gap: 26px; margin-top: 56px; position: relative; }
 .sect-line::before {
-  content: ""; position: absolute; top: 27px; left: 9%; right: 9%; height: 2px; border-radius: 2px;
-  background: linear-gradient(90deg, rgba(37,99,235,.12), rgba(37,99,235,.55), rgba(13,158,196,.55), rgba(13,158,196,.12));
-  background-size: 200% 100%;
-  animation: sectFlow 7s linear infinite;
+  content: ""; position: absolute; top: 26px; left: 9%; right: 9%; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, rgba(37,99,235,.22), rgba(37,99,235,.38), rgba(13,158,196,.38), rgba(13,158,196,.22));
 }
-@keyframes sectFlow { to { background-position: -200% 0; } }
+.sect-line::after {
+  content: ""; position: absolute; top: 25px; left: 9%; height: 5px; width: 20%; border-radius: 5px;
+  background: linear-gradient(90deg, transparent, #2563eb 30%, #38bdf8 55%, #22d3ee 70%, transparent);
+  filter: drop-shadow(0 0 7px rgba(37,99,235,.65));
+  animation: sectPulse 4.5s ease-in-out infinite;
+}
+@keyframes sectPulse {
+  0%   { transform: translateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { transform: translateX(310%); opacity: 0; }
+}
 .sect-step { text-align: center; position: relative; z-index: 1; }
 .sect-dot {
   width: 54px; height: 54px; margin: 0 auto 15px; border-radius: 50%;
@@ -1639,6 +1648,6 @@
 .sect-step .d { font-size: 13px; color: var(--muted); line-height: 1.55; }
 @media (max-width: 900px) {
   .sect-line { grid-template-columns: repeat(2,1fr); gap: 36px 18px; }
-  .sect-line::before { display: none; }
+  .sect-line::before, .sect-line::after { display: none; }
 }
 @media (max-width: 480px) { .sect-line { grid-template-columns: 1fr; } }
