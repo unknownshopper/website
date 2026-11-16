@@ -10,10 +10,19 @@ Regla de oro: **mensaje corto, una sola pregunta, sin adjuntar nada en el primer
 
 **Track record usable en pitch** (sin nombrar clientes): 13 sucursales evaluadas en 4 ciudades de Quintana Roo para cadena farmacéutica · plataforma de evaluación con KPIs + video para cadena de cafeterías (16 sucursales/mes recurrente) · portal documental para proyecto hotelero · sistema industrial de trazabilidad e inspecciones · POS de restaurante con NFC en operación cobrando mensualidad.
 
-**Arsenal por línea** (ofrecer según el dolor que salga):
-- Medición: mystery incógnito · auditoría de franquicias · encuesta de percepción (~20s, georreferenciada)
-- En sitio: menú NFC · llamada de mesero · comandas por mesa
-- Plataforma: dashboard KPIs + video · accesos por rol · sistemas a medida (PIRIA)
+**Catálogo de servicios** (ofrecer por nombre, según el dolor que salga):
+
+| Línea | Producto | Qué es | Modelo |
+|---|---|---|---|
+| TUS mide | **Ojo Incógnito** | Evaluación mystery por sucursal — shopper verificado con geo, foto y recibo | por visita o mensual |
+| TUS mide | **Pulso del Cliente** | Intercepts de percepción a clientes reales — 20s, georreferenciados | por estudio |
+| TUS mide | **Espejo A/B** | Mismo guion entre sucursales o vs. competencia, lado a lado | por ciclo |
+| En sitio | **Mesa Viva** | Menú NFC por mesa + llamada de mesero + comandas — tiempo de respuesta medido | instalación + mensualidad |
+| En sitio | **Piso Medido** | Instrumentación del piso y medición continua de tiempos | mensualidad |
+| PIRIA | **Embudo** | Captación: anuncio → WhatsApp → formulario → panel con dedupe y mensajes | setup + licencia |
+| PIRIA | **Sistema a la Medida** | Plataforma operativa del cliente — solo lo que necesita | setup + mensualidad |
+
+**Niveles de compromiso:** toda relación empieza con un **Diagnóstico** (piloto pagado), continúa con **Monitoreo** (evaluación recurrente) y puede consolidarse en su propia **Plataforma** (mensualidad de sistema).
 
 ---
 
