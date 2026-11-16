@@ -77,11 +77,19 @@ Objetivo de la llamada: NO vender ahí — conseguir el WhatsApp/nombre del deci
 - **Oferta gancho:** piloto sin costo en la sucursal que elijan
 - **Estado:** por contactar → IG DM o llamada administrativa
 
-### Farmacias Unión — PRIORIDAD 2 (pez gordo)
+### Farmacias Unión — PRIORIDAD 2 (pez gordo, re-entrada)
 - **Tamaño:** 100+ sucursales en Tabasco, marca tabasqueña (grupo Farmatodo)
-- **Ángulo:** acaban de anunciar remodelación de marca para "mejorar experiencia de compra y atención" — les vendemos la MEDICIÓN de si su inversión funciona
+- **Antecedente PROPIO:** ya trabajamos con ellos — 13 sucursales en Quintana Roo (6 Cancún, 3 Playa, 2 Tulum, 1 Carrillo Puerto, 1 Madero). Terminó en conflicto: ellos pedían ENCUESTA DE PERCEPCIÓN y se les vendió mystery shopping. Error de alcance, no de calidad.
+- **Re-entrada:** admitir el error + ofrecer ahora las DOS líneas: (1) evaluación incógnita con video, (2) encuestas de percepción a clientes reales (intercepts a la salida / en línea). La red de evaluadores sirve para ambos instrumentos.
+- **Ángulo extra:** anunciaron remodelación para "mejorar experiencia de compra" — medimos si su inversión funciona, con ambas metodologías
 - **Contacto:** David Oliva, gerente regional (citado en prensa XEVT); farmaciasunion.com
 - **Conflicto:** ninguno — vertical farmacia, sin relación con Café La Cabaña
+
+### Lección operativa (aplica a todos)
+Diagnosticar antes de vender: preguntar "¿qué quieren SABER?" antes de proponer instrumento.
+- ¿Cumplen protocolo? → mystery shopping incógnito
+- ¿Qué opinan sus clientes? → encuesta de percepción (intercepts/online)
+- ¿Ambas? → paquete combinado, mayor ticket
 
 ### Santandreu — mueblería
 - ~10 sucursales (Villahermosa matriz + Comalcalco, Cárdenas, Cunduacán, Jalpa)
