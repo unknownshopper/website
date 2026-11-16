@@ -498,21 +498,21 @@ fbq('track','PageView');
   <div class="container">
     <div class="sec-head reveal">
       <span class="sec-tag">El ecosistema TUS</span>
-      <h2>Un <span style="background:linear-gradient(100deg,#2563eb,#0d9ec4);-webkit-background-clip:text;background-clip:text;color:transparent">organismo vivo</span> de medición</h2>
-      <p>Sectores, modalidades de evaluación y la plataforma conectados en un solo sistema — arrastre los nodos para explorar las relaciones.</p>
+      <h2>Un <span style="background:linear-gradient(100deg,#2563eb,#0d9ec4);-webkit-background-clip:text;background-clip:text;color:transparent">organismo vivo</span> de soluciones</h2>
+      <p>Medición de campo, experiencia en el punto de venta y plataformas a medida — tres líneas que se refuerzan entre sí. Arrastre los nodos para explorar.</p>
     </div>
     <div class="shot reveal map-card">
       <div class="map-head">
         <span class="map-live"><i></i>Ecosistema en vivo</span>
-        <span class="map-sub">Sectores · Evaluación · Plataforma</span>
+        <span class="map-sub">Medición · Experiencia · Plataformas</span>
       </div>
       <canvas id="netCanvas" aria-label="Mapa interactivo del ecosistema TUS" role="img"></canvas>
       <div class="map-tip" id="mapTip"></div>
       <div class="map-legend">
         <span><i class="lg lg-hq"></i>Núcleo</span>
-        <span><i class="lg lg-sec"></i>Sectores</span>
-        <span><i class="lg lg-eva"></i>Evaluación</span>
-        <span><i class="lg lg-pla"></i>Plataforma</span>
+        <span><i class="lg lg-sec"></i>Medición de campo</span>
+        <span><i class="lg lg-eva"></i>Experiencia en sitio</span>
+        <span><i class="lg lg-pla"></i>Plataformas a medida</span>
         <span class="map-hint">Arrastra los nodos para explorar</span>
       </div>
     </div>
@@ -1064,27 +1064,25 @@ fbq('track','PageView');
   const netCv=document.getElementById("netCanvas"),netTip=document.getElementById("mapTip");
   if(netCv){
     const NODES=[
-      {id:"tus",l:"TUS",c:0,r:23,d:"Mystery shopping end-to-end: reclutamos, entrenamos, auditamos y entregamos inteligencia."},
-      {id:"sec",l:"Sectores",c:1,r:14,d:"Las industrias donde operan nuestros shoppers."},
-      {id:"eva",l:"Evaluación",c:2,r:14,d:"Modalidades de medición en campo y canales digitales."},
-      {id:"pla",l:"Plataforma",c:3,r:14,d:"Dónde viven los resultados: un sistema hecho a medida."},
-      {id:"s1",l:"Restaurantes",c:1,r:7},{id:"s2",l:"Cafeterías",c:1,r:7},
-      {id:"s3",l:"Farmacias",c:1,r:7},{id:"s4",l:"Retail",c:1,r:7},
-      {id:"s5",l:"Comercio en línea",c:1,r:7},{id:"s6",l:"Automotriz",c:1,r:7},
-      {id:"s7",l:"Salud",c:1,r:7},
-      {id:"e1",l:"Presencial",c:2,r:7},{id:"e2",l:"Sucursales",c:2,r:7},
-      {id:"e3",l:"Franquicias",c:2,r:7},{id:"e4",l:"Call center / WhatsApp",c:2,r:7},
-      {id:"e5",l:"E-commerce & app",c:2,r:7},
-      {id:"p1",l:"Hecha a medida",c:3,r:7},{id:"p2",l:"Accesos jerárquicos",c:3,r:7},
-      {id:"p3",l:"Tabulado",c:3,r:7},{id:"p4",l:"Graficado",c:3,r:7},
-      {id:"p5",l:"Proyección",c:3,r:7},{id:"p6",l:"Alertas en tiempo real",c:3,r:7},
+      {id:"tus",l:"TUS",c:0,r:23,d:"Soluciones que miden y mejoran la operación: auditoría incógnita, experiencia en sitio y sistemas a medida."},
+      {id:"med",l:"Medición de campo",c:1,r:14,d:"Datos reales recolectados en la operación: shopper incógnito, percepción y canales."},
+      {id:"exp",l:"Experiencia en sitio",c:2,r:14,d:"Herramientas que mejoran la atención dentro del propio punto de venta."},
+      {id:"pla",l:"Plataformas a medida",c:3,r:14,d:"Sistemas hechos a la operación del cliente: rápidos, sin botones de más."},
+      {id:"m1",l:"Mystery shopping",c:1,r:7},{id:"m2",l:"Auditoría de franquicias",c:1,r:7},
+      {id:"m3",l:"Encuesta de percepción",c:1,r:7},{id:"m4",l:"Call center / WhatsApp",c:1,r:7},
+      {id:"m5",l:"Red de evaluadores",c:1,r:7},
+      {id:"e1",l:"Menú digital en mesa",c:2,r:7},{id:"e2",l:"Llamada de mesero NFC",c:2,r:7},
+      {id:"e3",l:"Comandas por mesa",c:2,r:7},{id:"e4",l:"Tiempo de respuesta medido",c:2,r:7},
+      {id:"p1",l:"Dashboard con KPIs",c:3,r:7},{id:"p2",l:"Video evidencia",c:3,r:7},
+      {id:"p3",l:"Accesos por rol",c:3,r:7},{id:"p4",l:"Sistemas operativos",c:3,r:7},
+      {id:"p5",l:"Reportes <24 h",c:3,r:7},
     ];
     const EDGES=[
-      ["tus","sec"],["tus","eva"],["tus","pla"],["sec","eva"],["eva","pla"],
-      ["sec","s1"],["sec","s2"],["sec","s3"],["sec","s4"],["sec","s5"],["sec","s6"],["sec","s7"],
-      ["eva","e1"],["eva","e2"],["eva","e3"],["eva","e4"],["eva","e5"],
-      ["pla","p1"],["pla","p2"],["pla","p3"],["pla","p4"],["pla","p5"],["pla","p6"],
-      ["s5","e5"],["s6","e2"],["e3","s4"],
+      ["tus","med"],["tus","exp"],["tus","pla"],["med","exp"],["exp","pla"],["med","pla"],
+      ["med","m1"],["med","m2"],["med","m3"],["med","m4"],["med","m5"],
+      ["exp","e1"],["exp","e2"],["exp","e3"],["exp","e4"],
+      ["pla","p1"],["pla","p2"],["pla","p3"],["pla","p4"],["pla","p5"],
+      ["m1","p1"],["m1","p2"],["e2","e4"],["e4","p1"],["m2","p3"],["m3","p5"],["m5","m1"],
     ];
     const CC=["#22d3ee","#a78bfa","#60a5fa","#34d399"];
     const nctx=netCv.getContext("2d");
