@@ -547,6 +547,7 @@ fbq('track','PageView');
         <span><i class="lg lg-sec"></i>Unknown Shopper</span>
         <span><i class="lg lg-eva"></i>Experiencia en sitio</span>
         <span><i class="lg lg-pla"></i>PIRIA</span>
+        <span><i class="lg" style="background:#94a3b8"></i>Compartido</span>
         <span class="map-hint">Arrastra los nodos para explorar</span>
       </div>
     </div>
@@ -1098,27 +1099,50 @@ fbq('track','PageView');
   const netCv=document.getElementById("netCanvas"),netTip=document.getElementById("mapTip");
   if(netCv){
     const NODES=[
-      {id:"tus",l:"TUS",c:0,r:23,d:"Soluciones que miden y mejoran la operación: auditoría incógnita, experiencia en sitio y sistemas a medida."},
-      {id:"med",l:"Unknown Shopper",c:1,r:14,d:"Medición de campo: shopper incógnito, encuestas de percepción y auditoría de canales."},
-      {id:"exp",l:"Experiencia en sitio",c:2,r:14,d:"Herramientas que mejoran la atención dentro del propio punto de venta."},
-      {id:"pla",l:"PIRIA",c:3,r:14,d:"Sistemas a la medida y automatización: la operación hecha plataforma, sin botones de más."},
-      {id:"m1",l:"Mystery shopping",c:1,r:7},{id:"m2",l:"Auditoría de franquicias",c:1,r:7},
-      {id:"m3",l:"Encuestas de percepción",c:1,r:7},{id:"m4",l:"Call center / WhatsApp",c:1,r:7},
-      {id:"m5",l:"Red de evaluadores",c:1,r:7},
-      {id:"e1",l:"Menú digital NFC",c:2,r:7},{id:"e2",l:"Llamada de mesero",c:2,r:7},
-      {id:"e3",l:"Comandas por mesa",c:2,r:7},{id:"e4",l:"Tiempo de respuesta",c:2,r:7},
-      {id:"p1",l:"Embudo de captación",c:3,r:7},{id:"p2",l:"Integraciones API",c:3,r:7},
-      {id:"p3",l:"Gestor documental",c:3,r:7},{id:"p4",l:"Inventarios vivos",c:3,r:7},
-      {id:"p5",l:"Panel con KPIs + video",c:3,r:7},
+      {id:"tus",l:"TUS",c:0,r:23,d:"Soluciones que miden y mejoran la operación: medición en campo, experiencia en sitio y sistemas a medida."},
+      {id:"empresa",l:"Empresa",c:4,r:16,d:"La marca que contrata: define estándares, hace la pregunta de negocio y recibe los resultados."},
+      {id:"protocolo",l:"Protocolo de atención",c:1,r:12},{id:"shopper",l:"Mystery Shopper",c:1,r:15},
+      {id:"sucursal",l:"Sucursales / franquicias",c:1,r:13},{id:"cliente",l:"Cliente real",c:1,r:11},
+      {id:"evidencia",l:"Evidencia",c:1,r:11},{id:"reporte",l:"Reporte <24h",c:1,r:13},
+      {id:"matriz",l:"Matriz de ponderación",c:1,r:11},{id:"kpis",l:"KPIs",c:1,r:14},
+      {id:"score",l:"Score ponderado",c:1,r:9},{id:"tiempos",l:"Tiempos de espera",c:1,r:9},
+      {id:"panel",l:"Panel por roles",c:4,r:14,d:"El punto de entrega compartido: cada nivel ve exactamente su vista."},
+      {id:"direccion",l:"Dirección",c:1,r:9},{id:"ops",l:"Operaciones",c:1,r:9},
+      {id:"gerente",l:"Gerente de tienda",c:1,r:9},{id:"alertas",l:"Alertas críticas",c:1,r:10},
+      {id:"competencia",l:"Competencia",c:1,r:11},{id:"historico",l:"Histórico",c:1,r:10},
+      {id:"benchmark",l:"Comparativo A/B",c:1,r:10},
+      {id:"enc",l:"Encuestas georreferenciadas",c:1,r:12},{id:"muestra",l:"Diseño de muestra",c:1,r:10},
+      {id:"tab",l:"Tabulación",c:1,r:9},{id:"insight",l:"Insight estadístico",c:1,r:11},
+      {id:"piria",l:"PIRIA",c:3,r:16,d:"Sistemas a la medida y automatización: la operación hecha plataforma, sin botones de más."},
+      {id:"inv",l:"Inventarios vivos",c:3,r:11},{id:"api",l:"Integraciones API",c:3,r:10},
+      {id:"docs",l:"Gestor documental",c:3,r:10},{id:"embudo",l:"Embudo de captación",c:3,r:12},
+      {id:"tkt",l:"Tickets / soporte",c:3,r:9},
+      {id:"exp",l:"Experiencia en sitio",c:2,r:16,d:"Herramientas que mejoran la atención dentro del propio punto de venta."},
+      {id:"menu",l:"Menú digital NFC",c:2,r:12},{id:"llamada",l:"Llamada de mesero",c:2,r:11},
+      {id:"comanda",l:"Comandas por mesa",c:2,r:11},{id:"resp",l:"Tiempo de respuesta",c:2,r:10},
+      {id:"piso",l:"Equipo de piso",c:2,r:10},
     ];
     const EDGES=[
-      ["tus","med"],["tus","exp"],["tus","pla"],["med","exp"],["exp","pla"],["med","pla"],
-      ["med","m1"],["med","m2"],["med","m3"],["med","m4"],["med","m5"],
-      ["exp","e1"],["exp","e2"],["exp","e3"],["exp","e4"],
-      ["pla","p1"],["pla","p2"],["pla","p3"],["pla","p4"],["pla","p5"],
-      ["m1","p5"],["m3","p5"],["e2","e4"],["e4","p5"],["m2","p3"],["p1","m3"],["m5","m1"],["p1","p5"],
+      ["tus","empresa"],["tus","shopper"],["tus","protocolo"],
+      ["empresa","protocolo"],["empresa","sucursal"],["empresa","panel"],
+      ["shopper","sucursal"],["shopper","evidencia"],["shopper","cliente"],
+      ["protocolo","matriz"],["protocolo","shopper"],
+      ["sucursal","cliente"],["sucursal","evidencia"],["sucursal","competencia"],
+      ["evidencia","reporte"],["reporte","kpis"],["reporte","historico"],
+      ["matriz","score"],["kpis","score"],["kpis","tiempos"],["kpis","panel"],
+      ["panel","direccion"],["panel","ops"],["panel","gerente"],
+      ["panel","alertas"],["kpis","alertas"],
+      ["competencia","benchmark"],["score","benchmark"],["historico","benchmark"],
+      ["direccion","competencia"],["historico","direccion"],
+      ["empresa","enc"],["muestra","enc"],["enc","tab"],["tab","insight"],
+      ["insight","direccion"],["insight","panel"],["evidencia","enc"],
+      ["empresa","piria"],["piria","inv"],["piria","api"],["piria","docs"],["piria","tkt"],
+      ["piria","embudo"],["api","panel"],["piria","panel"],["embudo","panel"],
+      ["empresa","exp"],["exp","menu"],["exp","llamada"],["exp","comanda"],["exp","piso"],
+      ["menu","llamada"],["llamada","piso"],["llamada","resp"],["comanda","resp"],["resp","panel"],
+      ["tus","piria"],["tus","exp"],["resp","kpis"],["embudo","enc"],
     ];
-    const CC=["#22d3ee","#a78bfa","#60a5fa","#34d399"];
+    const CC=["#22d3ee","#a78bfa","#60a5fa","#34d399","#94a3b8"];
     const nctx=netCv.getContext("2d");
     let NW=0,NH=0,nvis=true,nhov=null,ndrag=null;
     const idx={};NODES.forEach(n=>idx[n.id]=n);
