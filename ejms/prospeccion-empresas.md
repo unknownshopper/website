@@ -77,6 +77,33 @@ Objetivo de la llamada: NO vender ahí — conseguir el WhatsApp/nombre del deci
 - **Oferta gancho:** piloto sin costo en la sucursal que elijan
 - **Estado:** por contactar → IG DM o llamada administrativa
 
+### Farmacias Unión — PRIORIDAD 2 (pez gordo)
+- **Tamaño:** 100+ sucursales en Tabasco, marca tabasqueña (grupo Farmatodo)
+- **Ángulo:** acaban de anunciar remodelación de marca para "mejorar experiencia de compra y atención" — les vendemos la MEDICIÓN de si su inversión funciona
+- **Contacto:** David Oliva, gerente regional (citado en prensa XEVT); farmaciasunion.com
+- **Conflicto:** ninguno — vertical farmacia, sin relación con Café La Cabaña
+
+### Santandreu — mueblería
+- ~10 sucursales (Villahermosa matriz + Comalcalco, Cárdenas, Cunduacán, Jalpa)
+- **Ángulo:** ¿el vendedor de piso ofreció crédito/cierre? medición de venta en tienda
+- santandreu.com.mx — teléfonos por sucursal en su sitio
+
+### Innovadores / Servicio Monterrey — gasolineras
+- Grupo de estaciones de servicio con matriz en Tabasco (Consorcio Lemon)
+- **Ángulo:** mystery shopping de gasolineras = vertical clásico (despachador, cobro, venta sugerida, limpieza)
+
+### Abarrotes Monterrey — retail masivo
+- 250 tiendas + CEDIS en Tabasco — contrato grande si entra, decisión más lenta
+
+### Cola rápida (ticket menor, cierre rápido)
+- Ópticas franquiciadas (Devlyn Villahermosa, Excelencia Óptica) — franquiciatario local decide solo
+- Gimnasios (Fitness Center 2 suc., BymFit) — venta de inscripciones en recepción
+- DyC Materiales — mostrador de materiales, Villahermosa + Cárdenas
+- TABSCOOB / TACSA — agro, menor fit pero con sucursales
+
+### Descartados por conflicto (competidores Café La Cabaña)
+- Chocolates CACEP · Atakear · A Toda Salsa · Banquetakos
+
 ---
 
 ## Playbook rápido
