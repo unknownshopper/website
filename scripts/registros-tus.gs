@@ -98,9 +98,7 @@ function doPost(e) {
     .map(([k, v]) => k + ": " + v).join("\n");
 
   const ALIAS = "the@unknownshoppers.com";
-  const tieneAlias = GmailApp.getAliases().indexOf(ALIAS) >= 0;
   const opts = { name: "The Unknown Shopper", replyTo: ALIAS };
-  if (tieneAlias) opts.from = ALIAS;
 
   try {
     GmailApp.sendEmail(NOTIFY_EMAIL, suj, cuerpo, opts);
