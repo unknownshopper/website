@@ -4,7 +4,7 @@ const SHEET_NAME = "registros";
 const SUC_NAME = "sucursales";
 const NOTIFY_EMAIL = "tipograficoweb@gmail.com";
 const TOKEN = "tus-reg-2026";
-const PANEL_KEY = "tus-panel-2026";
+const PANEL_KEY = "34fd89785544f191fe2e43eaa67d352e";
 
 const AUTO = {
   shopper: "Gracias por registrarte en The Unknown Shopper.\n\nRecibimos tus datos correctamente. Cuando haya una campaña disponible en tu zona, te contactaremos por WhatsApp o correo con los detalles.\n\n— Equipo TUS · unknownshoppers.com",
