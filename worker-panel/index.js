@@ -7,6 +7,15 @@ const EXEC = "https://script.google.com/macros/s/AKfycbw0QxwdJpebcBlXQsuMzuz39LV
 const COOKIE = "tus_sess";
 const MAX_AGE = 60 * 60 * 24 * 7; // 1 semana
 
+function jsUnescape(s) {
+  return s.replace(/\\(x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|n|r|t|b|f|v|0|"|'|\\|\/)/g, (_, e) => {
+    if (e[0] === "x" || e[0] === "u") return String.fromCharCode(parseInt(e.slice(1), 16));
+    const mp = { n: "\n", r: "\r", t: "\t", b: "\b", f: "\f", v: "\v", "0": "\0",
+      '"': '"', "'": "'", "\\": "\\", "/": "/" };
+    return mp[e];
+  });
+}
+
 async function sessionToken(env) {
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey(
@@ -87,6 +96,13 @@ export default {
     });
 
     let html = await res.text();
+
+    // Apps Script no devuelve el panel directo: lo envuelve en una página
+    // con iframe sandbox + JS de Google (que rompe bajo nuestro dominio).
+    // El HTML real viaja embebido en userHtml, doble-escapado → 2 decodes.
+    const m = html.match(/userHtml\\x22:\\x22((?:[^\\]|\\.)*?)\\x22,\\x22/);
+    if (m) html = jsUnescape(jsUnescape(m[1]));
+
     // reescritura in-domain: los links internos del panel apuntan al EXEC → a /panel
     html = html.split(EXEC).join("/panel");
     // y la clave real jamás aparece en el HTML entregado
