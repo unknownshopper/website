@@ -206,8 +206,8 @@
   <nav class="modes" id="modes" aria-label="Vista del ecosistema">
     <button class="on" data-mode="eco">Ecosistema</button>
     <button data-mode="tus">Unknown Shopper</button>
-    <button data-mode="oc">Olmeca Code</button>
-    <button data-mode="dd">Datos Duros</button>
+    <button data-mode="piria">PIRIA</button>
+    <button data-mode="exp">En sitio</button>
   </nav>
   <a class="back" href="index.html">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
@@ -253,7 +253,7 @@
 </div>
 
 <script>
-// g: grupo-marca ('tus' | 'oc' | 'dd' | 'all' — 'all' aparece en todas las vistas)
+// g: grupo-marca ('tus' | 'piria' | 'exp' | 'all' — 'all' aparece en todas las vistas)
 const NODES = [
   // — The Unknown Shopper: captura en campo
   { id:'tus',       label:'The Unknown Shopper', type:'core',   r:26, g:'tus', desc:'La puerta de entrada: recluta, entrena, audita y entrega inteligencia operativa. Medir antes de decidir.' },
@@ -276,19 +276,25 @@ const NODES = [
   { id:'competencia',label:'Competencia',        type:'actor',  r:14, g:'tus', desc:'Marcas similares evaluadas con el mismo guion — usted contra ellas, lado a lado.' },
   { id:'historico', label:'Histórico',           type:'data',   r:13, g:'tus', desc:'La evolución de cada KPI por sucursal a lo largo del tiempo.' },
   { id:'benchmark', label:'Comparativo A/B',     type:'result', r:12, g:'tus', desc:'La misma vara para todos: sus sucursales entre sí y contra la competencia.' },
-  // — OLMECA CODE: infraestructura donde vive la operación
-  { id:'oc',        label:'OLMECA CODE',         type:'core',   r:23, g:'oc',  desc:'La capa de infraestructura: sistemas a la medida que convierten los datos de campo en operación viva.' },
-  { id:'inv',       label:'Inventarios vivos',   type:'system', r:15, g:'oc',  desc:'Activos, refacciones y equipo con estado real — inspecciones PND, MRO y administración de la operación.' },
-  { id:'api',       label:'Integraciones API',   type:'system', r:12, g:'oc',  desc:'Sus sistemas hablando entre sí: ERP, CMMS, sensores y fuentes externas en un solo flujo.' },
-  { id:'docs',      label:'Gestor documental',   type:'system', r:12, g:'oc',  desc:'Control de versiones, evidencias y expedientes — nada se pierde, todo se audita.' },
-  { id:'tkt',       label:'Tickets / soporte',   type:'result', r:11, g:'oc',  desc:'Seguimiento operativo en vivo: incidencias, responsables y tiempos de resolución.' },
-  { id:'energia',   label:'Sector energía',      type:'actor',  r:14, g:'oc',  desc:'Villahermosa, Ciudad del Carmen, Dos Bocas, Coatzacoalcos — operación donde está la industria.' },
-  // — Datos Duros: profundidad después del reporte
-  { id:'dd',        label:'Datos Duros',         type:'core',   r:23, g:'dd',  desc:'La capa de profundidad: investigación metodológica que va más allá del reporte puntual.' },
-  { id:'enc',       label:'Encuestas en vivo',   type:'system', r:14, g:'dd',  desc:'Levantamiento georreferenciado con actualización en tiempo real — cada respuesta con su ubicación exacta.' },
-  { id:'muestra',   label:'Diseño de muestra',   type:'system', r:12, g:'dd',  desc:'Representatividad calculada: tamaño, segmentación y margen de error antes de salir a campo.' },
-  { id:'tab',       label:'Tabulación',          type:'data',   r:11, g:'dd',  desc:'Cada respuesta procesada, ponderada y cruzada — los datos duros detrás del hallazgo.' },
-  { id:'insight',   label:'Insight estadístico', type:'result', r:13, g:'dd',  desc:'El patrón que el reporte operativo no muestra: tendencias, correlaciones y señales de mercado.' },
+  // — TUS: encuestas de percepción (absorbidas en la línea de medición)
+  { id:'enc',       label:'Encuestas georreferenciadas', type:'system', r:14, g:'tus', desc:'Percepción del cliente real, en vivo y con ubicación exacta — cada respuesta prueba dónde se levantó.' },
+  { id:'muestra',   label:'Diseño de muestra',   type:'system', r:12, g:'tus', desc:'Representatividad calculada: tamaño, segmentación y margen de error antes de salir a campo.' },
+  { id:'tab',       label:'Tabulación',          type:'data',   r:11, g:'tus', desc:'Cada respuesta procesada, ponderada y cruzada — los datos duros detrás del hallazgo.' },
+  { id:'insight',   label:'Insight estadístico', type:'result', r:13, g:'tus', desc:'El patrón que el reporte operativo no muestra: tendencias, correlaciones y señales de mercado.' },
+  // — PIRIA: sistemas donde vive la operación
+  { id:'piria',     label:'PIRIA',               type:'core',   r:23, g:'piria', desc:'Sistemas a la medida y automatización: la operación del cliente convertida en plataforma viva, sin botones de más.' },
+  { id:'inv',       label:'Inventarios vivos',   type:'system', r:15, g:'piria', desc:'Activos, refacciones y equipo con estado real — inspecciones y administración de la operación.' },
+  { id:'api',       label:'Integraciones API',   type:'system', r:12, g:'piria', desc:'Sus sistemas hablando entre sí: ERP, CRM, sensores y fuentes externas en un solo flujo.' },
+  { id:'docs',      label:'Gestor documental',   type:'system', r:12, g:'piria', desc:'Control de versiones, evidencias y expedientes — nada se pierde, todo se audita.' },
+  { id:'embudo',    label:'Embudo de captación', type:'system', r:14, g:'piria', desc:'Anuncio → WhatsApp → registro → dedupe → mensajes automáticos: captación operando sola, con pixel y atribución.' },
+  { id:'tkt',       label:'Tickets / soporte',   type:'result', r:11, g:'piria', desc:'Seguimiento operativo en vivo: incidencias, responsables y tiempos de resolución.' },
+  // — Experiencia en sitio: la operación mejorada dentro del punto de venta
+  { id:'exp',       label:'Experiencia en sitio',type:'core',   r:23, g:'exp',  desc:'Herramientas dentro del punto de venta: el cliente se atiende mejor y el servicio se mide solo.' },
+  { id:'menu',      label:'Menú digital NFC',    type:'system', r:14, g:'exp',  desc:'NFC en el servilletero: el cliente ve el menú al instante, sin esperar al mesero.' },
+  { id:'llamada',   label:'Llamada de mesero',   type:'system', r:13, g:'exp',  desc:'Un botón en la mesa — el cliente llama, el mesero llega. Ideal en terrazas y salones grandes.' },
+  { id:'comanda',   label:'Comandas por mesa',   type:'system', r:13, g:'exp',  desc:'El pedido viaja directo de la mesa a cocina: menos vueltas, menos errores, más rotación.' },
+  { id:'resp',      label:'Tiempo de respuesta', type:'data',   r:12, g:'exp',  desc:'Cada llamada mide automáticamente cuánto tarda la atención — KPI de servicio en vivo, sin shopper.' },
+  { id:'piso',      label:'Equipo de piso',      type:'actor',  r:12, g:'exp',  desc:'Meseros y staff que reciben la llamada y ejecutan el servicio — su desempeño queda medido.' },
 ];
 
 const EDGES = [
@@ -304,14 +310,17 @@ const EDGES = [
   ['panel','alertas'],['kpis','alertas'],
   ['competencia','benchmark'],['score','benchmark'],['historico','benchmark'],
   ['direccion','competencia'],['historico','direccion'],
-  // Flujo OLMECA CODE
-  ['empresa','oc'],['oc','inv'],['oc','api'],['oc','docs'],['oc','tkt'],
-  ['oc','energia'],['energia','inv'],['api','panel'],['oc','panel'],
-  // Flujo Datos Duros
-  ['empresa','dd'],['dd','enc'],['dd','muestra'],['dd','tab'],['dd','insight'],
-  ['muestra','enc'],['enc','tab'],['tab','insight'],
-  // Puentes del ecosistema (los hallazgos también aterrizan en el panel)
-  ['tus','oc'],['reporte','dd'],['evidencia','enc'],['insight','direccion'],['insight','panel'],
+  // Flujo encuestas de percepción (TUS)
+  ['empresa','enc'],['muestra','enc'],['enc','tab'],['tab','insight'],
+  ['insight','direccion'],['insight','panel'],['evidencia','enc'],
+  // Flujo PIRIA
+  ['empresa','piria'],['piria','inv'],['piria','api'],['piria','docs'],['piria','tkt'],
+  ['piria','embudo'],['api','panel'],['piria','panel'],['embudo','panel'],
+  // Flujo Experiencia en sitio
+  ['empresa','exp'],['exp','menu'],['exp','llamada'],['exp','comanda'],['exp','piso'],
+  ['menu','llamada'],['llamada','piso'],['llamada','resp'],['comanda','resp'],['resp','panel'],
+  // Puentes del ecosistema (medir → construir → mejorar)
+  ['tus','piria'],['tus','exp'],['resp','kpis'],['embudo','enc'],
 ];
 
 // Lentes: qué se muestra y cómo se cuenta
@@ -319,22 +328,22 @@ const VIEWS = {
   eco: {
     tag: 'Mapa de servicios',
     title: 'El ecosistema completo',
-    desc: 'Tres marcas, un flujo: The Unknown Shopper captura en campo, OLMECA CODE lo convierte en sistemas vivos y Datos Duros profundiza con investigación metodológica.',
+    desc: 'Tres líneas que se refuerzan: The Unknown Shopper mide la operación en campo, PIRIA la convierte en sistemas vivos y la experiencia en sitio la mejora donde ocurre.',
   },
   tus: {
-    tag: 'Captura en campo',
+    tag: 'Medición de campo',
     title: 'The Unknown Shopper',
-    desc: 'La puerta de entrada: del protocolo de atención a la evidencia georreferenciada y el panel por roles — medir antes de decidir.',
+    desc: 'Del protocolo de atención a la evidencia: mystery shopping incógnito y encuestas de percepción georreferenciadas — medir antes de decidir.',
   },
-  oc: {
-    tag: 'Infraestructura',
-    title: 'OLMECA CODE',
-    desc: 'Los sistemas donde vive la operación: inventarios en tiempo real, integraciones y trazabilidad — con foco en el sector energía del sureste.',
+  piria: {
+    tag: 'Sistemas a medida',
+    title: 'PIRIA',
+    desc: 'Software hecho a la operación: inventarios vivos, integraciones API, gestor documental y embudos de captación automáticos — rápidos y sin botones de más.',
   },
-  dd: {
-    tag: 'Profundidad',
-    title: 'Datos Duros',
-    desc: 'El paso después del reporte: encuestas georreferenciadas en vivo, diseño de muestra y hallazgos estadísticos que sostienen la decisión.',
+  exp: {
+    tag: 'En el punto de venta',
+    title: 'Experiencia en sitio',
+    desc: 'Menú digital NFC por mesa, llamada de mesero y comandas directas: la atención mejora y el tiempo de respuesta se mide solo.',
   },
 };
 

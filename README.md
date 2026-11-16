@@ -2,13 +2,26 @@
 
 **The Unknown Shopper (TUS)** es una plataforma de mystery shopping y auditoría de experiencia del cliente. Shoppers certificados visitan puntos de venta de forma incógnita para medir, auditar y transformar la experiencia del cliente — con datos reales, no suposiciones.
 
+## Modelo de negocio
+
+Tres líneas que se refuerzan — **TUS mide, PIRIA construye, la experiencia en sitio mejora**:
+
+- **Medición de campo (TUS)**: mystery shopping incógnito, auditoría de franquicias, encuestas de percepción georreferenciadas, auditoría de canales (call center/WhatsApp/web).
+- **Experiencia en sitio**: menú digital NFC por mesa, botón de llamada de mesero, comandas — con tiempo de respuesta medido automáticamente.
+- **Plataformas a medida (PIRIA)**: el cliente no recibe un PDF, recibe su sistema — dashboard con KPIs, video evidencia, accesos por rol, reportes <24 h y sistemas operativos hechos a la operación.
+
+Modelo comercial: la auditoría **detecta** las áreas de atención y el reporte con evidencia es la puerta de entrada a vender la **solución** (sistema a medida / línea en sitio). Facturación recurrente vía evaluaciones mensuales + mensualidad de plataforma.
+
 ## Servicios
 
 - **Auditoría de punto de venta**: evaluación de vitrina, presentación, inventario visible, protocolos de atención y tiempo de espera real.
+- **Auditoría de franquicias**: verificación de estándar de marca por sucursal para el franquiciador.
+- **Encuestas de percepción**: intercepts a clientes reales (~20 s por encuesta, georreferenciadas), con diseño de muestra y tabulación.
 - **Comparación A/B**: el mismo guion de evaluación aplicado en sucursales, turnos o competidores distintos para detectar inconsistencias.
 - **Posventa automotriz**: documentación del ciclo completo de servicio — recepción, cotizaciones, comunicación y entrega.
 - **Salud y agendamiento**: evaluación del journey del paciente, de la cita a la venta.
 - **Cobertura multicanal**: tienda física, digital y telefónica auditadas por un solo equipo.
+- **Soluciones en el punto de venta**: menú NFC, llamada de mesero y comandas por mesa con métrica automática de respuesta.
 
 ### La plataforma
 

@@ -3,6 +3,18 @@
 Templates para contactar dueños/gerentes de negocio (cafeterías, restaurantes, retail en Villahermosa).
 Regla de oro: **mensaje corto, una sola pregunta, sin adjuntar nada en el primer contacto.**
 
+## El modelo (lo que vendemos en realidad)
+
+> **TUS mide → PIRIA construye → el cliente paga mensualidad.**
+> La auditoría detecta las áreas de atención; el reporte con evidencia es la puerta de entrada para vender la solución (sistema a medida, menú NFC, plataforma de KPIs). Mystery shopping es el diagnóstico; la mensualidad del sistema es el negocio.
+
+**Track record usable en pitch** (sin nombrar clientes): 13 sucursales evaluadas en 4 ciudades de Quintana Roo para cadena farmacéutica · plataforma de evaluación con KPIs + video para cadena de cafeterías (16 sucursales/mes recurrente) · portal documental para proyecto hotelero · sistema industrial de trazabilidad e inspecciones · POS de restaurante con NFC en operación cobrando mensualidad.
+
+**Arsenal por línea** (ofrecer según el dolor que salga):
+- Medición: mystery incógnito · auditoría de franquicias · encuesta de percepción (~20s, georreferenciada)
+- En sitio: menú NFC · llamada de mesero · comandas por mesa
+- Plataforma: dashboard KPIs + video · accesos por rol · sistemas a medida (PIRIA)
+
 ---
 
 ## 1. WhatsApp — primer contacto (frío)
