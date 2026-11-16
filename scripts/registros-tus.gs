@@ -316,6 +316,9 @@ td{padding:10px 12px;border-top:1px solid #eef0f6;vertical-align:top}
 .btn.wabtn{background:#25d366;color:#fff}
 textarea{width:100%;min-height:140px;border:1px solid #e3e6f0;border-radius:10px;padding:12px;font-size:13px;font-family:inherit;margin-top:10px;box-sizing:border-box}
 input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:13px;margin-top:10px}
+.desc{margin-top:20px}
+.desc>summary{cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;color:#6b7280;font-size:14px;padding:8px 0;user-select:none}
+.desc>summary:hover{color:#374151}
 </style></head><body>
 <h1>Panel TUS · Registros</h1>
 <div class="sub">${rows.length - 1} registros en el filtro 2 &middot; <a target="_top" href="${self}" style="color:#2563eb">actualizar</a> &middot; <a target="_top" href="${self}&action=nuevo" style="color:#15803d;font-weight:600">＋ Agregar</a>
@@ -327,7 +330,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
 </form></div>
 <table><tr><th onclick="sortTable(0)">#</th><th onclick="sortTable(1)">Nombre</th><th onclick="sortTable(2)">Contacto</th><th onclick="sortTable(3)">Ciudad / Edad</th><th onclick="sortTable(4)">Detalles</th><th onclick="sortTable(5)">Estatus</th><th>Acciones</th></tr>`;
 
-  for (let i = rows.length - 1; i >= 1; i--) {
+  function rowTr(i) {
     const r = rows[i];
     const est = String(r[16] || "Nuevo");
     const pref = String(r[10] || "").toLowerCase();
@@ -335,7 +338,7 @@ input.tel{border:1px solid #e3e6f0;border-radius:8px;padding:8px 10px;font-size:
       ? new Date(r[0]).toLocaleDateString("es-MX", { day: "2-digit", month: "short" }) +
         " · " + new Date(r[0]).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })
       : "";
-    body += `<tr>
+    return `<tr>
 <td>${i}<br><span class="muted">${fecha}</span></td>
 <td><strong>${r[2]}</strong><br><span class="muted">${r[1]}</span> ${r[17] ? '<span class="pb pc">' + r[17] + '</span>' : ""}</td>
 <td>${r[4]} ${pref === "whatsapp" ? '<span class="pb pwa">WhatsApp</span>' : ""}<br><span class="muted">${r[3]}</span> ${pref === "correo" ? '<span class="pb pm">Correo</span>' : ""}</td>
@@ -357,9 +360,20 @@ ${ESTATUS.map(function (s) {
 <a class="dl" target="_top" href="${self}&action=del&row=${i + 1}&nom=${encodeURIComponent(r[2])}" onclick="return confirm('¿Eliminar a ${r[2]}? No se puede deshacer.')">Eliminar</a>
 </td></tr>`;
   }
-  body += `</table>
 
-<h2>Asignación de rutas</h2>
+  let activos = "", desc = "", nDesc = 0;
+  for (let i = rows.length - 1; i >= 1; i--) {
+    if (String(rows[i][16] || "") === "Descartado") { desc += rowTr(i); nDesc++; }
+    else activos += rowTr(i);
+  }
+  body += activos + `</table>`;
+
+  if (nDesc) {
+    body += `<details class="desc"><summary>🗑 Descartados (${nDesc}) — toca para ver</summary>
+<table><tr><th>#</th><th>Nombre</th><th>Contacto</th><th>Ciudad / Edad</th><th>Detalles</th><th>Estatus</th><th>Acciones</th></tr>${desc}</table></details>`;
+  }
+
+  body += `<h2>Asignación de rutas</h2>
 <div class="rutas">`;
 
   for (const ruta in suc) {
