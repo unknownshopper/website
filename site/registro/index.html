@@ -476,7 +476,10 @@ $("regForm").addEventListener("submit", async e => {
       ? "¡Listo! Recibimos tu solicitud. Te contactaremos para agendar una demo."
       : "¡Listo! Recibimos tu registro. Te contactaremos cuando haya campañas en tu zona.");
     if (window.fbq) fbq("track", "CompleteRegistration", { content_name: tipo });
-    if (window.gtag) gtag("event", "generate_lead", { content_name: tipo });
+    if (window.gtag) {
+      gtag("event", "generate_lead", { content_name: tipo });
+      gtag("event", "conversion", { send_to: "AW-18545525875/guyiCOiMvbodEPCImYtF" });
+    }
   } catch {
     show("err", "No se pudo enviar. Intenta de nuevo o escríbenos a the@unknownshoppers.com.");
   } finally {
