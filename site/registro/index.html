@@ -155,6 +155,15 @@ fbq('init','1178135964818871');
 fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1178135964818871&ev=PageView&noscript=1"/></noscript>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18545525875"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'AW-18545525875');
+gtag('config', 'G-RVW79M5P7C');
+</script>
 </head>
 <body>
 
@@ -467,6 +476,7 @@ $("regForm").addEventListener("submit", async e => {
       ? "¡Listo! Recibimos tu solicitud. Te contactaremos para agendar una demo."
       : "¡Listo! Recibimos tu registro. Te contactaremos cuando haya campañas en tu zona.");
     if (window.fbq) fbq("track", "CompleteRegistration", { content_name: tipo });
+    if (window.gtag) gtag("event", "generate_lead", { content_name: tipo });
   } catch {
     show("err", "No se pudo enviar. Intenta de nuevo o escríbenos a the@unknownshoppers.com.");
   } finally {
